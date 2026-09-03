@@ -763,7 +763,9 @@ const TR = (function () {
             '<code>sqrt(3)</code> lub <code>√3</code>, ułamki jak <code>3pi/4</code>, ' +
             'przecinek lub kropkę.</small></p>');
         const inp = el.area.querySelector('#q-in');
-        inp.focus();
+        // preventScroll: bez tego przeglądarka przewinęłaby stronę do pola odpowiedzi
+        // przy samym wczytaniu modułu — czyli od razu na dół, do zadań
+        inp.focus({ preventScroll: true });
         inp.addEventListener('keydown', function (ev) {
           if (ev.key !== 'Enter') return;
           ev.preventDefault();
@@ -806,7 +808,7 @@ const TR = (function () {
       el.skip.style.display = 'none';
       el.next.style.display = '';
       el.next.textContent = (i + 1 >= count) ? 'Podsumowanie →' : 'Następne →';
-      el.next.focus();
+      el.next.focus({ preventScroll: true });
       head();
     }
 

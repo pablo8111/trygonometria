@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>05. Tożsamości i wzory — Trygonometria</title>
+<meta name="description" content="Jedynka trygonometryczna, wzory redukcyjne, wzory na sumę i różnicę kątów, kąt podwojony. Z interaktywnym reduktorem i sprawdzaczem tożsamości.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 05</div>
+    <h1>Tożsamości i wzory</h1>
+    <p class="lead">Tożsamość to równość prawdziwa dla <em>każdego</em> dopuszczalnego kąta —
+    w przeciwieństwie do równania, które trzeba rozwiązać. Wzorów jest tu dużo, ale prawie wszystkie
+    da się wyprowadzić z dwóch rzeczy: z twierdzenia Pitagorasa i z rysunku koła jednostkowego.</p>
+  </div>
+
+  <h2>Jedynka trygonometryczna</h2>
+  <p>Punkt <span class="math"><var>P</var> = (cos α, sin α)</span> leży na okręgu o promieniu 1.
+  Okrąg ten ma równanie <span class="math"><var>x</var><sup>2</sup> + <var>y</var><sup>2</sup> = 1</span>.
+  Podstawiamy — i to cały dowód:</p>
+
+  <div class="key">
+    <span class="t">Jedynka trygonometryczna</span>
+    <div class="math-block" style="margin:.2em 0;font-size:1.45em">
+      sin<sup>2</sup>α + cos<sup>2</sup>α = 1
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      Dlaczego to zawsze daje 1
+      <span class="hint">zmień kąt — słupek zawsze ma tę samą długość</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder mid"><canvas id="c-one"></canvas></div>
+      <div class="controls" id="ctl-one"></div>
+      <div class="readout">
+        <div class="r sin-b"><div class="k">sin²α</div><div class="val sin-c" id="o-s2">—</div></div>
+        <div class="r cos-b"><div class="k">cos²α</div><div class="val cos-c" id="o-c2">—</div></div>
+        <div class="r"><div class="k">suma</div><div class="val" id="o-sum">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="t">Do czego to służy</span>
+    Najczęstsze zastosowanie: znasz jedną wartość, chcesz drugą.
+    Jeśli <span class="math">sin α = 0,6</span> i <var>α</var> jest w ćwiartce II, to
+    <span class="math">cos<sup>2</sup>α = 1 − 0,36 = 0,64</span>, więc
+    <span class="math">cos α = ±0,8</span> — a znak wybieramy z ćwiartki: II, czyli cosinus ujemny,
+    więc <span class="math">cos α = −0,8</span>. <strong>Bez ćwiartki zadanie nie ma jednej odpowiedzi.</strong>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Związki z tangensem</h3>
+      <div class="math-block" style="margin:.4em 0">
+        tg α = <span class="frac"><span>sin α</span><span>cos α</span></span> &nbsp;&nbsp;
+        ctg α = <span class="frac"><span>cos α</span><span>sin α</span></span>
+      </div>
+      <div class="math-block" style="margin:.4em 0">
+        tg α · ctg α = 1
+      </div>
+      <p style="margin:.5em 0 0"><small>Pierwszy wzór wymaga <span class="math">cos α ≠ 0</span>,
+      drugi <span class="math">sin α ≠ 0</span>, trzeci obu.</small></p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Jedynka podzielona przez cos²α</h3>
+      <div class="math-block" style="margin:.4em 0">
+        1 + tg<sup>2</sup>α = <span class="frac"><span>1</span><span>cos<sup>2</sup>α</span></span>
+      </div>
+      <p style="margin:.5em 0 0"><small>Wyprowadzenie: dziel
+      <span class="math">sin<sup>2</sup>α + cos<sup>2</sup>α = 1</span> przez
+      <span class="math">cos<sup>2</sup>α</span>. Analogicznie dzielenie przez
+      <span class="math">sin<sup>2</sup>α</span> daje
+      <span class="math">1 + ctg<sup>2</sup>α = <span class="frac"><span>1</span><span>sin<sup>2</sup>α</span></span></span>.</small></p>
+    </div>
+  </div>
+
+  <h2>Wzory redukcyjne</h2>
+  <p>Wzorów redukcyjnych jest formalnie 32 i nikt przy zdrowych zmysłach ich nie wkuwa.
+  Zamiast tego są <strong>dwie zasady</strong>:</p>
+
+  <div class="key">
+    <span class="t">Dwie zasady zamiast trzydziestu dwóch wzorów</span>
+    <ol style="margin:.3em 0 0">
+      <li><strong>Czy funkcja się zmienia?</strong> Jeśli kąt odniesienia to
+      <strong>90°</strong> lub <strong>270°</strong> (nieparzysta wielokrotność 90°) —
+      funkcja przechodzi na „ko-funkcję”: sin ↔ cos, tg ↔ ctg.
+      Jeśli to <strong>180°</strong> lub <strong>360°</strong> — funkcja zostaje ta sama.</li>
+      <li><strong>Jaki znak?</strong> Sprawdzamy, w której ćwiartce leży cały kąt
+      (przyjmując, że <var>α</var> jest małym kątem ostrym) i jaki znak ma tam
+      <em>pierwotna</em> funkcja.</li>
+    </ol>
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      Reduktor
+      <span class="hint">wybierz funkcję i postać kąta</span>
+    </div>
+    <div class="widget-body">
+      <div class="inline-form" style="margin-bottom:14px">
+        <select id="r-fn">
+          <option value="sin">sin</option>
+          <option value="cos">cos</option>
+          <option value="tg">tg</option>
+          <option value="ctg">ctg</option>
+        </select>
+        <span>(</span>
+        <select id="r-form"></select>
+        <span>) &nbsp;=&nbsp;</span>
+        <span class="math" id="r-result" style="font-size:1.35em;font-weight:600"></span>
+      </div>
+      <div id="r-why" class="note" style="margin-top:0"></div>
+      <div class="canvas-holder narrow"><canvas id="c-red"></canvas></div>
+      <div class="controls" id="ctl-red"></div>
+      <div class="readout">
+        <div class="r"><div class="k">lewa strona</div><div class="val" id="r-left">—</div></div>
+        <div class="r"><div class="k">prawa strona</div><div class="val" id="r-right">—</div></div>
+        <div class="r"><div class="k">różnica</div><div class="val" id="r-diff">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Suma i różnica kątów</h2>
+  <p>Tych trzeba się nauczyć — nie wynikają z jednego rysunku, a przydają się bez końca
+  (w fizyce: składanie drgań, w matematyce: wszystko).</p>
+
+  <div class="card">
+    <div class="math-block">
+      sin(<var>x</var> ± <var>y</var>) = sin <var>x</var> · cos <var>y</var> ± cos <var>x</var> · sin <var>y</var>
+    </div>
+    <div class="math-block">
+      cos(<var>x</var> ± <var>y</var>) = cos <var>x</var> · cos <var>y</var> ∓ sin <var>x</var> · sin <var>y</var>
+    </div>
+    <div class="math-block">
+      tg(<var>x</var> ± <var>y</var>) =
+      <span class="frac"><span>tg <var>x</var> ± tg <var>y</var></span><span>1 ∓ tg <var>x</var> · tg <var>y</var></span></span>
+    </div>
+    <div class="warn" style="margin-bottom:0">
+      <span class="t">Uwaga na znaki</span>
+      W sinusie znaki po obu stronach są <strong>takie same</strong> (plus daje plus).
+      W cosinusie są <strong>odwrotne</strong> — dlatego napisane jest ∓.
+      Kontrola: <span class="math">cos(0 + 0) = 1</span>, a
+      <span class="math">cos 0 · cos 0 − sin 0 · sin 0 = 1 − 0 = 1</span>. Gdyby był plus,
+      wyszłoby też 1 — więc sprawdzaj na <span class="math"><var>x</var> = <var>y</var> = 90°</span>:
+      <span class="math">cos 180° = −1</span>, i tylko wersja z minusem to daje.
+    </div>
+  </div>
+
+  <h2>Kąt podwojony</h2>
+  <p>To po prostu <span class="math"><var>y</var> = <var>x</var></span> w powyższych wzorach:</p>
+
+  <div class="card">
+    <div class="math-block">
+      sin 2<var>x</var> = 2 sin <var>x</var> · cos <var>x</var>
+    </div>
+    <div class="math-block">
+      cos 2<var>x</var> = cos<sup>2</sup><var>x</var> − sin<sup>2</sup><var>x</var>
+      = 1 − 2sin<sup>2</sup><var>x</var> = 2cos<sup>2</sup><var>x</var> − 1
+    </div>
+    <div class="math-block">
+      tg 2<var>x</var> =
+      <span class="frac"><span>2 tg <var>x</var></span><span>1 − tg<sup>2</sup><var>x</var></span></span>
+    </div>
+    <p style="margin:0"><small>Trzy postacie cosinusa podwojonego kąta to ta sama rzecz
+    po podstawieniu jedynki trygonometrycznej. W zadaniach wybieramy tę, która zostawia
+    tylko jedną funkcję — np. gdy w równaniu jest już <span class="math">sin <var>x</var></span>,
+    bierzemy <span class="math">1 − 2sin<sup>2</sup><var>x</var></span>.</small></p>
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      Sprawdzacz tożsamości
+      <span class="hint">ustaw dowolne x i y — kolumny muszą się zgadzać</span>
+    </div>
+    <div class="widget-body">
+      <div class="controls" id="ctl-check"></div>
+      <div class="table-scroll" style="margin-bottom:0">
+        <table id="tbl-check">
+          <thead><tr><th class="lbl">tożsamość</th><th>lewa strona</th><th>prawa strona</th><th>zgadza się?</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p style="margin:14px 0 0"><small>Różnice rzędu 10<sup>−16</sup> to nie błąd wzoru,
+      tylko zaokrąglenia komputera — dokładnie tak samo jak przy dzieleniu 1/3 na kalkulatorze.</small></p>
+    </div>
+  </div>
+
+  <h2>Zadania</h2>
+  <p>Osiem zadań: jedynka, redukcje, sumy kątów, kąt podwojony.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong><span class="math">sin<sup>2</sup>α</span> to <span class="math">(sin α)<sup>2</sup></span></strong>,
+      a nie <span class="math">sin(α<sup>2</sup>)</span>. To dwie zupełnie różne rzeczy.</li>
+      <li><strong>„Rozdzielanie” funkcji.</strong>
+      <span class="math">sin(<var>x</var> + <var>y</var>) ≠ sin <var>x</var> + sin <var>y</var></span>.
+      Sprawdź na <span class="math"><var>x</var> = <var>y</var> = 90°</span>: lewa strona 0, prawa 2.</li>
+      <li><strong>Gubienie znaku przy pierwiastkowaniu jedynki.</strong>
+      Z <span class="math">cos<sup>2</sup>α = 0,64</span> wynika <span class="math">cos α = ±0,8</span>
+      — o wyborze decyduje ćwiartka.</li>
+      <li><strong>Redukcja bez sprawdzenia ćwiartki.</strong>
+      <span class="math">sin(180° + α) = −sin α</span>, nie <span class="math">sin α</span>:
+      kąt wpada w ćwiartkę III, gdzie sinus jest ujemny.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('tozsamosci');
+
+const FVAL = {
+  sin: (d) => Math.sin(d * TR.D2R),
+  cos: (d) => Math.cos(d * TR.D2R),
+  tg:  (d) => Math.tan(d * TR.D2R),
+  ctg: (d) => 1 / Math.tan(d * TR.D2R)
+};
+const COF = { sin: 'cos', cos: 'sin', tg: 'ctg', ctg: 'tg' };
+
+/* ============ widget: jedynka trygonometryczna ============ */
+(function () {
+  let deg = 55;
+
+  const plot = new TR.Plot(TR.$('#c-one'), {
+    xmin: -1.35, xmax: 2.9, ymin: -1.35, ymax: 1.35, equal: true, ratio: .635, maxH: 540,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = deg * TR.D2R, x = Math.cos(a), y = Math.sin(a);
+
+      p.grid(.5, .5);
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 1.8 });
+      p.path([[0, 0], [x, 0], [x, y], [0, 0]], { color: null, fill: TR.alpha(c.accent, .1) });
+      p.seg(0, 0, x, 0, { color: c.cos, width: 4 });
+      p.seg(x, 0, x, y, { color: c.sin, width: 4 });
+      p.seg(0, 0, x, y, { color: c.ink, width: 2 });
+      p.text('1', x / 2 - .04, y / 2 + .04, { align: 'right', color: c.ink, font: '600 13px system-ui', bg: true });
+      p.dot(x, y, { r: 6, color: c.accent });
+      p.angleArc(0, 0, .28, 0, a, { color: c.accent, width: 1.8 });
+
+      // słupek sin² + cos² = 1
+      const bx = 1.95, w = .38;
+      const h = 2.0;                       // wysokość słupka odpowiadająca 1
+      const y0 = -1.0;
+      p.path([[bx, y0], [bx + w, y0], [bx + w, y0 + h], [bx, y0 + h], [bx, y0]],
+             { color: null, fill: c.surface });
+      p.path([[bx, y0], [bx + w, y0], [bx + w, y0 + h * x * x], [bx, y0 + h * x * x], [bx, y0]],
+             { color: null, fill: TR.alpha(c.cos, .75) });
+      p.path([[bx, y0 + h * x * x], [bx + w, y0 + h * x * x],
+              [bx + w, y0 + h * (x * x + y * y)], [bx, y0 + h * (x * x + y * y)], [bx, y0 + h * x * x]],
+             { color: null, fill: TR.alpha(c.sin, .75) });
+      p.path([[bx, y0], [bx + w, y0], [bx + w, y0 + h], [bx, y0 + h], [bx, y0]],
+             { color: c.ink3, width: 1.4 });
+      p.text('cos²α = ' + TR.fmt(x * x, 3), bx + w + .1, y0 + h * x * x / 2, { color: c.cos, font: '600 12px system-ui' });
+      p.text('sin²α = ' + TR.fmt(y * y, 3), bx + w + .1, y0 + h * (x * x + (y * y) / 2), { color: c.sin, font: '600 12px system-ui' });
+      p.text('razem 1', bx + w / 2, y0 + h, { align: 'center', dy: -8, color: c.ink2, font: '700 12px system-ui' });
+    }
+  });
+
+  TR.slider(TR.$('#ctl-one'), {
+    label: 'Kąt α', min: 0, max: 360, step: 1, value: deg,
+    format: (v) => TR.fmt(v, 0) + '°',
+    onInput: (v) => { deg = v; refresh(); }
+  });
+
+  function refresh() {
+    const a = deg * TR.D2R;
+    const s2 = Math.sin(a) ** 2, c2 = Math.cos(a) ** 2;
+    TR.$('#o-s2').textContent = TR.fmt(s2, 4);
+    TR.$('#o-c2').textContent = TR.fmt(c2, 4);
+    TR.$('#o-sum').textContent = TR.fmt(s2 + c2, 4);
+    plot.render();
+  }
+  plot.onPointer(function (st) {
+    if (st.x > 1.5) return;
+    deg = TR.norm360(Math.atan2(st.y, st.x) * TR.R2D);
+    refresh();
+  });
+  refresh();
+})();
+
+/* ============ widget: reduktor wzorów redukcyjnych ============ */
+(function () {
+  const FORMS = [
+    { id: 'm',    label: '−α',        deg: 0,   sign: -1 },
+    { id: '90m',  label: '90° − α',   deg: 90,  sign: -1 },
+    { id: '90p',  label: '90° + α',   deg: 90,  sign: +1 },
+    { id: '180m', label: '180° − α',  deg: 180, sign: -1 },
+    { id: '180p', label: '180° + α',  deg: 180, sign: +1 },
+    { id: '270m', label: '270° − α',  deg: 270, sign: -1 },
+    { id: '270p', label: '270° + α',  deg: 270, sign: +1 },
+    { id: '360m', label: '360° − α',  deg: 360, sign: -1 }
+  ];
+
+  let fn = 'sin', form = FORMS[1], alpha = 32;
+
+  TR.$('#r-form').innerHTML = FORMS.map((f, i) =>
+    '<option value="' + i + '"' + (i === 1 ? ' selected' : '') + '>' + f.label + '</option>').join('');
+
+  /** Znajduje, czym jest f(deg ± α): ±f(α) albo ±kofunkcja(α). */
+  function reduce(fn, form) {
+    const a0 = 37;                                  // kąt testowy — nietypowy, żeby nie było przypadków
+    const target = FVAL[fn](form.deg + form.sign * a0);
+    const cands = [
+      { txt: fn + ' α', v: FVAL[fn](a0), changed: false, neg: false },
+      { txt: '−' + fn + ' α', v: -FVAL[fn](a0), changed: false, neg: true },
+      { txt: COF[fn] + ' α', v: FVAL[COF[fn]](a0), changed: true, neg: false },
+      { txt: '−' + COF[fn] + ' α', v: -FVAL[COF[fn]](a0), changed: true, neg: true }
+    ];
+    let best = cands[0], bd = Infinity;
+    for (const cd of cands) {
+      const dd = Math.abs(cd.v - target);
+      if (dd < bd) { bd = dd; best = cd; }
+    }
+    return best;
+  }
+
+  const plot = new TR.Plot(TR.$('#c-red'), {
+    xmin: -1.4, xmax: 1.4, ymin: -1.4, ymax: 1.4, equal: true, ratio: 1, maxH: 500,
+    draw: function (p) {
+      const c = TR.colors();
+      const d2 = form.deg + form.sign * alpha;
+      const a1 = alpha * TR.D2R, a2 = d2 * TR.D2R;
+
+      p.grid(.5, .5);
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 1.8 });
+
+      // punkt bazowy P(α)
+      p.seg(0, 0, Math.cos(a1), Math.sin(a1), { color: TR.alpha(c.ink3, .8), width: 1.6, dash: [4, 4] });
+      p.dot(Math.cos(a1), Math.sin(a1), { r: 6, color: c.ink3 });
+      p.text('P(α)', Math.cos(a1), Math.sin(a1), { dx: 9, dy: -8, color: c.ink3, font: '600 12px system-ui', bg: true });
+
+      // punkt po redukcji
+      p.seg(0, 0, Math.cos(a2), Math.sin(a2), { color: c.accent, width: 2.2 });
+      p.seg(Math.cos(a2), 0, Math.cos(a2), Math.sin(a2), { color: c.sin, width: 3 });
+      p.seg(0, 0, Math.cos(a2), 0, { color: c.cos, width: 3 });
+      p.dot(Math.cos(a2), Math.sin(a2), { r: 7, color: c.accent });
+      p.text('P(' + form.label + ')', Math.cos(a2), Math.sin(a2),
+             { dx: Math.cos(a2) >= 0 ? 10 : -10, dy: -8, align: Math.cos(a2) >= 0 ? 'left' : 'right',
+               color: c.accent, font: '600 12px system-ui', bg: true });
+
+      p.angleArc(0, 0, .22, 0, a1, { color: c.ink3, width: 1.6 });
+      p.angleArc(0, 0, .34, 0, a2, { color: c.accent, width: 1.8 });
+    }
+  });
+
+  TR.slider(TR.$('#ctl-red'), {
+    label: 'Kąt α do sprawdzenia liczbowego', min: 5, max: 80, step: 1, value: alpha,
+    format: (v) => TR.fmt(v, 0) + '°',
+    onInput: (v) => { alpha = v; refresh(); }
+  });
+
+  function refresh() {
+    const r = reduce(fn, form);
+    TR.$('#r-result').innerHTML = r.txt;
+
+    const odd = form.deg === 90 || form.deg === 270;
+    const total = form.deg + form.sign * alpha;
+    const base = TR.norm360(total);
+    const quad = ['I', 'II', 'III', 'IV'][Math.floor(base / 90)] || 'na osi';
+    const sgn = FVAL[fn](total) >= 0 ? 'dodatni' : 'ujemny';
+
+    TR.$('#r-why').innerHTML =
+      '<span class="t plain">Jak to wyszło</span>' +
+      '<strong>1. Czy funkcja się zmienia?</strong> Kąt odniesienia to ' +
+      (form.deg === 0 ? '0°' : form.deg + '°') + ', a to ' +
+      (odd ? '<em>nieparzysta</em> wielokrotność 90°, więc <strong>' + fn + ' przechodzi w ' + COF[fn] +
+             '</strong>.' : 'wielokrotność 180°, więc <strong>funkcja zostaje ta sama</strong>.') +
+      '<br><strong>2. Jaki znak?</strong> Dla α = ' + alpha + '° cały kąt to ' +
+      TR.fmt(total, 0) + '° — ćwiartka ' + quad + '. Tam <strong>' + fn + '</strong> jest ' + sgn +
+      ', więc przed wynikiem stawiamy „' + (r.neg ? '−' : '+') + '”.';
+
+    const L = FVAL[fn](total);
+    const R = (r.neg ? -1 : 1) * FVAL[r.changed ? COF[fn] : fn](alpha);
+    TR.$('#r-left').textContent = TR.fmt(L, 6);
+    TR.$('#r-right').textContent = TR.fmt(R, 6);
+    TR.$('#r-diff').textContent = Math.abs(L - R) < 1e-9 ? '0 ✓' : TR.fmt(L - R, 9);
+
+    plot.render();
+  }
+
+  TR.$('#r-fn').addEventListener('change', function (e) { fn = e.target.value; refresh(); });
+  TR.$('#r-form').addEventListener('change', function (e) { form = FORMS[+e.target.value]; refresh(); });
+  refresh();
+})();
+
+/* ============ widget: sprawdzacz tożsamości ============ */
+(function () {
+  let X = 37, Y = 23;
+
+  const ID = [
+    { t: 'sin²x + cos²x = 1', L: (x) => Math.sin(x) ** 2 + Math.cos(x) ** 2, R: () => 1 },
+    { t: 'sin(x + y) = sin x cos y + cos x sin y',
+      L: (x, y) => Math.sin(x + y), R: (x, y) => Math.sin(x) * Math.cos(y) + Math.cos(x) * Math.sin(y) },
+    { t: 'cos(x + y) = cos x cos y − sin x sin y',
+      L: (x, y) => Math.cos(x + y), R: (x, y) => Math.cos(x) * Math.cos(y) - Math.sin(x) * Math.sin(y) },
+    { t: 'sin(x − y) = sin x cos y − cos x sin y',
+      L: (x, y) => Math.sin(x - y), R: (x, y) => Math.sin(x) * Math.cos(y) - Math.cos(x) * Math.sin(y) },
+    { t: 'cos(x − y) = cos x cos y + sin x sin y',
+      L: (x, y) => Math.cos(x - y), R: (x, y) => Math.cos(x) * Math.cos(y) + Math.sin(x) * Math.sin(y) },
+    { t: 'sin 2x = 2 sin x cos x',
+      L: (x) => Math.sin(2 * x), R: (x) => 2 * Math.sin(x) * Math.cos(x) },
+    { t: 'cos 2x = cos²x − sin²x',
+      L: (x) => Math.cos(2 * x), R: (x) => Math.cos(x) ** 2 - Math.sin(x) ** 2 },
+    { t: 'cos 2x = 1 − 2sin²x',
+      L: (x) => Math.cos(2 * x), R: (x) => 1 - 2 * Math.sin(x) ** 2 },
+    { t: 'tg 2x = 2tg x / (1 − tg²x)',
+      L: (x) => Math.tan(2 * x), R: (x) => 2 * Math.tan(x) / (1 - Math.tan(x) ** 2) },
+    { t: '1 + tg²x = 1 / cos²x',
+      L: (x) => 1 + Math.tan(x) ** 2, R: (x) => 1 / Math.cos(x) ** 2 },
+    { t: 'UWAGA — to NIE jest tożsamość: sin(x+y) = sin x + sin y',
+      L: (x, y) => Math.sin(x + y), R: (x, y) => Math.sin(x) + Math.sin(y), fake: true }
+  ];
+
+  const box = TR.$('#ctl-check');
+  TR.slider(box, { label: 'Kąt <var>x</var>', min: 1, max: 89, step: 1, value: X,
+    format: (v) => TR.fmt(v, 0) + '°', onInput: (v) => { X = v; refresh(); } });
+  TR.slider(box, { label: 'Kąt <var>y</var>', min: 1, max: 89, step: 1, value: Y,
+    format: (v) => TR.fmt(v, 0) + '°', onInput: (v) => { Y = v; refresh(); } });
+
+  function refresh() {
+    const x = X * TR.D2R, y = Y * TR.D2R;
+    TR.$('#tbl-check tbody').innerHTML = ID.map(function (it) {
+      const L = it.L(x, y), R = it.R(x, y);
+      const ok = Math.abs(L - R) < 1e-9;
+      return '<tr' + (it.fake ? ' style="opacity:.9"' : '') + '>' +
+        '<td class="lbl" style="white-space:normal;font-family:var(--serif);font-weight:500' +
+        (it.fake ? ';color:var(--bad)' : '') + '">' + it.t + '</td>' +
+        '<td style="font-family:var(--mono);font-size:.85rem">' + TR.fmt(L, 6) + '</td>' +
+        '<td style="font-family:var(--mono);font-size:.85rem">' + TR.fmt(R, 6) + '</td>' +
+        '<td style="font-weight:700;color:' + (ok ? 'var(--ok)' : 'var(--bad)') + '">' +
+        (ok ? '✓' : '✗') + '</td></tr>';
+    }).join('');
+  }
+  refresh();
+})();
+
+/* ============ zadania ============ */
+(function () {
+  const FORMS = [
+    { label: '90° − α', deg: 90, sign: -1 }, { label: '90° + α', deg: 90, sign: 1 },
+    { label: '180° − α', deg: 180, sign: -1 }, { label: '180° + α', deg: 180, sign: 1 },
+    { label: '270° − α', deg: 270, sign: -1 }, { label: '270° + α', deg: 270, sign: 1 },
+    { label: '360° − α', deg: 360, sign: -1 }, { label: '−α', deg: 0, sign: -1 }
+  ];
+
+  function reduceTxt(fn, form) {
+    const a0 = 37;
+    const target = FVAL[fn](form.deg + form.sign * a0);
+    const cands = [
+      [fn + ' α', FVAL[fn](a0)], ['−' + fn + ' α', -FVAL[fn](a0)],
+      [COF[fn] + ' α', FVAL[COF[fn]](a0)], ['−' + COF[fn] + ' α', -FVAL[COF[fn]](a0)]
+    ];
+    let best = cands[0], bd = Infinity;
+    for (const cd of cands) { const d = Math.abs(cd[1] - target); if (d < bd) { bd = d; best = cd; } }
+    return best[0];
+  }
+
+  function gen() {
+    const kind = TR.rnd.int(1, 5);
+
+    if (kind === 1) {
+      // jedynka trygonometryczna ze znakiem z ćwiartki
+      const known = TR.rnd.pick(['sin', 'cos']);
+      const other = known === 'sin' ? 'cos' : 'sin';
+      const t = TR.rnd.pick([[3, 5], [4, 5], [5, 13], [12, 13], [8, 17], [15, 17]]);
+      const v = t[0] / t[1];                       // wartość bezwzględna znanej funkcji
+      const quad = TR.rnd.int(1, 4);
+      const sgn = (f, q) => (f === 'sin' ? (q <= 2 ? 1 : -1) : (q === 1 || q === 4 ? 1 : -1));
+      const sgnKnown = sgn(known, quad), sgnOther = sgn(other, quad);
+      const otherAbs = Math.sqrt(1 - v * v);
+      const ans = sgnOther * otherAbs;
+      const rom = ['', 'I', 'II', 'III', 'IV'][quad];
+      return {
+        kind: 'input',
+        q: 'Wiadomo, że <span class="math">' + known + ' α = ' +
+           (sgnKnown < 0 ? '−' : '') + TR.fracHTML(t[0] + '/' + t[1]) + '</span>, ' +
+           'a kąt <var>α</var> leży w ćwiartce <strong>' + rom + '</strong>.<br>' +
+           'Oblicz <span class="math">' + other + ' α</span>.',
+        answer: ans, tol: 0.005,
+        placeholder: 'np. −4/5',
+        show: TR.fmt(ans, 4),
+        why: 'Z jedynki: ' + other + '²α = 1 − ' + known + '²α = 1 − ' +
+             TR.fmt(v * v, 4) + ' = ' + TR.fmt(1 - v * v, 4) + ', więc ' + other + ' α = ±' +
+             TR.fmt(otherAbs, 4) + '. W ćwiartce ' + rom + ' funkcja ' + other + ' jest ' +
+             (sgnOther > 0 ? 'dodatnia' : 'ujemna') + ', więc wybieramy ' + TR.fmt(ans, 4) + '.'
+      };
+    }
+
+    if (kind === 2) {
+      const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+      const form = TR.rnd.pick(FORMS);
+      const right = reduceTxt(fn, form);
+      const opts = Array.from(new Set([
+        right, fn + ' α', '−' + fn + ' α', COF[fn] + ' α', '−' + COF[fn] + ' α'
+      ])).slice(0, 4);
+      if (opts.indexOf(right) < 0) opts[3] = right;
+      const ch = TR.rnd.shuffle(opts);
+      const odd = form.deg === 90 || form.deg === 270;
+      return {
+        kind: 'choice',
+        q: 'Zredukuj: <span class="math" style="font-size:1.25em">' + fn + '(' + form.label + ')</span>',
+        choices: ch,
+        correct: ch.indexOf(right),
+        why: (odd
+          ? 'Kąt odniesienia ' + form.deg + '° jest nieparzystą wielokrotnością 90°, więc ' +
+            fn + ' zmienia się na ' + COF[fn] + '. '
+          : 'Kąt odniesienia ' + form.deg + '° jest wielokrotnością 180°, więc funkcja zostaje ta sama. ') +
+          'Znak bierzemy z ćwiartki, w której leży ' + form.label + ' dla małego ostrego α. Wynik: ' + right + '.'
+      };
+    }
+
+    if (kind === 3) {
+      // suma kątów dająca kąt szczególny
+      const pr = TR.rnd.pick([[30, 45], [45, 60], [30, 60]]);
+      const fn = TR.rnd.pick(['sin', 'cos']);
+      const sum = pr[0] + pr[1];
+      const val = FVAL[fn](sum);
+      const parts = fn === 'sin'
+        ? 'sin ' + pr[0] + '° · cos ' + pr[1] + '° + cos ' + pr[0] + '° · sin ' + pr[1] + '°'
+        : 'cos ' + pr[0] + '° · cos ' + pr[1] + '° − sin ' + pr[0] + '° · sin ' + pr[1] + '°';
+      return {
+        kind: 'input',
+        q: 'Korzystając ze wzoru na ' + (fn === 'sin' ? 'sinus' : 'cosinus') +
+           ' sumy kątów, oblicz <span class="math" style="font-size:1.2em">' + fn + ' ' + sum + '°</span> ' +
+           '(podaj wartość liczbową z dokładnością do 0,001).',
+        answer: val, tol: 0.003,
+        placeholder: 'np. 0,966',
+        show: TR.fmt(val, 4),
+        why: fn + ' ' + sum + '° = ' + fn + '(' + pr[0] + '° + ' + pr[1] + '°) = ' + parts +
+             ' = ' + TR.fmt(val, 4) + '.'
+      };
+    }
+
+    if (kind === 4) {
+      // kąt podwojony
+      const t = TR.rnd.pick([[3, 5], [4, 5], [5, 13], [12, 13]]);
+      const s = t[0] / t[1];
+      const c = Math.sqrt(1 - s * s);
+      const which = TR.rnd.pick(['sin2', 'cos2']);
+      const val = which === 'sin2' ? 2 * s * c : 1 - 2 * s * s;
+      return {
+        kind: 'input',
+        q: 'Dla kąta ostrego <var>α</var> wiadomo, że <span class="math">sin α = ' +
+           TR.fracHTML(t[0] + '/' + t[1]) + '</span>.<br>Oblicz <span class="math">' +
+           (which === 'sin2' ? 'sin 2α' : 'cos 2α') + '</span>.',
+        answer: val, tol: 0.005,
+        placeholder: 'np. 0,96',
+        show: TR.fmt(val, 4),
+        why: which === 'sin2'
+          ? 'Najpierw cos α = √(1 − sin²α) = ' + TR.fmt(c, 4) + ' (dodatni, bo α jest ostry). ' +
+            'Potem sin 2α = 2 sin α cos α = 2 · ' + TR.fmt(s, 4) + ' · ' + TR.fmt(c, 4) + ' = ' + TR.fmt(val, 4) + '.'
+          : 'Najwygodniejsza postać to cos 2α = 1 − 2sin²α, bo znamy właśnie sinus: 1 − 2 · ' +
+            TR.fmt(s * s, 4) + ' = ' + TR.fmt(val, 4) + '.'
+      };
+    }
+
+    // upraszczanie wyrażenia
+    const items = [
+      { q: 'sin²x + cos²x', a: '1' },
+      { q: '1 − cos²x', a: 'sin²x' },
+      { q: '1 − sin²x', a: 'cos²x' },
+      { q: 'sin x / cos x', a: 'tg x' },
+      { q: 'tg x · ctg x', a: '1' },
+      { q: '2 sin x cos x', a: 'sin 2x' },
+      { q: 'cos²x − sin²x', a: 'cos 2x' }
+    ];
+    const it = TR.rnd.pick(items);
+    const pool = ['1', '0', 'sin²x', 'cos²x', 'tg x', 'ctg x', 'sin 2x', 'cos 2x', '2'];
+    const wrong = TR.rnd.shuffle(pool.filter(v => v !== it.a)).slice(0, 3);
+    const ch = TR.rnd.shuffle(wrong.concat([it.a]));
+    return {
+      kind: 'choice',
+      q: 'Uprość: <span class="math" style="font-size:1.25em">' + it.q + '</span>',
+      choices: ch,
+      correct: ch.indexOf(it.a),
+      why: 'Wynik: <span class="math">' + it.a + '</span>. Wszystkie te przekształcenia wychodzą ' +
+           'z jedynki trygonometrycznej albo ze wzorów na kąt podwojony.'
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 8, moduleId: 'tozsamosci', pass: 0.75 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04. Wykresy funkcji trygonometrycznych — Trygonometria</title>
+<meta name="description" content="Sinusoida, cosinusoida i tangensoida. Amplituda, okres, przesunięcia wykresu, własności funkcji trygonometrycznych.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 04</div>
+    <h1>Wykresy funkcji trygonometrycznych</h1>
+    <p class="lead">Punkt krąży po okręgu w kółko, więc jego wysokość rośnie i maleje bez końca.
+    Jeśli tę wysokość nanieść na wykres w zależności od kąta, powstaje fala. Ta fala opisuje
+    wszystko, co drga: struny, prąd zmienny, ruch wahadła, dźwięk.</p>
+  </div>
+
+  <h2>Od okręgu do fali</h2>
+  <p>Punkt po lewej jedzie po kole jednostkowym. Jego <span class="sin-c">wysokość</span>
+  (czyli sinus kąta) jest rysowana po prawej — kąt na osi poziomej, sinus na pionowej.
+  Naciśnij <em>Start</em>.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Rozwijanie okręgu w sinusoidę
+      <span class="hint">możesz też przeciągać punkt na okręgu</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder"><canvas id="c-unroll"></canvas></div>
+      <div class="btn-row">
+        <button class="btn" id="u-play">▶ Start</button>
+        <button class="btn ghost small" id="u-reset">Od nowa</button>
+        <label class="switch" style="margin-left:6px"><input type="checkbox" id="u-cos"> pokaż też cosinus</label>
+      </div>
+      <div class="readout">
+        <div class="r"><div class="k">Kąt</div><div class="val" id="u-deg">—</div></div>
+        <div class="r"><div class="k">Radiany</div><div class="val" id="u-rad">—</div></div>
+        <div class="r sin-b"><div class="k">sin</div><div class="val sin-c" id="u-sin">—</div></div>
+        <div class="r cos-b"><div class="k">cos</div><div class="val cos-c" id="u-cos-v">—</div></div>
+      </div>
+      <p style="margin:14px 0 0;font-size:.93rem;color:var(--ink-2)">
+        Zwróć uwagę: cosinusoida to <strong>ta sama fala</strong>, tylko przesunięta o
+        <span class="math">π/2</span> w lewo. To dlatego, że
+        <span class="math">cos x = sin(x + π/2)</span> — punkt na okręgu ma poziomą współrzędną
+        taką, jaką pionową będzie miał kwadrans obrotu później.
+      </p>
+    </div>
+  </div>
+
+  <h2>Trzy wykresy i ich własności</h2>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th class="lbl"></th>
+        <th class="sin-c">y = sin x</th><th class="cos-c">y = cos x</th><th class="tan-c">y = tg x</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">dziedzina</td><td>ℝ</td><td>ℝ</td>
+          <td style="white-space:normal">ℝ bez <span class="math">π/2 + <var>k</var>π</span></td></tr>
+        <tr><td class="lbl">zbiór wartości</td><td>⟨−1, 1⟩</td><td>⟨−1, 1⟩</td><td>ℝ</td></tr>
+        <tr><td class="lbl">okres</td><td>2π</td><td>2π</td><td><strong>π</strong></td></tr>
+        <tr><td class="lbl">parzystość</td>
+          <td>nieparzysta<br><small>sin(−x) = −sin x</small></td>
+          <td>parzysta<br><small>cos(−x) = cos x</small></td>
+          <td>nieparzysta<br><small>tg(−x) = −tg x</small></td></tr>
+        <tr><td class="lbl">miejsca zerowe</td>
+          <td><span class="math"><var>k</var>π</span></td>
+          <td><span class="math">π/2 + <var>k</var>π</span></td>
+          <td><span class="math"><var>k</var>π</span></td></tr>
+        <tr><td class="lbl">maksima</td>
+          <td><span class="math">π/2 + 2<var>k</var>π</span></td>
+          <td><span class="math">2<var>k</var>π</span></td>
+          <td>brak</td></tr>
+        <tr><td class="lbl">asymptoty</td><td>brak</td><td>brak</td>
+          <td><span class="math"><var>x</var> = π/2 + <var>k</var>π</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="t">Parzystość na obrazku</span>
+    Funkcja parzysta jest symetryczna względem osi <var>y</var> (cosinusoida wygląda tak samo
+    w lewo i w prawo od zera). Nieparzysta jest symetryczna względem punktu
+    <span class="math">(0,&nbsp;0)</span> — obrót o 180° nakłada wykres na siebie.
+  </div>
+
+  <h2>Przekształcenia wykresu</h2>
+  <p>Wszystkie zadania „narysuj wykres funkcji…” sprowadzają się do jednego wzoru
+  z czterema pokrętłami:</p>
+
+  <div class="math-block">
+    <var>y</var> = <var>a</var> · f( <var>b</var>(<var>x</var> − <var>c</var>) ) + <var>d</var>
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      Laboratorium przekształceń
+      <span class="hint">ruszaj suwakami i patrz, co robi każdy parametr</span>
+    </div>
+    <div class="widget-body">
+      <div class="formula-live" id="w-formula"></div>
+      <div class="chips" style="margin-bottom:14px">
+        <button class="chip" data-fn="sin" aria-pressed="true">sin</button>
+        <button class="chip" data-fn="cos" aria-pressed="false">cos</button>
+        <button class="chip" data-fn="tg" aria-pressed="false">tg</button>
+      </div>
+      <div class="canvas-holder"><canvas id="c-transform"></canvas></div>
+      <div class="controls" id="ctl-transform"></div>
+      <div class="btn-row">
+        <label class="switch"><input type="checkbox" id="t-base" checked> pokaż wykres bazowy</label>
+        <label class="switch"><input type="checkbox" id="t-env"> pokaż linie <span class="math">y = d ± |a|</span></label>
+        <button class="btn ghost small" id="t-reset">Wyzeruj parametry</button>
+      </div>
+      <div class="readout">
+        <div class="r"><div class="k">Amplituda |a|</div><div class="val" id="w-amp">—</div></div>
+        <div class="r"><div class="k">Okres</div><div class="val" id="w-per">—</div></div>
+        <div class="r"><div class="k">Przesunięcie w poziomie</div><div class="val" id="w-shx">—</div></div>
+        <div class="r"><div class="k">Przesunięcie w pionie</div><div class="val" id="w-shy">—</div></div>
+        <div class="r"><div class="k">Zbiór wartości</div><div class="val" id="w-range">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0"><var>a</var> — rozciąganie w pionie</h3>
+      <p style="margin:0;font-size:.95rem">Mnoży wszystkie wartości. Amplituda to
+      <span class="math">|<var>a</var>|</span>. Dla <span class="math"><var>a</var> &lt; 0</span>
+      wykres dodatkowo odbija się w osi <var>x</var> (góra idzie w dół).</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0"><var>b</var> — ściskanie w poziomie</h3>
+      <p style="margin:0;font-size:.95rem">Zmienia okres na
+      <span class="math"><span class="frac"><span>2π</span><span>|<var>b</var>|</span></span></span>
+      (dla tangensa <span class="math"><span class="frac"><span>π</span><span>|<var>b</var>|</span></span></span>).
+      Uwaga: <span class="math"><var>b</var> = 2</span> <em>ściska</em> wykres dwukrotnie, a nie rozciąga.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0"><var>c</var> — przesunięcie w poziomie</h3>
+      <p style="margin:0;font-size:.95rem">Przesuwa wykres o <var>c</var> w <strong>prawo</strong>
+      (bo w nawiasie jest <span class="math"><var>x</var> − <var>c</var></span>). Najczęstszy błąd:
+      <span class="math">sin(2<var>x</var> − π)</span> to przesunięcie o <span class="math">π/2</span>,
+      nie o π — trzeba najpierw wyłączyć <var>b</var> przed nawias:
+      <span class="math">sin(2(<var>x</var> − π/2))</span>.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0"><var>d</var> — przesunięcie w pionie</h3>
+      <p style="margin:0;font-size:.95rem">Podnosi całą falę. Zbiór wartości przesuwa się na
+      <span class="math">⟨<var>d</var> − |<var>a</var>|, <var>d</var> + |<var>a</var>|⟩</span>.
+      Oś symetrii fali to prosta <span class="math"><var>y</var> = <var>d</var></span>.</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <span class="t">Kolejność ma znaczenie</span>
+    Najpierw działa to, co jest „bliżej” <var>x</var>. Dla
+    <span class="math"><var>y</var> = 3sin(2<var>x</var> + π) − 1</span> czytamy:
+    ściśnij dwukrotnie (<var>b</var>=2), przesuń o <span class="math">π/2</span> w lewo
+    (bo <span class="math">2<var>x</var> + π = 2(<var>x</var> + π/2)</span>),
+    rozciągnij trzy razy w pionę, zjedź o 1 w dół.
+  </div>
+
+  <h2>Zadania</h2>
+  <p>Osiem zadań na czytanie parametrów z wzoru i z wykresu.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong>Okres liczony jako <span class="math">2π·<var>b</var></span>.</strong>
+      Jest odwrotnie: <span class="math">2π/|<var>b</var>|</span>. Sprawdzenie:
+      <span class="math">sin 2<var>x</var></span> robi dwa pełne cykle na odcinku 2π, więc jeden cykl
+      musi być krótszy niż 2π.</li>
+      <li><strong>Zapominanie o dzieleniu przy przesunięciu.</strong>
+      <span class="math">cos(3<var>x</var> − π)</span> przesuwa się o <span class="math">π/3</span>, nie o π.</li>
+      <li><strong>Okres tangensa.</strong> <span class="math">tg <var>bx</var></span> ma okres
+      <span class="math">π/|<var>b</var>|</span> — π, nie 2π, w liczniku.</li>
+      <li><strong>Amplituda ze znakiem.</strong> Amplituda to <em>wartość bezwzględna</em>
+      współczynnika: dla <span class="math"><var>y</var> = −2sin <var>x</var></span> amplituda to 2.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('wykresy');
+
+/* podpisy osi w wielokrotnościach π/2 */
+function piLabel(x, unit) {
+  const k = Math.round(x / unit);
+  if (k === 0) return null;
+  const deg = k * (unit * TR.R2D);
+  const t = TR.radPiText(Math.round(deg * 1000) / 1000);
+  return t === null ? TR.fmt(x, 2) : t;
+}
+
+/* ============ widget: rozwijanie okręgu ============ */
+(function () {
+  let t = 0, showCos = false;
+  const CX = -1.95, XMAX = 2 * Math.PI + .45;
+
+  const plot = new TR.Plot(TR.$('#c-unroll'), {
+    xmin: -3.1, xmax: XMAX, ymin: -1.65, ymax: 1.65,
+    equal: true, ratio: 3.3 / 9.5, maxH: 330,
+    draw: function (p) {
+      const c = TR.colors();
+      const s = Math.sin(t), co = Math.cos(t);
+
+      // --- okrąg ---
+      p.circle(CX, 0, 1, { color: c.line2, width: 1.8 });
+      p.seg(CX - 1.25, 0, CX + 1.25, 0, { color: c.line, width: 1.2 });
+      p.seg(CX, -1.25, CX, 1.25, { color: c.line, width: 1.2 });
+      p.seg(CX, 0, CX + co, s, { color: c.ink2, width: 1.6 });
+      p.seg(CX + co, 0, CX + co, s, { color: c.sin, width: 3 });
+      if (showCos) p.seg(CX, 0, CX + co, 0, { color: c.cos, width: 3 });
+      p.dot(CX + co, s, { r: 6, color: c.accent });
+      p.angleArc(CX, 0, .28, 0, t, { color: c.accent, width: 1.8 });
+
+      // --- osie wykresu ---
+      const gx0 = 0;
+      p.seg(gx0, 0, XMAX, 0, { color: c.ink3, width: 1.3 });
+      p.seg(gx0, -1.45, gx0, 1.45, { color: c.ink3, width: 1.3 });
+      for (let k = 1; k <= 4; k++) {
+        const x = k * Math.PI / 2;
+        p.seg(x, -.06, x, .06, { color: c.ink3, width: 1.2 });
+        p.text(TR.radPiText(k * 90), x, 0, { align: 'center', dy: 15, color: c.ink3, font: '11px ui-monospace, monospace' });
+      }
+      for (const yv of [-1, 1]) {
+        p.seg(-.06, yv, .06, yv, { color: c.ink3, width: 1.2 });
+        p.text(String(yv), 0, yv, { align: 'right', dx: -6, dy: 4, color: c.ink3, font: '11px ui-monospace, monospace' });
+        p.seg(gx0, yv, XMAX, yv, { color: c.line, width: 1, dash: [3, 4] });
+      }
+
+      // --- narysowana część fali ---
+      const N = 240;
+      const sinPts = [], cosPts = [];
+      for (let i = 0; i <= N; i++) {
+        const x = t * i / N;
+        sinPts.push([x, Math.sin(x)]);
+        cosPts.push([x, Math.cos(x)]);
+      }
+      if (showCos) p.path(cosPts, { color: c.cos, width: 2 });
+      p.path(sinPts, { color: c.sin, width: 2.6 });
+
+      // reszta fali na blado
+      const restS = [], restC = [];
+      for (let i = 0; i <= N; i++) {
+        const x = t + (2 * Math.PI - t) * i / N;
+        restS.push([x, Math.sin(x)]);
+        restC.push([x, Math.cos(x)]);
+      }
+      if (t < 2 * Math.PI - 1e-6) {
+        p.path(restS, { color: TR.alpha(c.sin, .18), width: 2 });
+        if (showCos) p.path(restC, { color: TR.alpha(c.cos, .15), width: 1.6 });
+      }
+
+      // łącznik okrąg → wykres
+      p.seg(CX + co, s, Math.min(t, XMAX), s, { color: TR.alpha(c.accent, .5), width: 1.2, dash: [4, 4] });
+      p.dot(Math.min(t, XMAX), s, { r: 6, color: c.sin });
+      if (showCos) p.dot(Math.min(t, XMAX), co, { r: 5, color: c.cos });
+    }
+  });
+
+  function refresh() {
+    TR.$('#u-deg').textContent = TR.fmt(t * TR.R2D, 1) + '°';
+    TR.$('#u-rad').textContent = TR.fmt(t, 3);
+    TR.$('#u-sin').textContent = TR.fmt(Math.sin(t), 3);
+    TR.$('#u-cos-v').textContent = TR.fmt(Math.cos(t), 3);
+    plot.render();
+  }
+
+  const tick = TR.ticker(function (dt) {
+    t += dt * 1.1;
+    if (t > 2 * Math.PI) { t = 2 * Math.PI; tick.stop(); TR.$('#u-play').textContent = '▶ Start'; }
+    refresh();
+  });
+
+  TR.$('#u-play').addEventListener('click', function () {
+    if (t >= 2 * Math.PI - 1e-9) t = 0;
+    tick.toggle();
+    this.textContent = tick.running ? '❚❚ Pauza' : '▶ Start';
+  });
+  TR.$('#u-reset').addEventListener('click', function () {
+    tick.stop(); TR.$('#u-play').textContent = '▶ Start'; t = 0; refresh();
+  });
+  TR.$('#u-cos').addEventListener('change', function (e) { showCos = e.target.checked; refresh(); });
+
+  plot.onPointer(function (st) {
+    tick.stop(); TR.$('#u-play').textContent = '▶ Start';
+    const a = Math.atan2(st.y, st.x - CX);
+    t = TR.norm360(a * TR.R2D) * TR.D2R;
+    refresh();
+  });
+
+  refresh();
+})();
+
+/* ============ widget: przekształcenia ============ */
+(function () {
+  let fn = 'sin', a = 1, b = 1, c = 0, d = 0;
+  const F = { sin: Math.sin, cos: Math.cos, tg: Math.tan };
+  const NAME = { sin: 'sin', cos: 'cos', tg: 'tg' };
+
+  const plot = new TR.Plot(TR.$('#c-transform'), {
+    xmin: -2 * Math.PI - .8, xmax: 2 * Math.PI + .8, ymin: -4.2, ymax: 4.2,
+    equal: false, ratio: .55, maxH: 420,
+    draw: function (p) {
+      const col = TR.colors();
+      const color = { sin: col.sin, cos: col.cos, tg: col.tan }[fn];
+
+      p.grid(Math.PI / 4, 1, { color: col.line });
+      p.axes({
+        tickX: Math.PI / 2, tickY: 1,
+        labelX: (x) => piLabel(x, Math.PI / 2),
+        labelY: (y) => (Math.abs(y % 1) < .01 ? TR.fmt(y, 0) : null)
+      });
+
+      if (TR.$('#t-env').checked && fn !== 'tg') {
+        for (const yv of [d + Math.abs(a), d - Math.abs(a)]) {
+          p.seg(p.win.xmin, yv, p.win.xmax, yv, { color: TR.alpha(col.gold, .8), width: 1.3, dash: [6, 4] });
+        }
+        p.seg(p.win.xmin, d, p.win.xmax, d, { color: TR.alpha(col.ink3, .8), width: 1.2, dash: [2, 4] });
+      }
+
+      if (TR.$('#t-base').checked) {
+        p.fn(F[fn], { color: TR.alpha(col.ink3, .55), width: 1.6, clip: 30, dash: [5, 4] });
+      }
+
+      // asymptoty tangensa
+      if (fn === 'tg') {
+        for (let k = -12; k <= 12; k++) {
+          const xa = c + (Math.PI / 2 + k * Math.PI) / b;
+          if (xa > p.win.xmin && xa < p.win.xmax) {
+            p.seg(xa, p.win.ymin, xa, p.win.ymax, { color: TR.alpha(col.tan, .3), width: 1.2, dash: [4, 5] });
+          }
+        }
+      }
+
+      p.fn((x) => a * F[fn](b * (x - c)) + d, { color: color, width: 2.8, clip: 40 });
+    }
+  });
+
+  const box = TR.$('#ctl-transform');
+  const sa = TR.slider(box, { label: '<var>a</var> — rozciągnięcie w pionie', min: -3, max: 3, step: .1, value: a,
+    format: (v) => TR.fmt(v, 1), onInput: (v) => { a = v; refresh(); } });
+  const sb = TR.slider(box, { label: '<var>b</var> — ściśnięcie w poziomie', min: .25, max: 4, step: .25, value: b,
+    format: (v) => TR.fmt(v, 2), onInput: (v) => { b = v; refresh(); } });
+  const sc = TR.slider(box, { label: '<var>c</var> — przesunięcie w poziomie', min: -12, max: 12, step: 1, value: 0,
+    format: (v) => (v === 0 ? '0' : TR.fracHTML(TR.radPiText(v * 15))),
+    onInput: (v) => { c = v * Math.PI / 12; refresh(); } });
+  const sd = TR.slider(box, { label: '<var>d</var> — przesunięcie w pionie', min: -2.5, max: 2.5, step: .25, value: d,
+    format: (v) => TR.fmt(v, 2), onInput: (v) => { d = v; refresh(); } });
+
+  function fmtSigned(v, one) {
+    if (one && Math.abs(v - 1) < 1e-9) return '';
+    if (one && Math.abs(v + 1) < 1e-9) return '−';
+    return TR.fmt(v, 2);
+  }
+
+  function refresh() {
+    const per = (fn === 'tg' ? Math.PI : 2 * Math.PI) / Math.abs(b);
+    const cDeg = Math.round(c * TR.R2D);
+    const cTxt = Math.abs(c) < 1e-9 ? null : TR.radPiText(cDeg);
+
+    // wzór na żywo — nawiasy tylko tam, gdzie są potrzebne
+    let arg = '<var>x</var>';
+    if (cTxt !== null) arg += (c > 0 ? ' − ' : ' + ') + TR.fracHTML(cTxt.replace('−', ''));
+    if (Math.abs(b - 1) > 1e-9) arg = TR.fmt(b, 2) + (cTxt === null ? '<var>x</var>' : '(' + arg + ')');
+    let f = '<var>y</var> = ' + fmtSigned(a, true) + NAME[fn] + '(' + arg + ')';
+    if (Math.abs(d) > 1e-9) f += (d > 0 ? ' + ' : ' − ') + TR.fmt(Math.abs(d), 2);
+    TR.$('#w-formula').innerHTML = f;
+
+    TR.$('#w-amp').textContent = fn === 'tg' ? '—' : TR.fmt(Math.abs(a), 2);
+    TR.$('#w-per').innerHTML = TR.radPiText(Math.round(per * TR.R2D * 100) / 100) !== null
+      ? TR.fracHTML(TR.radPiText(Math.round(per * TR.R2D))) + ' ≈ ' + TR.fmt(per, 2)
+      : TR.fmt(per, 3);
+    TR.$('#w-shx').innerHTML = cTxt === null ? '0'
+      : TR.fracHTML(cTxt.replace('−', '')) + (c > 0 ? ' w prawo' : ' w lewo');
+    TR.$('#w-shy').textContent = TR.fmt(d, 2);
+    TR.$('#w-range').textContent = fn === 'tg' ? 'ℝ'
+      : '⟨' + TR.fmt(d - Math.abs(a), 2) + ', ' + TR.fmt(d + Math.abs(a), 2) + '⟩';
+
+    // pionowy zakres dopasowany do parametrów, żeby wykres nigdy nie wychodził poza kanwę
+    const M = fn === 'tg' ? 4.2 : Math.max(2.2, Math.abs(a) + Math.abs(d) + .6);
+    plot.setWindow({ xmin: -2 * Math.PI - .8, xmax: 2 * Math.PI + .8, ymin: -M, ymax: M });
+    plot.render();
+  }
+
+  TR.$$('.chip[data-fn]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      fn = btn.dataset.fn;
+      TR.$$('.chip[data-fn]').forEach(x => x.setAttribute('aria-pressed', String(x === btn)));
+      refresh();
+    });
+  });
+  TR.$('#t-base').addEventListener('change', () => plot.render());
+  TR.$('#t-env').addEventListener('change', () => plot.render());
+  TR.$('#t-reset').addEventListener('click', function () {
+    a = 1; b = 1; c = 0; d = 0;
+    sa.value = 1; sb.value = 1; sc.value = 0; sd.value = 0;
+    refresh();
+  });
+
+  refresh();
+})();
+
+/* ============ zadania ============ */
+(function () {
+  const NAME = { sin: 'sin', cos: 'cos', tg: 'tg' };
+
+  function bTxt(b) { return b === 1 ? '' : (b === .5 ? '½' : String(b)); }
+
+  function gen() {
+    const kind = TR.rnd.int(1, 5);
+    const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+    const A = TR.rnd.pick([2, 3, 4, -2, -3, .5]);
+    const B = TR.rnd.pick([1, 2, 3, 4, .5]);
+
+    if (kind === 1) {
+      const per = (fn === 'tg' ? 180 : 360) / B;
+      const perTxt = TR.radPiText(per);
+      const opts = Array.from(new Set([
+        perTxt,
+        TR.radPiText((fn === 'tg' ? 180 : 360) * B),
+        TR.radPiText(fn === 'tg' ? 360 / B : 180 / B),
+        TR.radPiText(360)
+      ].filter(Boolean)));
+      const ch = TR.rnd.shuffle(opts);
+      return {
+        kind: 'choice',
+        q: 'Jaki okres ma funkcja <span class="math" style="font-size:1.2em"><var>y</var> = ' +
+           NAME[fn] + ' ' + bTxt(B) + '<var>x</var></span>?',
+        choices: ch.map(TR.fracHTML),
+        correct: ch.indexOf(perTxt),
+        why: 'Okres podstawowy ' + NAME[fn] + ' to ' + (fn === 'tg' ? 'π' : '2π') +
+             ', a współczynnik <var>b</var> = ' + B + ' dzieli go: ' +
+             (fn === 'tg' ? 'π' : '2π') + ' / ' + B + ' = ' + TR.fracHTML(perTxt) + '.'
+      };
+    }
+
+    if (kind === 2 && fn !== 'tg') {
+      const D = TR.rnd.pick([-2, -1, 0, 1, 2]);
+      const lo = D - Math.abs(A), hi = D + Math.abs(A);
+      const opts = TR.rnd.shuffle([
+        '⟨' + lo + ', ' + hi + '⟩',
+        '⟨' + (-Math.abs(A)) + ', ' + Math.abs(A) + '⟩',
+        '⟨' + (D - 1) + ', ' + (D + 1) + '⟩',
+        '⟨−1, 1⟩'
+      ].filter((v, i, s) => s.indexOf(v) === i));
+      return {
+        kind: 'choice',
+        q: 'Jaki zbiór wartości ma funkcja <span class="math" style="font-size:1.2em"><var>y</var> = ' +
+           (A === .5 ? '½' : A) + NAME[fn] + ' <var>x</var>' +
+           (D === 0 ? '' : (D > 0 ? ' + ' + D : ' − ' + (-D))) + '</span>?',
+        choices: opts,
+        correct: opts.indexOf('⟨' + lo + ', ' + hi + '⟩'),
+        why: 'Amplituda to |' + A + '| = ' + Math.abs(A) + ', a cała fala jest przesunięta o ' + D +
+             '. Zbiór wartości: ⟨' + D + ' − ' + Math.abs(A) + ', ' + D + ' + ' + Math.abs(A) +
+             '⟩ = ⟨' + lo + ', ' + hi + '⟩.'
+      };
+    }
+
+    if (kind === 3) {
+      // przesunięcie po wyłączeniu b przed nawias
+      const k = TR.rnd.pick([2, 3, 4]);
+      const num = TR.rnd.pick([1, 2, 3]);
+      const shiftDeg = 180 * num / k;
+      const shiftTxt = TR.radPiText(shiftDeg);
+      const opts = Array.from(new Set([
+        shiftTxt, TR.radPiText(180 * num), TR.radPiText(180 * num * k), TR.radPiText(180 / k)
+      ].filter(Boolean)));
+      const ch = TR.rnd.shuffle(opts);
+      return {
+        kind: 'choice',
+        q: 'O ile w <strong>prawo</strong> przesunięty jest wykres funkcji ' +
+           '<span class="math" style="font-size:1.15em"><var>y</var> = ' + NAME[fn] +
+           '(' + k + '<var>x</var> − ' + (num === 1 ? '' : num) + 'π)</span> ' +
+           'względem wykresu <span class="math"><var>y</var> = ' + NAME[fn] + ' ' + k + '<var>x</var></span>?',
+        choices: ch.map(TR.fracHTML),
+        correct: ch.indexOf(shiftTxt),
+        why: 'Najpierw wyłączamy ' + k + ' przed nawias: ' + k + '<var>x</var> − ' +
+             (num === 1 ? '' : num) + 'π = ' + k + '(<var>x</var> − ' + TR.fracHTML(shiftTxt) +
+             '). Przesunięcie to ' + TR.fracHTML(shiftTxt) + ', a nie ' +
+             TR.fracHTML(TR.radPiText(180 * num)) + '.'
+      };
+    }
+
+    if (kind === 4) {
+      const items = [
+        { q: 'sin(−x)', a: '−sin x', base: 'sin', other: 'cos', why: 'sinus jest funkcją nieparzystą' },
+        { q: 'cos(−x)', a: 'cos x', base: 'cos', other: 'sin', why: 'cosinus jest funkcją parzystą' },
+        { q: 'tg(−x)', a: '−tg x', base: 'tg', other: 'ctg', why: 'tangens jest funkcją nieparzystą' }
+      ];
+      const it = TR.rnd.pick(items);
+      const ch = TR.rnd.shuffle([
+        it.base + ' x', '−' + it.base + ' x', it.other + ' x', '−' + it.other + ' x'
+      ]);
+      return {
+        kind: 'choice',
+        q: 'Uprość: <span class="math" style="font-size:1.2em">' + it.q + '</span>',
+        choices: ch,
+        correct: ch.indexOf(it.a),
+        why: 'Bo ' + it.why + '. Na kole jednostkowym punkty <var>P</var>(x) i <var>P</var>(−x) ' +
+             'są symetryczne względem osi <var>x</var>: mają ten sam cosinus, przeciwny sinus.'
+      };
+    }
+
+    // amplituda z wzoru — wpisywana
+    const D = TR.rnd.pick([-2, -1, 0, 1, 2, 3]);
+    return {
+      kind: 'input',
+      q: 'Podaj amplitudę funkcji <span class="math" style="font-size:1.2em"><var>y</var> = ' +
+         (A === .5 ? '½' : A) + 'sin(' + bTxt(B) + '<var>x</var>)' +
+         (D === 0 ? '' : (D > 0 ? ' + ' + D : ' − ' + (-D))) + '</span>',
+      answer: Math.abs(A), tol: 0.001,
+      placeholder: 'np. 3',
+      show: TR.fmt(Math.abs(A), 2),
+      why: 'Amplituda to wartość bezwzględna współczynnika przy funkcji: |' + A + '| = ' +
+           TR.fmt(Math.abs(A), 2) + '. Ani <var>b</var>, ani <var>d</var> na nią nie wpływają.'
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 8, moduleId: 'wykresy', pass: 0.75 });
+})();
+</script>
+</body>
+</html>

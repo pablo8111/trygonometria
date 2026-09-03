@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06. Równania trygonometryczne — Trygonometria</title>
+<meta name="description" content="Równania sin x = a, cos x = a, tg x = a. Rozwiązania na kole jednostkowym, wzory ogólne z parametrem k, nierówności trygonometryczne.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 06</div>
+    <h1>Równania trygonometryczne</h1>
+    <p class="lead">Różnica wobec równań, które znasz: tu rozwiązań jest zawsze
+    <strong>nieskończenie wiele</strong> — bo funkcje są okresowe. Sztuka polega na tym,
+    żeby znaleźć wszystkie i zapisać je jednym wzorem.</p>
+  </div>
+
+  <h2>Skąd te dwie serie rozwiązań</h2>
+  <p>Weźmy <span class="math">sin <var>x</var> = <span class="frac"><span>1</span><span>2</span></span></span>.
+  Na kole jednostkowym pytamy: które punkty mają <strong>drugą współrzędną</strong> równą ½?
+  Prosta pozioma <span class="math"><var>y</var> = ½</span> przecina okrąg w <strong>dwóch</strong>
+  miejscach — a każdy z nich powtarza się co pełny obrót. Stąd dwie serie.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Równanie podstawowe
+      <span class="hint">wybierz funkcję i prawą stronę</span>
+    </div>
+    <div class="widget-body">
+      <div class="chips" style="margin-bottom:12px">
+        <button class="chip" data-fn="sin" aria-pressed="true">sin x = a</button>
+        <button class="chip" data-fn="cos" aria-pressed="false">cos x = a</button>
+        <button class="chip" data-fn="tg" aria-pressed="false">tg x = a</button>
+      </div>
+      <div class="inline-form" style="margin-bottom:14px">
+        <label for="e-a" style="font-weight:650">a =</label>
+        <select id="e-a"></select>
+        <span class="muted" id="e-a-num"></span>
+      </div>
+      <div class="grid grid-2" style="gap:10px">
+        <div class="canvas-holder"><canvas id="c-eq-circle"></canvas></div>
+        <div class="canvas-holder"><canvas id="c-eq-graph"></canvas></div>
+      </div>
+      <div id="e-sol" style="margin-top:16px"></div>
+    </div>
+  </div>
+
+  <h2>Trzy wzory ogólne</h2>
+  <p>Litera <var>k</var> oznacza dowolną liczbę całkowitą (<span class="math"><var>k</var> ∈ ℤ</span>) —
+  to ona „produkuje” nieskończenie wiele rozwiązań. Symbol <span class="math">∨</span> czytamy „lub”.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0" class="sin-c">sin x = a &nbsp;<small class="muted">(rozwiązania istnieją tylko dla |a| ≤ 1)</small></h3>
+    <div class="math-block">
+      <var>x</var> = α + 2<var>k</var>π &nbsp;&nbsp;∨&nbsp;&nbsp; <var>x</var> = π − α + 2<var>k</var>π
+    </div>
+    <p style="margin:0"><small>gdzie <var>α</var> to <em>jakiekolwiek</em> rozwiązanie,
+    które umiesz wskazać (np. z tabeli wartości szczególnych albo z arcsin na kalkulatorze).
+    Druga seria bierze się z symetrii względem osi <var>y</var>: punkty
+    <var>P</var>(α) i <var>P</var>(π − α) mają ten sam sinus.</small></p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0" class="cos-c">cos x = a &nbsp;<small class="muted">(tylko dla |a| ≤ 1)</small></h3>
+    <div class="math-block">
+      <var>x</var> = α + 2<var>k</var>π &nbsp;&nbsp;∨&nbsp;&nbsp; <var>x</var> = −α + 2<var>k</var>π
+    </div>
+    <p style="margin:0"><small>Tutaj symetria jest względem osi <var>x</var>:
+    <var>P</var>(α) i <var>P</var>(−α) mają ten sam cosinus. Bardzo częsty skrót zapisu:
+    <span class="math"><var>x</var> = ±α + 2<var>k</var>π</span>.</small></p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0" class="tan-c">tg x = a &nbsp;<small class="muted">(dla dowolnego a ∈ ℝ)</small></h3>
+    <div class="math-block">
+      <var>x</var> = α + <var>k</var>π
+    </div>
+    <p style="margin:0"><small>Jedna seria, bo okres tangensa to π, a nie 2π.
+    Punkty <var>P</var>(α) i <var>P</var>(α + π) są przeciwne, więc dają ten sam iloraz
+    <span class="math">sin/cos</span>.</small></p>
+  </div>
+
+  <div class="warn">
+    <span class="t">Kiedy równanie nie ma rozwiązań</span>
+    <span class="math">sin <var>x</var> = 2</span>, <span class="math">cos <var>x</var> = −1,5</span> —
+    brak rozwiązań, bo obie funkcje mieszczą się w przedziale ⟨−1, 1⟩.
+    Za to <span class="math">tg <var>x</var> = 1000</span> rozwiązania <em>ma</em>, i to nieskończenie wiele.
+    Zanim zaczniesz liczyć, sprawdź zakres — czasem to całe zadanie.
+  </div>
+
+  <h2>Rozwiązanie krok po kroku</h2>
+  <p>Przykład typowy dla sprawdzianu: rozwiąż
+  <span class="math">2sin(2<var>x</var> − <span class="frac"><span>π</span><span>3</span></span>) = √3</span>
+  w przedziale <span class="math">⟨0, 2π⟩</span>.</p>
+
+  <div class="card">
+    <ol class="steps">
+      <li><strong>Wyodrębnij funkcję.</strong> Dziel obie strony przez 2:
+        <div class="math-block" style="margin:.4em 0">
+          sin(2<var>x</var> − <span class="frac"><span>π</span><span>3</span></span>) =
+          <span class="frac"><span>√3</span><span>2</span></span>
+        </div>
+      </li>
+      <li><strong>Podstaw.</strong> Niech
+        <span class="math"><var>t</var> = 2<var>x</var> − <span class="frac"><span>π</span><span>3</span></span></span>.
+        Rozwiązujemy prościej: <span class="math">sin <var>t</var> = <span class="frac"><span>√3</span><span>2</span></span></span>.
+      </li>
+      <li><strong>Znajdź kąt podstawowy.</strong>
+        <span class="math">sin <span class="frac"><span>π</span><span>3</span></span> =
+        <span class="frac"><span>√3</span><span>2</span></span></span>, więc
+        <span class="math">α = <span class="frac"><span>π</span><span>3</span></span></span>.
+      </li>
+      <li><strong>Napisz obie serie.</strong>
+        <div class="math-block" style="margin:.4em 0">
+          <var>t</var> = <span class="frac"><span>π</span><span>3</span></span> + 2<var>k</var>π
+          &nbsp;&nbsp;∨&nbsp;&nbsp;
+          <var>t</var> = π − <span class="frac"><span>π</span><span>3</span></span> + 2<var>k</var>π
+          = <span class="frac"><span>2π</span><span>3</span></span> + 2<var>k</var>π
+        </div>
+      </li>
+      <li><strong>Wróć do <var>x</var>.</strong> Z
+        <span class="math"><var>t</var> = 2<var>x</var> − <span class="frac"><span>π</span><span>3</span></span></span>
+        mamy <span class="math"><var>x</var> = <span class="frac"><span><var>t</var> + π/3</span><span>2</span></span></span>:
+        <div class="math-block" style="margin:.4em 0">
+          <var>x</var> = <span class="frac"><span>π</span><span>3</span></span> + <var>k</var>π
+          &nbsp;&nbsp;∨&nbsp;&nbsp;
+          <var>x</var> = <span class="frac"><span>π</span><span>2</span></span> + <var>k</var>π
+        </div>
+        <small class="muted">Uwaga: dzielenie przez 2 dotyczy <em>także</em> wyrazu
+        <span class="math">2<var>k</var>π</span> — dlatego okres skrócił się do
+        <span class="math"><var>k</var>π</span>. To najczęstsze miejsce błędu w całym dziale.</small>
+      </li>
+      <li><strong>Wybierz rozwiązania z przedziału.</strong> Podstawiając
+        <span class="math"><var>k</var> = 0, 1</span>:
+        <div class="math-block" style="margin:.4em 0">
+          <var>x</var> ∈ { <span class="frac"><span>π</span><span>3</span></span>,
+          <span class="frac"><span>π</span><span>2</span></span>,
+          <span class="frac"><span>4π</span><span>3</span></span>,
+          <span class="frac"><span>3π</span><span>2</span></span> }
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <h2>Nierówności trygonometryczne</h2>
+  <p>Tu koło jednostkowe naprawdę zarabia na siebie. Zamiast myśleć wzorami, patrzymy:
+  <em>dla których punktów okręgu współrzędna jest większa od zadanej wartości?</em>
+  To zawsze jest <strong>łuk</strong>, a odpowiedź — przedział powtarzany co okres.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Nierówność podstawowa
+      <span class="hint">zielony łuk to zbiór rozwiązań</span>
+    </div>
+    <div class="widget-body">
+      <div class="chips" style="margin-bottom:12px">
+        <button class="chip" data-ifn="sin" aria-pressed="true">sin</button>
+        <button class="chip" data-ifn="cos" aria-pressed="false">cos</button>
+        <button class="chip" data-idir="ge" aria-pressed="true" style="margin-left:12px">≥ a</button>
+        <button class="chip" data-idir="le" aria-pressed="false">≤ a</button>
+      </div>
+      <div class="controls" id="ctl-ineq"></div>
+      <div class="grid grid-2" style="gap:10px;margin-top:12px">
+        <div class="canvas-holder"><canvas id="c-in-circle"></canvas></div>
+        <div class="canvas-holder"><canvas id="c-in-graph"></canvas></div>
+      </div>
+      <div id="i-sol" style="margin-top:16px"></div>
+    </div>
+  </div>
+
+  <h2>Zadania</h2>
+  <p>Osiem zadań: równania podstawowe, liczba rozwiązań w przedziale, podstawienia.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong>Podanie tylko jednego rozwiązania.</strong> Kalkulator daje jedną wartość
+      (<span class="math">arcsin</span>), a równanie ma dwie serie. Zawsze pytaj: gdzie <em>jeszcze</em>
+      na okręgu jest ta sama wysokość?</li>
+      <li><strong>Niepodzielenie okresu.</strong> Rozwiązując
+      <span class="math">sin 2<var>x</var> = 0</span> dostajesz <span class="math">2<var>x</var> = <var>k</var>π</span>,
+      więc <span class="math"><var>x</var> = <var>k</var>π/2</span> — okres też się dzieli.</li>
+      <li><strong>Skracanie równania przez <span class="math">sin <var>x</var></span>.</strong>
+      Z <span class="math">sin <var>x</var> · cos <var>x</var> = sin <var>x</var></span> nie wolno
+      „skrócić” — traci się rozwiązania <span class="math">sin <var>x</var> = 0</span>.
+      Przenosimy wszystko na jedną stronę i wyłączamy przed nawias.</li>
+      <li><strong>Mieszanie stopni z radianami w jednej odpowiedzi.</strong>
+      Jeśli przedział podany jest w radianach, odpowiedź też musi być w radianach.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('rownania');
+
+const F = { sin: Math.sin, cos: Math.cos, tg: Math.tan };
+
+/* wartości „ładne” dla prawej strony równania */
+const NICE = {
+  sc: [
+    { t: '−1', v: -1 }, { t: '−√3/2', v: -Math.sqrt(3) / 2 }, { t: '−√2/2', v: -Math.SQRT2 / 2 },
+    { t: '−1/2', v: -.5 }, { t: '0', v: 0 }, { t: '1/2', v: .5 },
+    { t: '√2/2', v: Math.SQRT2 / 2 }, { t: '√3/2', v: Math.sqrt(3) / 2 }, { t: '1', v: 1 }
+  ],
+  tg: [
+    { t: '−√3', v: -Math.sqrt(3) }, { t: '−1', v: -1 }, { t: '−√3/3', v: -Math.sqrt(3) / 3 },
+    { t: '0', v: 0 }, { t: '√3/3', v: Math.sqrt(3) / 3 }, { t: '1', v: 1 }, { t: '√3', v: Math.sqrt(3) }
+  ]
+};
+
+/* ============ widget: równanie podstawowe ============ */
+(function () {
+  let fn = 'sin', ai = 5;
+
+  function list() { return fn === 'tg' ? NICE.tg : NICE.sc; }
+  function aVal() { return list()[ai].v; }
+  function aTxt() { return list()[ai].t; }
+
+  function fillSelect() {
+    const L = list();
+    TR.$('#e-a').innerHTML = L.map((o, i) =>
+      '<option value="' + i + '"' + (i === ai ? ' selected' : '') + '>' + o.t + '</option>').join('');
+  }
+
+  /* rozwiązania w stopniach z przedziału [0, 360) */
+  function solutionsDeg() {
+    const a = aVal();
+    if (fn === 'sin') {
+      const al = Math.round(Math.asin(a) * TR.R2D);
+      return Array.from(new Set([TR.norm360(al), TR.norm360(180 - al)]));
+    }
+    if (fn === 'cos') {
+      const al = Math.round(Math.acos(a) * TR.R2D);
+      return Array.from(new Set([TR.norm360(al), TR.norm360(-al)]));
+    }
+    const al = Math.round(Math.atan(a) * TR.R2D);
+    return Array.from(new Set([TR.norm360(al), TR.norm360(al + 180)]));
+  }
+
+  const circle = new TR.Plot(TR.$('#c-eq-circle'), {
+    xmin: -1.35, xmax: 1.35, ymin: -1.35, ymax: 1.35, equal: true, ratio: 1, maxH: 330,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = aVal();
+      p.grid(.5, .5);
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 1.8 });
+
+      if (fn === 'sin') {
+        p.seg(p.win.xmin, a, p.win.xmax, a, { color: c.sin, width: 2, dash: [5, 4] });
+        p.text('y = ' + aTxt(), p.win.xmin, a, { dx: 4, dy: -7, color: c.sin, font: '600 11px system-ui', bg: true });
+      } else if (fn === 'cos') {
+        p.seg(a, p.win.ymin, a, p.win.ymax, { color: c.cos, width: 2, dash: [5, 4] });
+        p.text('x = ' + aTxt(), a, p.win.ymax, { dx: 4, dy: 14, color: c.cos, font: '600 11px system-ui', bg: true });
+      } else {
+        p.seg(1, -1.3, 1, 1.3, { color: TR.alpha(c.tan, .5), width: 1.4, dash: [4, 4] });
+        p.dot(1, a, { r: 5, color: c.tan });
+        p.text('tg = ' + aTxt(), 1, a, { dx: -6, dy: -8, align: 'right', color: c.tan, font: '600 11px system-ui', bg: true });
+      }
+
+      for (const d of solutionsDeg()) {
+        const r = d * TR.D2R;
+        p.seg(0, 0, Math.cos(r), Math.sin(r), { color: c.accent, width: 2 });
+        p.dot(Math.cos(r), Math.sin(r), { r: 7, color: c.accent });
+        p.text(d + '°', 1.14 * Math.cos(r), 1.14 * Math.sin(r),
+               { align: 'center', color: c.accent, font: '700 11px system-ui', bg: true });
+      }
+    }
+  });
+
+  const graph = new TR.Plot(TR.$('#c-eq-graph'), {
+    xmin: -Math.PI - .35, xmax: 3 * Math.PI + .35, ymin: -2.4, ymax: 2.4, equal: false, ratio: .62, maxH: 330,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = aVal();
+      const color = { sin: c.sin, cos: c.cos, tg: c.tan }[fn];
+
+      p.grid(Math.PI / 2, 1);
+      p.axes({
+        tickX: Math.PI, tickY: 1,
+        labelX: (x) => { const k = Math.round(x / Math.PI); return k === 0 ? null : TR.radPiText(k * 180); },
+        labelY: (y) => (Math.abs(y % 1) < .01 ? TR.fmt(y, 0) : null)
+      });
+
+      p.seg(p.win.xmin, a, p.win.xmax, a, { color: c.ink3, width: 1.6, dash: [5, 4] });
+      p.text('y = ' + aTxt(), p.win.xmin, a, { dx: 5, dy: -6, color: c.ink3, font: '600 11px system-ui', bg: true });
+      p.fn(F[fn], { color: color, width: 2.6, clip: 12 });
+
+      // punkty przecięcia
+      const per = fn === 'tg' ? 180 : 360;
+      for (const d of solutionsDeg()) {
+        for (let k = -2; k <= 4; k++) {
+          const x = (d + k * per) * TR.D2R;
+          if (x >= p.win.xmin && x <= p.win.xmax) p.dot(x, a, { r: 6, color: c.accent });
+        }
+      }
+    }
+  });
+
+  function refresh() {
+    const a = aVal();
+    TR.$('#e-a-num').textContent = '≈ ' + TR.fmt(a, 4);
+
+    const sols = solutionsDeg();
+    let general = '';
+    if (fn === 'sin') {
+      const al = Math.round(Math.asin(a) * TR.R2D);
+      general = Math.abs(Math.abs(a) - 1) < 1e-9
+        ? '<var>x</var> = ' + TR.fracHTML(TR.radPiText(al)) + ' + 2<var>k</var>π'
+        : '<var>x</var> = ' + TR.fracHTML(TR.radPiText(al)) + ' + 2<var>k</var>π &nbsp;∨&nbsp; ' +
+          '<var>x</var> = ' + TR.fracHTML(TR.radPiText(180 - al)) + ' + 2<var>k</var>π';
+    } else if (fn === 'cos') {
+      const al = Math.round(Math.acos(a) * TR.R2D);
+      general = (al === 0 || al === 180)
+        ? '<var>x</var> = ' + TR.fracHTML(TR.radPiText(al)) + ' + 2<var>k</var>π'
+        : '<var>x</var> = ' + TR.fracHTML(TR.radPiText(al)) + ' + 2<var>k</var>π &nbsp;∨&nbsp; ' +
+          '<var>x</var> = ' + TR.fracHTML(TR.radPiText(-al)) + ' + 2<var>k</var>π';
+    } else {
+      const al = Math.round(Math.atan(a) * TR.R2D);
+      general = '<var>x</var> = ' + TR.fracHTML(TR.radPiText(al)) + ' + <var>k</var>π';
+    }
+
+    TR.$('#e-sol').innerHTML =
+      '<div class="key" style="margin:0">' +
+        '<span class="t plain">Rozwiązanie równania ' + fn + ' x = ' + aTxt() + '</span>' +
+        '<div class="math-block" style="margin:.3em 0;font-size:1.25em">' + general + '</div>' +
+        '<p style="margin:.6em 0 0;text-align:center"><small>W przedziale ⟨0°, 360°): ' +
+        sols.sort((x, y) => x - y).map(d => '<strong>' + d + '°</strong> = ' +
+          TR.fracHTML(TR.radPiText(d))).join(' &nbsp;i&nbsp; ') +
+        '</small></p>' +
+      '</div>';
+
+    circle.render(); graph.render();
+  }
+
+  TR.$$('.chip[data-fn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      fn = b.dataset.fn;
+      TR.$$('.chip[data-fn]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      ai = 5;
+      fillSelect(); refresh();
+    });
+  });
+  TR.$('#e-a').addEventListener('change', function (e) { ai = +e.target.value; refresh(); });
+
+  fillSelect(); refresh();
+})();
+
+/* ============ widget: nierówność podstawowa ============ */
+(function () {
+  let fn = 'sin', dir = 'ge', a = .5;
+
+  /** Zbiór rozwiązań jako przedział kątów w stopniach (start, koniec) — może przechodzić przez 0. */
+  function interval() {
+    if (fn === 'sin') {
+      const al = Math.asin(a) * TR.R2D;
+      return dir === 'ge' ? [al, 180 - al] : [180 - al, 360 + al];
+    }
+    const al = Math.acos(a) * TR.R2D;
+    return dir === 'ge' ? [-al, al] : [al, 360 - al];
+  }
+
+  const circle = new TR.Plot(TR.$('#c-in-circle'), {
+    xmin: -1.35, xmax: 1.35, ymin: -1.35, ymax: 1.35, equal: true, ratio: 1, maxH: 320,
+    draw: function (p) {
+      const c = TR.colors();
+      const [s, e] = interval();
+
+      p.grid(.5, .5);
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 1.6 });
+
+      // obszar spełniający nierówność
+      if (fn === 'sin') {
+        const yy = dir === 'ge' ? [a, 1.3] : [-1.3, a];
+        p.path([[-1.3, yy[0]], [1.3, yy[0]], [1.3, yy[1]], [-1.3, yy[1]]],
+               { color: null, fill: TR.alpha(c.ok, .1) });
+        p.seg(-1.3, a, 1.3, a, { color: c.sin, width: 2, dash: [5, 4] });
+      } else {
+        const xx = dir === 'ge' ? [a, 1.3] : [-1.3, a];
+        p.path([[xx[0], -1.3], [xx[1], -1.3], [xx[1], 1.3], [xx[0], 1.3]],
+               { color: null, fill: TR.alpha(c.ok, .1) });
+        p.seg(a, -1.3, a, 1.3, { color: c.cos, width: 2, dash: [5, 4] });
+      }
+
+      // łuk rozwiązań
+      p.angleArc(0, 0, 1, s * TR.D2R, e * TR.D2R, { color: c.ok, width: 6 });
+      p.dot(Math.cos(s * TR.D2R), Math.sin(s * TR.D2R), { r: 6, color: c.ok });
+      p.dot(Math.cos(e * TR.D2R), Math.sin(e * TR.D2R), { r: 6, color: c.ok });
+      p.text(TR.fmt(TR.norm360(s), 0) + '°', 1.15 * Math.cos(s * TR.D2R), 1.15 * Math.sin(s * TR.D2R),
+             { align: 'center', color: c.ok, font: '700 11px system-ui', bg: true });
+      p.text(TR.fmt(TR.norm360(e), 0) + '°', 1.15 * Math.cos(e * TR.D2R), 1.15 * Math.sin(e * TR.D2R),
+             { align: 'center', color: c.ok, font: '700 11px system-ui', bg: true });
+    }
+  });
+
+  const graph = new TR.Plot(TR.$('#c-in-graph'), {
+    xmin: -Math.PI / 2 - .3, xmax: 2.5 * Math.PI + .3, ymin: -1.6, ymax: 1.6, equal: false, ratio: .62, maxH: 320,
+    draw: function (p) {
+      const c = TR.colors();
+      const [s, e] = interval();
+      const color = fn === 'sin' ? c.sin : c.cos;
+
+      p.grid(Math.PI / 2, .5);
+      p.axes({
+        tickX: Math.PI / 2, tickY: 1,
+        labelX: (x) => { const k = Math.round(x / (Math.PI / 2)); return k === 0 ? null : TR.radPiText(k * 90); },
+        labelY: (y) => (Math.abs(y % 1) < .01 ? TR.fmt(y, 0) : null)
+      });
+
+      // pasy rozwiązań na osi x
+      for (let k = -1; k <= 2; k++) {
+        const x1 = (s + 360 * k) * TR.D2R, x2 = (e + 360 * k) * TR.D2R;
+        p.path([[x1, p.win.ymin], [x2, p.win.ymin], [x2, p.win.ymax], [x1, p.win.ymax]],
+               { color: null, fill: TR.alpha(c.ok, .13) });
+      }
+      p.seg(p.win.xmin, a, p.win.xmax, a, { color: c.ink3, width: 1.6, dash: [5, 4] });
+      p.fn(F[fn], { color: color, width: 2.6 });
+    }
+  });
+
+  TR.slider(TR.$('#ctl-ineq'), {
+    label: 'Prawa strona <var>a</var>', min: -.95, max: .95, step: .05, value: a,
+    format: (v) => TR.fmt(v, 2),
+    onInput: (v) => { a = v; refresh(); }
+  });
+
+  function refresh() {
+    const [s, e] = interval();
+    const sign = dir === 'ge' ? '≥' : '≤';
+    TR.$('#i-sol').innerHTML =
+      '<div class="key" style="margin:0">' +
+        '<span class="t plain">Rozwiązanie nierówności ' + fn + ' x ' + sign + ' ' + TR.fmt(a, 2) + '</span>' +
+        '<div class="math-block" style="margin:.3em 0;font-size:1.15em">' +
+        '<var>x</var> ∈ ⟨' + TR.fmt(s, 1) + '° + <var>k</var>·360°, &nbsp;' +
+        TR.fmt(e, 1) + '° + <var>k</var>·360°⟩' +
+        '</div>' +
+        '<p style="margin:.5em 0 0;text-align:center"><small>W radianach: ⟨' +
+        TR.fmt(s * TR.D2R, 3) + ' + 2<var>k</var>π, ' + TR.fmt(e * TR.D2R, 3) +
+        ' + 2<var>k</var>π⟩. &nbsp;Krańce należą do zbioru, bo nierówność jest nieostra.' +
+        '</small></p>' +
+      '</div>';
+    circle.render(); graph.render();
+  }
+
+  TR.$$('.chip[data-ifn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      fn = b.dataset.ifn;
+      TR.$$('.chip[data-ifn]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      refresh();
+    });
+  });
+  TR.$$('.chip[data-idir]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      dir = b.dataset.idir;
+      TR.$$('.chip[data-idir]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      refresh();
+    });
+  });
+
+  refresh();
+})();
+
+/* ============ zadania ============ */
+(function () {
+  function gen() {
+    const kind = TR.rnd.int(1, 5);
+
+    if (kind === 1) {
+      // ile rozwiązań w przedziale
+      const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+      const b = TR.rnd.pick([1, 2, 3]);
+      const per = fn === 'tg' ? 180 : 360;
+      const a = fn === 'tg' ? TR.rnd.pick([0, 1, Math.sqrt(3)]) : TR.rnd.pick([.5, Math.SQRT2 / 2, 0]);
+      // liczba rozwiązań na okresie: 2 dla sin/cos (1 gdy |a|=1), 1 dla tg
+      const perSol = fn === 'tg' ? 1 : 2;
+      const n = perSol * b * (360 / per);
+      const ch = TR.rnd.shuffle(Array.from(new Set([n, n + 1, n - 1, 2 * n].filter(v => v > 0))))
+        .slice(0, 4).map(String);
+      if (ch.indexOf(String(n)) < 0) ch[0] = String(n);
+      return {
+        kind: 'choice',
+        q: 'Ile rozwiązań ma równanie <span class="math" style="font-size:1.15em">' + fn + ' ' +
+           (b === 1 ? '' : b) + '<var>x</var> = ' +
+           (a === 0 ? '0' : a === 1 ? '1' : TR.fracHTML(a === .5 ? '1/2' : a > 1 ? '√3' : '√2/2')) +
+           '</span> w przedziale <span class="math">⟨0, 2π)</span>?',
+        choices: ch,
+        correct: ch.indexOf(String(n)),
+        why: 'Podstawiamy <var>t</var> = ' + b + '<var>x</var>. Gdy <var>x</var> przebiega ⟨0, 2π), ' +
+             '<var>t</var> przebiega ⟨0, ' + (2 * b) + 'π) — czyli ' +
+             (fn === 'tg' ? (2 * b) + ' okresów tangensa po 1 rozwiązaniu' : b + ' okresów po 2 rozwiązania') +
+             '. Razem ' + n + '.'
+      };
+    }
+
+    if (kind === 2) {
+      // brak rozwiązań
+      const fn = TR.rnd.pick(['sin', 'cos']);
+      const bad = TR.rnd.pick([1.5, 2, -1.4, -3]);
+      const good = TR.rnd.pick([.5, -.8, 1, 0]);
+      const useBad = TR.rnd.int(0, 1) === 1;
+      const a = useBad ? bad : good;
+      return {
+        kind: 'choice',
+        q: 'Czy równanie <span class="math" style="font-size:1.2em">' + fn + ' <var>x</var> = ' +
+           TR.fmt(a, 2) + '</span> ma rozwiązania?',
+        choices: ['tak, nieskończenie wiele', 'nie ma żadnych', 'dokładnie jedno'],
+        correct: Math.abs(a) <= 1 ? 0 : 1,
+        why: 'Zbiór wartości sinusa i cosinusa to ⟨−1, 1⟩. Ponieważ |' + TR.fmt(a, 2) + '| ' +
+             (Math.abs(a) <= 1 ? '≤ 1, rozwiązania istnieją — i przez okresowość jest ich nieskończenie wiele.'
+                               : '> 1, żaden kąt takiej wartości nie daje.')
+      };
+    }
+
+    if (kind === 3) {
+      // podstawowe równanie — podaj najmniejsze dodatnie rozwiązanie
+      const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+      const cand = fn === 'tg'
+        ? [[0, '0'], [30, '√3/3'], [45, '1'], [60, '√3']]
+        : [[30, null], [45, null], [60, null], [90, null], [120, null], [135, null], [150, null]];
+      let deg = TR.rnd.pick(cand)[0];
+      const val = { sin: Math.sin, cos: Math.cos, tg: Math.tan }[fn](deg * TR.D2R);
+      const exTxt = TR.exact(fn, deg);
+      if (exTxt === null || exTxt === undefined) return gen();
+      // najmniejsze dodatnie rozwiązanie
+      let smallest;
+      if (fn === 'sin') {
+        const al = Math.round(Math.asin(val) * TR.R2D);
+        smallest = Math.min.apply(null, [TR.norm360(al), TR.norm360(180 - al)].filter(v => v > 0));
+      } else if (fn === 'cos') {
+        const al = Math.round(Math.acos(val) * TR.R2D);
+        smallest = Math.min.apply(null, [TR.norm360(al), TR.norm360(-al)].filter(v => v > 0));
+      } else {
+        const al = Math.round(Math.atan(val) * TR.R2D);
+        smallest = Math.min.apply(null, [TR.norm360(al), TR.norm360(al + 180)].filter(v => v > 0));
+      }
+      return {
+        kind: 'input',
+        q: 'Podaj <strong>najmniejsze dodatnie</strong> rozwiązanie równania ' +
+           '<span class="math" style="font-size:1.2em">' + fn + ' <var>x</var> = ' +
+           TR.fracHTML(exTxt) + '</span> (w stopniach).',
+        answer: smallest, tol: 0.5, unit: '°',
+        placeholder: 'np. 30',
+        show: smallest + '°',
+        why: 'Z tabeli wartości szczególnych: ' + fn + ' ' + smallest + '° = ' + TR.fracHTML(exTxt) +
+             '. Pozostałe rozwiązania dostajemy, dodając ' + (fn === 'tg' ? '<var>k</var>·180°' : '<var>k</var>·360°') +
+             (fn === 'tg' ? '' : ' oraz z drugiej serii') + '.'
+      };
+    }
+
+    if (kind === 4) {
+      // która postać wzoru ogólnego
+      const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+      const right = {
+        sin: '<var>x</var> = α + 2<var>k</var>π ∨ <var>x</var> = π − α + 2<var>k</var>π',
+        cos: '<var>x</var> = α + 2<var>k</var>π ∨ <var>x</var> = −α + 2<var>k</var>π',
+        tg: '<var>x</var> = α + <var>k</var>π'
+      };
+      const ch = TR.rnd.shuffle([right.sin, right.cos, right.tg,
+        '<var>x</var> = α + <var>k</var>·2π ∨ <var>x</var> = α − π + 2<var>k</var>π']);
+      return {
+        kind: 'choice',
+        q: 'Jak wygląda wzór ogólny na rozwiązania równania ' +
+           '<span class="math" style="font-size:1.15em">' + fn + ' <var>x</var> = <var>a</var></span>, ' +
+           'jeśli <var>α</var> jest jednym z rozwiązań?',
+        choices: ch,
+        correct: ch.indexOf(right[fn]),
+        why: fn === 'tg'
+          ? 'Tangens ma okres π, więc wystarcza jedna seria z krokiem π.'
+          : (fn === 'sin'
+            ? 'Prosta pozioma przecina okrąg w dwóch punktach symetrycznych względem osi y — stąd α i π − α.'
+            : 'Prosta pionowa przecina okrąg w dwóch punktach symetrycznych względem osi x — stąd α i −α.')
+      };
+    }
+
+    // podstawienie i dzielenie okresu
+    const b = TR.rnd.pick([2, 3, 4]);
+    const alDeg = TR.rnd.pick([30, 45, 60, 90]);
+    const ansDeg = alDeg / b;
+    return {
+      kind: 'input',
+      q: 'Rozwiąż i podaj najmniejsze dodatnie rozwiązanie: ' +
+         '<span class="math" style="font-size:1.15em">sin(' + b + '<var>x</var>) = ' +
+         TR.fracHTML(TR.exact('sin', alDeg)) + '</span> (w stopniach).',
+      answer: ansDeg, tol: 0.3, unit: '°',
+      placeholder: 'np. 15',
+      show: TR.fmt(ansDeg, 2) + '°',
+      why: 'Podstawiamy <var>t</var> = ' + b + '<var>x</var>. Najmniejsze dodatnie <var>t</var> z ' +
+           'sin <var>t</var> = ' + TR.fracHTML(TR.exact('sin', alDeg)) + ' to ' + alDeg + '°. ' +
+           'Wracamy: <var>x</var> = ' + alDeg + '° / ' + b + ' = ' + TR.fmt(ansDeg, 2) + '°. ' +
+           'Uwaga — dzielimy też okres: pełny wzór to <var>x</var> = ' + TR.fmt(ansDeg, 2) +
+           '° + <var>k</var>·' + (360 / b) + '°.'
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 8, moduleId: 'rownania', pass: 0.75 });
+})();
+</script>
+</body>
+</html>

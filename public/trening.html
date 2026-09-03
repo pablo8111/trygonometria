@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>08. Trening — Trygonometria</title>
+<meta name="description" content="Losowe zadania z całej trygonometrii: trzy poziomy trudności, statystyki skuteczności po działach.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 08</div>
+    <h1>Trening</h1>
+    <p class="lead">Zadania z całego działu, losowane za każdym razem od nowa. Trzy poziomy:
+    od odruchów (wartości szczególne, zamiana miar) po zadania sprawdzianowe
+    (podstawienia, przypadek niejednoznaczny, kąt podwojony).</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Ustawienia zestawu</h3>
+    <div class="chips" style="margin-bottom:14px">
+      <button class="chip" data-lvl="1" aria-pressed="false">Poziom 1 — odruchy</button>
+      <button class="chip" data-lvl="2" aria-pressed="true">Poziom 2 — standard</button>
+      <button class="chip" data-lvl="3" aria-pressed="false">Poziom 3 — sprawdzian</button>
+      <button class="chip" data-lvl="0" aria-pressed="false">Wszystko naraz</button>
+    </div>
+    <div class="inline-form">
+      <label for="t-count" style="font-weight:650">Liczba zadań:</label>
+      <select id="t-count">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+      </select>
+      <button class="btn" id="t-start" style="margin-left:8px">Zacznij zestaw</button>
+    </div>
+    <p style="margin:1em 0 0"><small id="t-desc"></small></p>
+  </div>
+
+  <div id="quiz"></div>
+
+  <h2>Twoja skuteczność</h2>
+  <p>Liczone ze wszystkich zestawów w tej przeglądarce. Dział z najniższym słupkiem
+  to ten, do którego warto wrócić.</p>
+  <div id="stats"></div>
+  <div class="btn-row">
+    <button class="btn ghost small" id="t-reset-stats">Wyczyść statystyki</button>
+  </div>
+
+  <div class="note">
+    <span class="t">Jak trenować, żeby to miało sens</span>
+    Lepiej pięć zadań dziennie przez tydzień niż trzydzieści pięć w niedzielę wieczorem —
+    to nie opinia, to sposób, w jaki działa pamięć. Kiedy odpowiedź jest zła, przeczytaj
+    wyjaśnienie <em>i wróć do modułu</em>, z którego pochodzi zadanie: sam widok poprawnej
+    odpowiedzi rzadko wystarcza.
+  </div>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('trening');
+
+/* ============ statystyki po działach ============ */
+const TOPICS = {
+  katy: 'Kąty i radiany',
+  trojkat: 'Trójkąt prostokątny',
+  kolo: 'Koło jednostkowe',
+  wykresy: 'Wykresy',
+  tozsamosci: 'Tożsamości',
+  rownania: 'Równania',
+  twierdzenia: 'Twierdzenia'
+};
+const SKEY = 'tryg.stats.v1';
+
+function loadStats() {
+  try { return JSON.parse(localStorage.getItem(SKEY) || '{}'); } catch (e) { return {}; }
+}
+function saveStats(s) { try { localStorage.setItem(SKEY, JSON.stringify(s)); } catch (e) {} }
+
+function renderStats() {
+  const st = loadStats();
+  const rows = Object.keys(TOPICS).map(function (k) {
+    const t = st[k] || { ok: 0, n: 0 };
+    const pct = t.n ? Math.round(100 * t.ok / t.n) : 0;
+    const col = !t.n ? 'var(--line-2)' : pct >= 75 ? 'var(--ok)' : pct >= 50 ? 'var(--gold)' : 'var(--bad)';
+    return '<tr><td class="lbl" style="white-space:normal">' + TOPICS[k] + '</td>' +
+      '<td>' + (t.n ? t.ok + ' / ' + t.n : '—') + '</td>' +
+      '<td style="width:45%"><div class="progress" style="flex:1"><i style="width:' + pct +
+      '%;background:' + col + '"></i></div></td>' +
+      '<td style="font-family:var(--mono);font-weight:600">' + (t.n ? pct + '%' : '—') + '</td></tr>';
+  }).join('');
+  TR.$('#stats').innerHTML = '<div class="table-scroll"><table><thead><tr>' +
+    '<th class="lbl">dział</th><th>poprawnie</th><th>skuteczność</th><th></th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+function bump(topic, ok) {
+  const st = loadStats();
+  st[topic] = st[topic] || { ok: 0, n: 0 };
+  st[topic].n++;
+  if (ok) st[topic].ok++;
+  saveStats(st);
+}
+
+/* ============ bank zadań ============ */
+const D2R = TR.D2R, R2D = TR.R2D;
+const FV = {
+  sin: (d) => Math.sin(d * D2R), cos: (d) => Math.cos(d * D2R),
+  tg: (d) => Math.tan(d * D2R), ctg: (d) => 1 / Math.tan(d * D2R)
+};
+const COF = { sin: 'cos', cos: 'sin', tg: 'ctg', ctg: 'tg' };
+const VALS = ['0', '1', '−1', '1/2', '−1/2', '√2/2', '−√2/2', '√3/2', '−√3/2', '√3', '−√3', '√3/3', '−√3/3'];
+
+function reduceTxt(fn, deg, sign) {
+  const a0 = 37;
+  const target = FV[fn](deg + sign * a0);
+  const cands = [
+    [fn + ' α', FV[fn](a0)], ['−' + fn + ' α', -FV[fn](a0)],
+    [COF[fn] + ' α', FV[COF[fn]](a0)], ['−' + COF[fn] + ' α', -FV[COF[fn]](a0)]
+  ];
+  let best = cands[0], bd = Infinity;
+  for (const c of cands) { const d = Math.abs(c[1] - target); if (d < bd) { bd = d; best = c; } }
+  return best[0];
+}
+
+function choiceFrom(right, pool, n) {
+  const wrong = TR.rnd.shuffle(pool.filter(v => v !== right)).slice(0, (n || 4) - 1);
+  const ch = TR.rnd.shuffle(wrong.concat([right]));
+  return { ch: ch, i: ch.indexOf(right) };
+}
+
+/* --- poziom 1 --- */
+const L1 = [
+  function () {                                    // stopnie → radiany
+    const d = TR.rnd.pick([30, 45, 60, 90, 120, 135, 150, 180, 270, 360]);
+    const t = TR.radPiText(d);
+    const c = choiceFrom(t, ['π/6', 'π/4', 'π/3', 'π/2', '2π/3', '3π/4', '5π/6', 'π', '3π/2', '2π']);
+    return { topic: 'katy', kind: 'choice',
+      q: 'Ile radianów to <span class="math" style="font-size:1.2em">' + d + '°</span>?',
+      choices: c.ch.map(TR.fracHTML), correct: c.i,
+      why: 'Mnożymy przez π/180°: ' + d + '° = ' + TR.fracHTML(t) + '.' };
+  },
+  function () {                                    // wartość szczególna
+    let deg, fn, ex;
+    do { deg = TR.rnd.pick(TR.SPECIAL_DEGS); fn = TR.rnd.pick(['sin', 'cos', 'tg']); ex = TR.exact(fn, deg); }
+    while (ex === null || ex === undefined);
+    const c = choiceFrom(ex, VALS);
+    return { topic: 'kolo', kind: 'choice',
+      q: 'Podaj wartość: <span class="math" style="font-size:1.25em">' + fn + ' ' + deg + '°</span>',
+      choices: c.ch.map(TR.fracHTML), correct: c.i,
+      why: fn + ' ' + deg + '° = ' + TR.fracHTML(ex) + ' ≈ ' + TR.fmt(FV[fn](deg), 4) + '.' };
+  },
+  function () {                                    // znak w ćwiartce
+    let deg; do { deg = TR.rnd.int(1, 359); } while (deg % 90 === 0);
+    const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+    const v = FV[fn](deg);
+    return { topic: 'kolo', kind: 'choice',
+      q: 'Jaki znak ma <span class="math" style="font-size:1.2em">' + fn + ' ' + deg + '°</span>?',
+      choices: ['dodatni', 'ujemny'], correct: v >= 0 ? 0 : 1,
+      why: 'Kąt leży w ćwiartce ' + ['I', 'II', 'III', 'IV'][Math.floor(deg / 90)] +
+           ', gdzie ' + fn + ' jest ' + (v >= 0 ? 'dodatni' : 'ujemny') + ' (' + TR.fmt(v, 3) + ').' };
+  },
+  function () {                                    // definicja w trójkącie
+    const t = TR.rnd.pick([[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17]]);
+    const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+    const frac = { sin: t[0] + '/' + t[2], cos: t[1] + '/' + t[2], tg: t[0] + '/' + t[1] }[fn];
+    const val = TR.parseAnswer(frac);
+    return { topic: 'trojkat', kind: 'input',
+      q: 'W trójkącie prostokątnym: przyprostokątna przeciwległa do <var>α</var> = <b>' + t[0] +
+         '</b>, przyległa = <b>' + t[1] + '</b>, przeciwprostokątna = <b>' + t[2] + '</b>.<br>' +
+         'Oblicz <span class="math">' + fn + ' α</span>.',
+      answer: val, tol: 0.005, placeholder: 'np. 3/5', show: TR.fracHTML(frac),
+      why: fn + ' α = ' + TR.fracHTML(frac) + ' = ' + TR.fmt(val, 4) + ' — wprost z definicji.' };
+  },
+  function () {                                    // kąt współkońcowy
+    const base = TR.rnd.pick([30, 60, 135, 200, 225, 300, 330]);
+    const k = TR.rnd.pick([-2, -1, 1, 2]);
+    const d = base + 360 * k;
+    return { topic: 'katy', kind: 'input',
+      q: 'Podaj kąt z przedziału <span class="math">⟨0°, 360°)</span> współkońcowy z ' +
+         '<span class="math" style="font-size:1.15em">' + d + '°</span>.',
+      answer: base, tol: 0.5, unit: '°', placeholder: 'np. 150', show: base + '°',
+      why: 'Dodajemy albo odejmujemy pełne obroty: ' + d + '° ' + (k > 0 ? '− ' + k : '+ ' + (-k)) +
+           ' · 360° = ' + base + '°.' };
+  }
+];
+
+/* --- poziom 2 --- */
+const L2 = [
+  function () {                                    // wzór redukcyjny
+    const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+    const forms = [[90, -1, '90° − α'], [90, 1, '90° + α'], [180, -1, '180° − α'],
+                   [180, 1, '180° + α'], [270, -1, '270° − α'], [270, 1, '270° + α'],
+                   [360, -1, '360° − α'], [0, -1, '−α']];
+    const f = TR.rnd.pick(forms);
+    const right = reduceTxt(fn, f[0], f[1]);
+    const c = choiceFrom(right, [fn + ' α', '−' + fn + ' α', COF[fn] + ' α', '−' + COF[fn] + ' α']);
+    return { topic: 'tozsamosci', kind: 'choice',
+      q: 'Zredukuj: <span class="math" style="font-size:1.25em">' + fn + '(' + f[2] + ')</span>',
+      choices: c.ch, correct: c.i,
+      why: (f[0] === 90 || f[0] === 270
+        ? 'Kąt odniesienia ' + f[0] + '° jest nieparzystą wielokrotnością 90°, więc funkcja zmienia się na ' + COF[fn] + '. '
+        : 'Kąt odniesienia ' + f[0] + '° jest wielokrotnością 180°, więc funkcja zostaje. ') +
+        'Znak z ćwiartki. Wynik: ' + right + '.' };
+  },
+  function () {                                    // jedynka trygonometryczna
+    const t = TR.rnd.pick([[3, 5], [4, 5], [5, 13], [12, 13], [8, 17]]);
+    const v = t[0] / t[1];
+    const known = TR.rnd.pick(['sin', 'cos']);
+    const other = known === 'sin' ? 'cos' : 'sin';
+    const quad = TR.rnd.int(1, 4);
+    const sgn = (f, q) => (f === 'sin' ? (q <= 2 ? 1 : -1) : (q === 1 || q === 4 ? 1 : -1));
+    const ans = sgn(other, quad) * Math.sqrt(1 - v * v);
+    return { topic: 'tozsamosci', kind: 'input',
+      q: '<span class="math">' + known + ' α = ' + (sgn(known, quad) < 0 ? '−' : '') +
+         TR.fracHTML(t[0] + '/' + t[1]) + '</span>, kąt <var>α</var> w ćwiartce <b>' +
+         ['', 'I', 'II', 'III', 'IV'][quad] + '</b>. Oblicz <span class="math">' + other + ' α</span>.',
+      answer: ans, tol: 0.005, placeholder: 'np. −0,8', show: TR.fmt(ans, 4),
+      why: 'Z jedynki ' + other + '²α = 1 − ' + TR.fmt(v * v, 4) + ', więc ' + other + ' α = ±' +
+           TR.fmt(Math.sqrt(1 - v * v), 4) + '. Ćwiartka rozstrzyga znak: ' + TR.fmt(ans, 4) + '.' };
+  },
+  function () {                                    // okres funkcji
+    const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+    const b = TR.rnd.pick([2, 3, 4]);
+    const per = (fn === 'tg' ? 180 : 360) / b;
+    const right = TR.radPiText(per);
+    const c = choiceFrom(right, ['π/4', 'π/3', 'π/2', '2π/3', 'π', '3π/2', '2π', '4π']);
+    return { topic: 'wykresy', kind: 'choice',
+      q: 'Jaki okres ma <span class="math" style="font-size:1.2em"><var>y</var> = ' + fn + ' ' + b + '<var>x</var></span>?',
+      choices: c.ch.map(TR.fracHTML), correct: c.i,
+      why: 'Okres podstawowy ' + (fn === 'tg' ? 'π' : '2π') + ' dzielimy przez ' + b + ': ' +
+           TR.fracHTML(right) + '.' };
+  },
+  function () {                                    // równanie podstawowe
+    const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+    const deg = TR.rnd.pick(fn === 'tg' ? [30, 45, 60] : [30, 45, 60, 120, 135, 150]);
+    const ex = TR.exact(fn, deg);
+    if (ex === null || ex === undefined) return L2[3]();
+    const val = FV[fn](deg);
+    let sols;
+    if (fn === 'sin') { const al = Math.round(Math.asin(val) * R2D); sols = [TR.norm360(al), TR.norm360(180 - al)]; }
+    else if (fn === 'cos') { const al = Math.round(Math.acos(val) * R2D); sols = [TR.norm360(al), TR.norm360(-al)]; }
+    else { const al = Math.round(Math.atan(val) * R2D); sols = [TR.norm360(al), TR.norm360(al + 180)]; }
+    const smallest = Math.min.apply(null, sols.filter(v => v > 0));
+    return { topic: 'rownania', kind: 'input',
+      q: 'Podaj najmniejsze <strong>dodatnie</strong> rozwiązanie równania ' +
+         '<span class="math" style="font-size:1.2em">' + fn + ' <var>x</var> = ' + TR.fracHTML(ex) + '</span> (w stopniach).',
+      answer: smallest, tol: 0.5, unit: '°', placeholder: 'np. 30', show: smallest + '°',
+      why: fn + ' ' + smallest + '° = ' + TR.fracHTML(ex) + '. Wszystkie rozwiązania: ' +
+           (fn === 'tg' ? smallest + '° + k·180°' : 'dwie serie co 360°.') };
+  },
+  function () {                                    // twierdzenie cosinusów
+    const a = TR.rnd.int(4, 12), b = TR.rnd.int(4, 12);
+    const ga = TR.rnd.pick([30, 45, 60, 120, 135]);
+    const c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(ga * D2R));
+    return { topic: 'twierdzenia', kind: 'input',
+      q: '<var>a</var> = <b>' + a + '</b>, <var>b</var> = <b>' + b + '</b>, kąt między nimi <var>γ</var> = <b>' +
+         ga + '°</b>. Oblicz <var>c</var> (do 0,01).',
+      answer: c, tol: 0.03, placeholder: 'np. 9,17', show: TR.fmt(c, 3),
+      why: 'c² = a² + b² − 2ab·cos γ = ' + TR.fmt(c * c, 3) + ', więc c = ' + TR.fmt(c, 3) + '.' };
+  },
+  function () {                                    // pole trójkąta
+    const a = TR.rnd.int(4, 14), b = TR.rnd.int(4, 14);
+    const ga = TR.rnd.pick([30, 45, 60, 120, 150]);
+    const S = .5 * a * b * Math.sin(ga * D2R);
+    return { topic: 'twierdzenia', kind: 'input',
+      q: 'Oblicz pole trójkąta o bokach <b>' + a + '</b> i <b>' + b + '</b> oraz kącie <b>' + ga +
+         '°</b> między nimi (do 0,01).',
+      answer: S, tol: 0.03, placeholder: 'np. 24,25', show: TR.fmt(S, 3),
+      why: 'S = ½ab·sin γ = ½ · ' + a + ' · ' + b + ' · sin ' + ga + '° = ' + TR.fmt(S, 3) + '.' };
+  },
+  function () {                                    // amplituda i zbiór wartości
+    const A = TR.rnd.pick([2, 3, 4, -2, -3]);
+    const D = TR.rnd.pick([-2, -1, 1, 2, 3]);
+    const fn = TR.rnd.pick(['sin', 'cos']);
+    const right = '⟨' + (D - Math.abs(A)) + ', ' + (D + Math.abs(A)) + '⟩';
+    const c = choiceFrom(right, ['⟨−1, 1⟩', '⟨' + (-Math.abs(A)) + ', ' + Math.abs(A) + '⟩',
+      '⟨' + (D - 1) + ', ' + (D + 1) + '⟩', '⟨' + D + ', ' + (D + Math.abs(A)) + '⟩',
+      '⟨' + (D - Math.abs(A) - 1) + ', ' + (D + Math.abs(A) + 1) + '⟩']);
+    return { topic: 'wykresy', kind: 'choice',
+      q: 'Jaki zbiór wartości ma <span class="math" style="font-size:1.15em"><var>y</var> = ' + A + fn +
+         ' <var>x</var> ' + (D > 0 ? '+ ' + D : '− ' + (-D)) + '</span>?',
+      choices: c.ch, correct: c.i,
+      why: 'Amplituda |' + A + '| = ' + Math.abs(A) + ', środek fali na wysokości ' + D +
+           ', więc wartości od ' + (D - Math.abs(A)) + ' do ' + (D + Math.abs(A)) + '.' };
+  }
+];
+
+/* --- poziom 3 --- */
+const L3 = [
+  function () {                                    // kąt podwojony
+    const t = TR.rnd.pick([[3, 5], [4, 5], [5, 13], [12, 13]]);
+    const s = t[0] / t[1], co = Math.sqrt(1 - s * s);
+    const which = TR.rnd.pick(['sin2', 'cos2', 'tg2']);
+    const val = which === 'sin2' ? 2 * s * co : which === 'cos2' ? 1 - 2 * s * s
+      : 2 * (s / co) / (1 - (s / co) ** 2);
+    return { topic: 'tozsamosci', kind: 'input',
+      q: 'Kąt <var>α</var> jest ostry i <span class="math">sin α = ' + TR.fracHTML(t[0] + '/' + t[1]) +
+         '</span>. Oblicz <span class="math">' +
+         { sin2: 'sin 2α', cos2: 'cos 2α', tg2: 'tg 2α' }[which] + '</span> (do 0,001).',
+      answer: val, tol: 0.01, placeholder: 'np. 0,96', show: TR.fmt(val, 4),
+      why: 'cos α = ' + TR.fmt(co, 4) + ' (dodatni, bo α ostry). Dalej ze wzoru na kąt podwojony: ' +
+           { sin2: 'sin 2α = 2 sin α cos α', cos2: 'cos 2α = 1 − 2sin²α',
+             tg2: 'tg 2α = 2tg α / (1 − tg²α)' }[which] + ' = ' + TR.fmt(val, 4) + '.' };
+  },
+  function () {                                    // suma kątów
+    const pr = TR.rnd.pick([[30, 45], [45, 60], [30, 60], [45, 45]]);
+    const fn = TR.rnd.pick(['sin', 'cos']);
+    const sum = pr[0] + pr[1];
+    const val = FV[fn](sum);
+    return { topic: 'tozsamosci', kind: 'input',
+      q: 'Ze wzoru na ' + (fn === 'sin' ? 'sinus' : 'cosinus') + ' sumy kątów oblicz ' +
+         '<span class="math" style="font-size:1.15em">' + fn + '(' + pr[0] + '° + ' + pr[1] + '°)</span> (do 0,001).',
+      answer: val, tol: 0.005, placeholder: 'np. 0,966', show: TR.fmt(val, 4),
+      why: fn + '(x + y) = ' + (fn === 'sin' ? 'sin x cos y + cos x sin y' : 'cos x cos y − sin x sin y') +
+           ' = ' + TR.fmt(val, 4) + '. Kontrola: ' + fn + ' ' + sum + '° = ' + TR.fmt(val, 4) + '.' };
+  },
+  function () {                                    // równanie z podstawieniem
+    const b = TR.rnd.pick([2, 3, 4]);
+    const alDeg = TR.rnd.pick([30, 45, 60, 90]);
+    const ans = alDeg / b;
+    return { topic: 'rownania', kind: 'input',
+      q: 'Podaj najmniejsze dodatnie rozwiązanie: <span class="math" style="font-size:1.15em">sin(' +
+         b + '<var>x</var>) = ' + TR.fracHTML(TR.exact('sin', alDeg)) + '</span> (w stopniach).',
+      answer: ans, tol: 0.3, unit: '°', placeholder: 'np. 15', show: TR.fmt(ans, 2) + '°',
+      why: 'Podstawienie t = ' + b + 'x. Najmniejsze dodatnie t to ' + alDeg + '°, więc x = ' +
+           alDeg + '°/' + b + ' = ' + TR.fmt(ans, 2) + '°. Uwaga: okres też dzielimy — pełny wzór ma krok ' +
+           (360 / b) + '°.' };
+  },
+  function () {                                    // liczba rozwiązań
+    const fn = TR.rnd.pick(['sin', 'cos']);
+    const b = TR.rnd.pick([1, 2, 3]);
+    const n = 2 * b;
+    const c = choiceFrom(String(n), ['1', '2', '3', '4', '6', '8']);
+    return { topic: 'rownania', kind: 'choice',
+      q: 'Ile rozwiązań ma <span class="math" style="font-size:1.15em">' + fn + ' ' +
+         (b === 1 ? '' : b) + '<var>x</var> = <span class="frac"><span>1</span><span>2</span></span></span> ' +
+         'w przedziale <span class="math">⟨0, 2π)</span>?',
+      choices: c.ch, correct: c.i,
+      why: 'Podstawiamy t = ' + b + 'x; gdy x przebiega ⟨0, 2π), t przebiega ⟨0, ' + (2 * b) +
+           'π), czyli ' + b + ' okresów. Na każdym okresie są 2 rozwiązania, razem ' + n + '.' };
+  },
+  function () {                                    // przypadek niejednoznaczny
+    const al = TR.rnd.pick([30, 40, 50]);
+    const b = 10;
+    const h = b * Math.sin(al * D2R);
+    const variant = TR.rnd.int(1, 3);
+    const a = variant === 1 ? Math.round(h * .6 * 10) / 10
+            : variant === 2 ? Math.round((h + (b - h) / 2) * 10) / 10
+            : Math.round((b + 3) * 10) / 10;
+    const sinB = b * Math.sin(al * D2R) / a;
+    let n;
+    if (sinB > 1) n = 0;
+    else { const B1 = Math.asin(sinB) * R2D; n = (al + (180 - B1) < 180 - 1e-9) ? 2 : 1; }
+    return { topic: 'twierdzenia', kind: 'choice',
+      q: 'Ile trójkątów spełnia: <var>a</var> = <b>' + a + '</b>, <var>b</var> = <b>' + b +
+         '</b>, <var>α</var> = <b>' + al + '°</b> (kąt naprzeciw <var>a</var>)?',
+      choices: ['żaden', 'dokładnie jeden', 'dwa'], correct: n,
+      why: 'sin β = b·sin α / a = ' + TR.fmt(sinB, 4) + '. ' +
+           (n === 0 ? 'Więcej niż 1 — trójkąt nie istnieje.'
+             : n === 2 ? 'Zarówno kąt ostry, jak i rozwarty dają sumę kątów poniżej 180°.'
+             : 'Wariant rozwarty dałby sumę kątów ≥ 180°, więc zostaje jedno rozwiązanie.') };
+  },
+  function () {                                    // przesunięcie z wyłączaniem przed nawias
+    const k = TR.rnd.pick([2, 3, 4]);
+    const num = TR.rnd.pick([1, 2, 3]);
+    const shift = TR.radPiText(180 * num / k);
+    const fn = TR.rnd.pick(['sin', 'cos']);
+    const c = choiceFrom(shift, ['π/6', 'π/4', 'π/3', 'π/2', '2π/3', '3π/4', 'π', '3π/2', '2π', 'π/8']);
+    return { topic: 'wykresy', kind: 'choice',
+      q: 'O ile w prawo przesunięty jest wykres <span class="math" style="font-size:1.12em"><var>y</var> = ' +
+         fn + '(' + k + '<var>x</var> − ' + (num === 1 ? '' : num) + 'π)</span> względem ' +
+         '<span class="math"><var>y</var> = ' + fn + ' ' + k + '<var>x</var></span>?',
+      choices: c.ch.map(TR.fracHTML), correct: c.i,
+      why: 'Wyłączamy ' + k + ' przed nawias: ' + k + 'x − ' + (num === 1 ? '' : num) + 'π = ' + k +
+           '(x − ' + TR.fracHTML(shift) + '). Przesunięcie to ' + TR.fracHTML(shift) + '.' };
+  },
+  function () {                                    // upraszczanie wyrażeń
+    const items = [
+      { q: 'sin 2x / (2 cos x)', a: 'sin x' },
+      { q: '1 − 2sin²x', a: 'cos 2x' },
+      { q: '2 sin x cos x', a: 'sin 2x' },
+      { q: 'sin²x − 1', a: '−cos²x' },
+      { q: '(1 + tg²x) · cos²x', a: '1' }
+    ];
+    const it = TR.rnd.pick(items);
+    const c = choiceFrom(it.a, ['sin x', 'cos x', 'sin 2x', 'cos 2x', '1', '−1', '−cos²x', 'tg x', '0']);
+    return { topic: 'tozsamosci', kind: 'choice',
+      q: 'Uprość: <span class="math" style="font-size:1.2em">' + it.q + '</span>',
+      choices: c.ch, correct: c.i,
+      why: 'Wynik: <span class="math">' + it.a + '</span>. Wszystko z jedynki trygonometrycznej ' +
+           'i wzorów na kąt podwojony.' };
+  },
+  function () {                                    // twierdzenie sinusów — kąt
+    let a, be, b, sinA;
+    do {
+      a = TR.rnd.int(6, 14);
+      be = TR.rnd.pick([40, 50, 60, 70]);
+      b = Math.round(a * Math.sin(be * D2R) / Math.sin(TR.rnd.pick([35, 45, 55]) * D2R) * 10) / 10;
+      sinA = a * Math.sin(be * D2R) / b;
+    } while (sinA > .999);
+    const A = Math.asin(sinA) * R2D;
+    return { topic: 'twierdzenia', kind: 'input',
+      q: 'W trójkącie <var>a</var> = <b>' + a + '</b>, <var>b</var> = <b>' + b + '</b>, <var>β</var> = <b>' +
+         be + '°</b>. Oblicz <strong>ostry</strong> kąt <var>α</var> (do 0,1°).',
+      answer: A, tol: 0.2, unit: '°', placeholder: 'np. 41,8', show: TR.fmt(A, 2) + '°',
+      why: 'Z twierdzenia sinusów sin α = a·sin β / b = ' + TR.fmt(sinA, 4) + ', więc α = arcsin ' +
+           TR.fmt(sinA, 4) + ' ≈ ' + TR.fmt(A, 2) + '°. Drugi kandydat, 180° − α, jest rozwarty.' };
+  }
+];
+
+/* ============ uruchamianie zestawu ============ */
+(function () {
+  let lvl = 2;
+  const DESC = {
+    1: 'Poziom 1: zamiana miar, wartości szczególne, znaki, definicje w trójkącie. Odpowiedzi powinny przychodzić bez liczenia na papierze.',
+    2: 'Poziom 2: wzory redukcyjne, jedynka trygonometryczna, okresy, równania podstawowe, twierdzenia sinusów i cosinusów.',
+    3: 'Poziom 3: kąt podwojony, sumy kątów, równania z podstawieniem, przypadek niejednoznaczny. Poziom typowego sprawdzianu.',
+    0: 'Wszystkie poziomy naraz — tak wygląda prawdziwa powtórka przed klasówką.'
+  };
+
+  function pool() {
+    return lvl === 1 ? L1 : lvl === 2 ? L2 : lvl === 3 ? L3 : L1.concat(L2, L3);
+  }
+
+  function start(scroll) {
+    const count = +TR.$('#t-count').value;
+    TR.quiz(TR.$('#quiz'), function () { return TR.rnd.pick(pool())(); }, {
+      count: count,
+      pass: 0.8,
+      moduleId: 'trening',
+      onAnswer: function (ok, q) { if (q && q.topic) { bump(q.topic, ok); renderStats(); } }
+    });
+    if (scroll) TR.$('#quiz').scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
+  TR.$$('.chip[data-lvl]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      lvl = +b.dataset.lvl;
+      TR.$$('.chip[data-lvl]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      TR.$('#t-desc').textContent = DESC[lvl];
+    });
+  });
+  TR.$('#t-start').addEventListener('click', function () { start(true); });
+  TR.$('#t-reset-stats').addEventListener('click', function () {
+    if (confirm('Wyczyścić statystyki skuteczności?')) {
+      try { localStorage.removeItem(SKEY); } catch (e) {}
+      renderStats();
+    }
+  });
+
+  TR.$('#t-desc').textContent = DESC[2];
+  renderStats();
+  start(false);
+})();
+</script>
+</body>
+</html>

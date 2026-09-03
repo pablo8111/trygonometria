@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme-default>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trygonometria — interaktywny kurs dla liceum</title>
+<meta name="description" content="Interaktywny kurs trygonometrii dla I klasy liceum (profil matematyczno-fizyczny): koło jednostkowe, wykresy, tożsamości, równania, twierdzenia sinusów i cosinusów. Wszystko do poruszania i sprawdzania.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<main>
+  <div class="wrap">
+    <div class="page-head">
+      <div class="kicker">I klasa liceum · profil mat-fiz</div>
+      <h1>Trygonometria, którą można ruszać</h1>
+      <p class="lead">
+        Dziewięć modułów: od kąta w trójkącie prostokątnym do równań trygonometrycznych.
+        Każdy wzór ma tu ruchomy obrazek i zadania ze sprawdzaniem odpowiedzi — nie po to,
+        żeby czytać, tylko żeby zobaczyć, <em>dlaczego</em> tak jest.
+      </p>
+    </div>
+
+    <div class="widget">
+      <div class="widget-head">
+        Skąd się bierze sinus
+        <span class="hint">chwyć kropkę na okręgu i przeciągnij</span>
+      </div>
+      <div class="widget-body">
+        <div class="canvas-holder narrow"><canvas id="hero"></canvas></div>
+        <div class="readout">
+          <div class="r"><div class="k">Kąt α</div><div class="val" id="h-deg">—</div></div>
+          <div class="r"><div class="k">w radianach</div><div class="val" id="h-rad">—</div></div>
+          <div class="r cos-b"><div class="k">cos α = x</div><div class="val cos-c" id="h-cos">—</div></div>
+          <div class="r sin-b"><div class="k">sin α = y</div><div class="val sin-c" id="h-sin">—</div></div>
+        </div>
+        <p style="margin:14px 0 0;font-size:.93rem;color:var(--ink-2)">
+          Cała trygonometria mieści się w tym jednym obrazku: punkt jedzie po okręgu o promieniu 1,
+          a <span class="cos-c"><strong>cosinus</strong></span> i <span class="sin-c"><strong>sinus</strong></span>
+          to po prostu jego współrzędne.
+        </p>
+      </div>
+    </div>
+
+    <h2>Plan nauki</h2>
+    <p>Moduły warto przejść po kolei — każdy korzysta z poprzedniego. Odwiedzone dostają szary ptaszek,
+       zaliczone (po poprawnym zestawie zadań) — zielony.</p>
+
+    <div class="grid grid-2" id="tiles"></div>
+
+    <div class="card" style="margin-top:26px">
+      <h3 style="margin-top:0">Twój postęp</h3>
+      <div class="score-bar">
+        <span id="prog-text">—</span>
+        <div class="progress"><i id="prog-bar"></i></div>
+        <button class="btn ghost small" id="reset">Wyczyść postęp</button>
+      </div>
+      <p style="margin:.9em 0 0"><small>Postęp siedzi wyłącznie w tej przeglądarce (localStorage).
+      Nic nie jest nigdzie wysyłane, nie ma logowania.</small></p>
+    </div>
+
+    <h2>Jak z tego korzystać</h2>
+    <div class="grid grid-3">
+      <div class="card" style="margin:0">
+        <h3 style="margin-top:0">1. Najpierw ruszaj</h3>
+        <p style="margin:0;font-size:.94rem;color:var(--ink-2)">Zanim przeczytasz wzór, pobaw się obrazkiem.
+        Zobacz, co się zmienia, kiedy przeciągasz punkt albo przesuwasz suwak.</p>
+      </div>
+      <div class="card" style="margin:0">
+        <h3 style="margin-top:0">2. Potem nazwij</h3>
+        <p style="margin:0;font-size:.94rem;color:var(--ink-2)">Wzór to skrócony zapis tego, co już zobaczyłaś.
+        Czytając go, wskaż na obrazku każdy symbol.</p>
+      </div>
+      <div class="card" style="margin:0">
+        <h3 style="margin-top:0">3. Na końcu policz</h3>
+        <p style="margin:0;font-size:.94rem;color:var(--ink-2)">Zadania na dole każdego modułu losują się
+        za każdym razem inaczej. Rób do momentu, w którym przestają zaskakiwać.</p>
+      </div>
+    </div>
+
+    <div class="key">
+      <span class="t">Umowa co do oznaczeń</span>
+      Kąty oznaczamy greckimi literami <var>α</var>, <var>β</var>, <var>γ</var> (alfa, beta, gamma).
+      <span class="cos-c">Cosinus jest zawsze niebieski</span>,
+      <span class="sin-c">sinus czerwony</span>,
+      <span class="tan-c">tangens zielony</span> — na wszystkich rysunkach w tym kursie.
+      Zapis <var>tg&nbsp;x</var> to polski odpowiednik <var>tan&nbsp;x</var>; oba znaczą to samo.
+    </div>
+  </div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('home');
+
+/* ---------- kafelki modułów ---------- */
+(function () {
+  const state = TR.progress.all();
+  TR.$('#tiles').innerHTML = TR.MODULES.map(function (m) {
+    const st = state[m.id] || {};
+    const cls = 'tile' + (st.done ? ' is-done' : '');
+    const mark = st.done ? '✓' : (st.visited ? '·' : '');
+    return '<a class="' + cls + '" href="' + m.file + '">' +
+      '<span class="n">MODUŁ ' + m.n + '</span>' +
+      (st.done ? '<span class="done">✓</span>' :
+        (st.visited ? '<span class="done" style="display:flex;background:var(--line-2);color:var(--ink-2)">·</span>' : '')) +
+      '<h3>' + m.title + '</h3><p>' + m.desc + '</p></a>';
+  }).join('');
+
+  const total = TR.MODULES.length;
+  const doneCount = TR.MODULES.filter(function (m) { return (state[m.id] || {}).done; }).length;
+  const seen = TR.MODULES.filter(function (m) { return (state[m.id] || {}).visited; }).length;
+  TR.$('#prog-text').innerHTML = '<b>' + doneCount + '</b> / ' + total + ' zaliczonych, ' +
+    seen + ' odwiedzonych';
+  TR.$('#prog-bar').style.width = (100 * doneCount / total) + '%';
+
+  TR.$('#reset').addEventListener('click', function () {
+    if (confirm('Wyczyścić cały zapisany postęp?')) { TR.progress.reset(); location.reload(); }
+  });
+})();
+
+/* ---------- widget powitalny ---------- */
+(function () {
+  let deg = 40;
+
+  const plot = new TR.Plot(TR.$('#hero'), {
+    xmin: -1.35, xmax: 1.35, ymin: -1.3, ymax: 1.3, equal: true, ratio: .963, maxH: 520,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = deg * TR.D2R;
+      const x = Math.cos(a), y = Math.sin(a);
+
+      p.grid(.5, .5);
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 2 });
+
+      p.angleArc(0, 0, .27, 0, a, { color: c.accent, width: 2 });
+      p.angleArc(0, 0, .27, 0, a, { sector: true, fill: TR.alpha(c.accent, .16) });
+
+      // rzuty
+      p.seg(x, 0, x, y, { color: c.sin, width: 3 });
+      p.seg(0, 0, x, 0, { color: c.cos, width: 3 });
+      p.seg(0, 0, x, y, { color: c.ink2, width: 1.6, dash: [5, 4] });
+
+      p.dot(x, y, { r: 7, color: c.accent });
+      p.text('cos α', x / 2, 0, { align: 'center', dy: y >= 0 ? 17 : -8, color: c.cos, font: '600 13px system-ui' });
+      p.text('sin α', x, y / 2, { align: x >= 0 ? 'left' : 'right', dx: x >= 0 ? 8 : -8, color: c.sin, font: '600 13px system-ui' });
+      p.text('α = ' + TR.fmt(deg, 1) + '°', .3, .07, { color: c.accent, font: '600 13px system-ui' });
+    }
+  });
+
+  function refresh() {
+    const a = deg * TR.D2R;
+    const snap = TR.snapSpecial(deg, 0.001);
+    TR.$('#h-deg').textContent = TR.fmt(deg, 1) + '°';
+    TR.$('#h-rad').textContent = (snap !== null ? TR.radPiText(snap) : TR.fmt(a, 3));
+    TR.$('#h-cos').textContent = TR.fmt(Math.cos(a), 3);
+    TR.$('#h-sin').textContent = TR.fmt(Math.sin(a), 3);
+    plot.render();
+  }
+
+  plot.onPointer(function (s) {
+    const d = Math.atan2(s.y, s.x) * TR.R2D;
+    deg = TR.norm360(d);
+    const sn = TR.snapSpecial(deg, 4);
+    if (sn !== null) deg = sn;
+    refresh();
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>

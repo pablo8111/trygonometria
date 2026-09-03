@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01. Kąty i miara łukowa — Trygonometria</title>
+<meta name="description" content="Kąt skierowany, miara stopniowa i łukowa, radiany, zamiana stopni na radiany, długość łuku i pole wycinka koła.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 01</div>
+    <h1>Kąty i miara łukowa</h1>
+    <p class="lead">W gimnazjum kąt miał od 0° do 180°. W liceum kąt może się kręcić dowolnie długo,
+    w dwie strony, i mierzymy go nie tylko w stopniach, ale też w radianach. To nie kaprys —
+    bez radianów nie zadziałają pochodne, fizyka drgań ani ruch po okręgu.</p>
+  </div>
+
+  <h2>Kąt skierowany</h2>
+  <p>Kąt umieszczamy w układzie współrzędnych tak, żeby jego wierzchołek był w punkcie
+  <span class="math">(0,&nbsp;0)</span>, a <strong>ramię początkowe</strong> leżało na dodatniej
+  półosi <var>x</var>. Drugie ramię — <strong>końcowe</strong> — obracamy:</p>
+  <ul>
+    <li><strong>w lewo</strong> (przeciwnie do ruchu wskazówek zegara) → kąt <strong>dodatni</strong>;</li>
+    <li><strong>w prawo</strong> (zgodnie z zegarem) → kąt <strong>ujemny</strong>.</li>
+  </ul>
+  <p>Obrotów może być dowolnie wiele. Kąt 400° to jedno pełne okrążenie i jeszcze 40°.
+  Kąty, których ramiona końcowe wypadają w tym samym miejscu, nazywamy
+  <strong>współkońcowymi</strong> — różnią się o całkowitą wielokrotność 360°.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Kąt skierowany
+      <span class="hint">przeciągnij po rysunku albo użyj suwaka</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder narrow"><canvas id="c-angle"></canvas></div>
+      <div class="controls" id="ctl-angle"></div>
+      <div class="readout">
+        <div class="r"><div class="k">Kąt</div><div class="val" id="a-deg">—</div></div>
+        <div class="r"><div class="k">Radiany</div><div class="val" id="a-rad">—</div></div>
+        <div class="r"><div class="k">Pełne obroty</div><div class="val" id="a-turns">—</div></div>
+        <div class="r"><div class="k">Kąt podstawowy</div><div class="val" id="a-base">—</div></div>
+        <div class="r"><div class="k">Ćwiartka</div><div class="val" id="a-quad">—</div></div>
+      </div>
+      <div class="btn-row">
+        <button class="chip" data-set="-135">−135°</button>
+        <button class="chip" data-set="90">90°</button>
+        <button class="chip" data-set="210">210°</button>
+        <button class="chip" data-set="400">400°</button>
+        <button class="chip" data-set="720">720°</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Radian — dlaczego w ogóle?</h2>
+  <p>Stopień jest umową: ktoś kiedyś podzielił obrót na 360 części (bo 360 ma dużo dzielników
+  i bo rok ma około 360 dni). Radian nie jest umową — wynika z samego okręgu.</p>
+
+  <div class="key">
+    <span class="t">Definicja</span>
+    <strong>Jeden radian</strong> to miara kąta środkowego, który wycina z okręgu łuk
+    o długości równej promieniowi tego okręgu.
+  </div>
+
+  <p>Skoro cały okrąg ma długość <span class="math">2π<var>r</var></span>, to na pełny obrót
+  wchodzi dokładnie <span class="math">2π</span> takich kątów. Stąd cała zamiana:</p>
+
+  <div class="math-block">
+    2π rad = 360° &nbsp;&nbsp;⟺&nbsp;&nbsp; π rad = 180°
+  </div>
+  <div class="math-block">
+    α<sub>[rad]</sub> = α<sub>[°]</sub> · <span class="frac"><span>π</span><span>180°</span></span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    α<sub>[°]</sub> = α<sub>[rad]</sub> · <span class="frac"><span>180°</span><span>π</span></span>
+  </div>
+
+  <div class="note">
+    <span class="t">Jak to zapamiętać bez wzoru</span>
+    Zamieniasz na radiany — pomnóż przez <span class="math"><span class="frac"><span>π</span><span>180</span></span></span>,
+    czyli „doklej π, podziel przez 180”. Zamieniasz na stopnie — π wychodzi, wchodzi 180.
+    Jeśli w wyniku ma być π, to znaczy, że idziesz w stronę radianów.
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      Radian, długość łuku i pole wycinka
+      <span class="hint">ustaw promień i kąt</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder"><canvas id="c-arc"></canvas></div>
+      <div class="controls" id="ctl-arc"></div>
+      <div class="readout">
+        <div class="r"><div class="k">Kąt α</div><div class="val" id="b-rad">—</div></div>
+        <div class="r"><div class="k">w stopniach</div><div class="val" id="b-deg">—</div></div>
+        <div class="r"><div class="k">Długość łuku</div><div class="val" id="b-arc">—</div></div>
+        <div class="r"><div class="k">Pole wycinka</div><div class="val" id="b-area">—</div></div>
+      </div>
+      <p style="margin:14px 0 0;font-size:.93rem;color:var(--ink-2)">
+        Fioletowy odcinek pod rysunkiem to <strong>wyprostowany łuk</strong>, a szary obok niego —
+        promień. Ustaw α = 1 rad i porównaj: będą równe. To właśnie definicja radiana.
+      </p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3 style="margin-top:0">Długość łuku</h3>
+      <div class="math-block" style="margin:.6em 0">
+        <var>l</var> = <var>r</var> · α
+      </div>
+      <p style="margin:0"><small>α <strong>w radianach</strong>. W stopniach trzeba dopisać
+      przelicznik: <span class="math"><var>l</var> = 2π<var>r</var> ·
+      <span class="frac"><span>α°</span><span>360°</span></span></span> — i właśnie po to są radiany,
+      żeby takich przeliczników nie nosić.</small></p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Pole wycinka</h3>
+      <div class="math-block" style="margin:.6em 0">
+        <var>S</var> = <span class="frac"><span>1</span><span>2</span></span><var>r</var><sup>2</sup>α
+      </div>
+      <p style="margin:0"><small>Też dla α w radianach. Sprawdzenie sensowności:
+      dla α = 2π wychodzi <span class="math"><var>S</var> = π<var>r</var><sup>2</sup></span>,
+      czyli pole całego koła. Zgadza się.</small></p>
+    </div>
+  </div>
+
+  <h2>Kąty, które trzeba znać z pamięci</h2>
+  <p>Tych jest dwanaście i wracają na każdym sprawdzianie. Nie ma sensu ich za każdym razem przeliczać.</p>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th class="lbl">stopnie</th>
+        <th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>120°</th>
+        <th>135°</th><th>150°</th><th>180°</th><th>270°</th><th>360°</th></tr></thead>
+      <tbody><tr><td class="lbl">radiany</td>
+        <td>0</td>
+        <td><span class="frac"><span>π</span><span>6</span></span></td>
+        <td><span class="frac"><span>π</span><span>4</span></span></td>
+        <td><span class="frac"><span>π</span><span>3</span></span></td>
+        <td><span class="frac"><span>π</span><span>2</span></span></td>
+        <td><span class="frac"><span>2π</span><span>3</span></span></td>
+        <td><span class="frac"><span>3π</span><span>4</span></span></td>
+        <td><span class="frac"><span>5π</span><span>6</span></span></td>
+        <td>π</td>
+        <td><span class="frac"><span>3π</span><span>2</span></span></td>
+        <td>2π</td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="t">Sztuczka</span>
+    Mianownik mówi, na ile części podzielono <em>półobrót</em>.
+    <span class="math"><span class="frac"><span>π</span><span>6</span></span></span> to szósta część
+    180°, czyli 30°. <span class="math"><span class="frac"><span>5π</span><span>6</span></span></span> to
+    pięć takich części, czyli 150°. Licznik liczy, ile kawałków bierzemy.
+  </div>
+
+  <h2>Kalkulator zamiany</h2>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <div class="inline-form">
+          <label for="conv-deg" style="font-weight:650">Stopnie:</label>
+          <input type="number" id="conv-deg" value="60" step="1" style="width:120px">
+          <span>°</span>
+        </div>
+      </div>
+      <div>
+        <div class="inline-form">
+          <span style="font-weight:650">to w radianach:</span>
+          <span class="math" id="conv-out-exact" style="font-size:1.25em"></span>
+          <span class="muted" id="conv-out-num"></span>
+        </div>
+      </div>
+    </div>
+    <hr style="margin:1.4em 0">
+    <div class="two-col">
+      <div>
+        <div class="inline-form">
+          <label for="conv-rad" style="font-weight:650">Radiany:</label>
+          <input type="text" id="conv-rad" value="3pi/4" style="width:120px">
+          <span class="muted">np. <code>3pi/4</code></span>
+        </div>
+      </div>
+      <div>
+        <div class="inline-form">
+          <span style="font-weight:650">to w stopniach:</span>
+          <span class="math" id="conv-out-deg" style="font-size:1.25em"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Zadania</h2>
+  <p>Sześć losowych zadań na zamianę miar, kąty współkońcowe i ćwiartki.
+  Zestaw zalicza się od 5 poprawnych.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong>Mnożenie w złą stronę.</strong> 90° to <span class="math">π/2 ≈ 1,57</span>, a nie 5157.
+      Kontrola: radiany to zwykle liczby jednocyfrowe (pełny obrót to tylko 6,28).</li>
+      <li><strong>Kalkulator w trybie DEG, a kąt w radianach.</strong> Jeśli
+      <span class="math">sin 1</span> wychodzi 0,017, to liczysz sinus jednego <em>stopnia</em>.
+      Powinno być 0,841.</li>
+      <li><strong>Zapominanie, że łuk i pole wymagają radianów.</strong>
+      Wzory <span class="math"><var>l</var> = <var>r</var>α</span> i
+      <span class="math"><var>S</var> = ½<var>r</var><sup>2</sup>α</span> są bezlitosne — w stopniach dają bzdury.</li>
+      <li><strong>Radian nie jest jednostką w sensie fizycznym.</strong> To liczba (stosunek długości
+      do długości). Dlatego wolno napisać <span class="math">α = π/3</span> bez dopisku „rad”.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('katy');
+
+/* ============ widget 1: kąt skierowany ============ */
+(function () {
+  let deg = 210;
+
+  const plot = new TR.Plot(TR.$('#c-angle'), {
+    xmin: -1.5, xmax: 1.5, ymin: -1.4, ymax: 1.4, equal: true, ratio: .933, maxH: 500,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = deg * TR.D2R;
+
+      p.grid(.5, .5);
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 1.6, dash: [4, 4] });
+
+      // spirala obrotu — promień rośnie z każdym okrążeniem, żeby widzieć wielokrotne obroty
+      const turns = Math.abs(deg) / 360;
+      const r0 = .3, r1 = .3 + Math.min(.55, turns * .16);
+      const n = Math.max(24, Math.round(Math.abs(deg)));
+      const pts = [];
+      for (let k = 0; k <= n; k++) {
+        const t = a * k / n;
+        const rr = r0 + (r1 - r0) * (k / n);
+        pts.push([rr * Math.cos(t), rr * Math.sin(t)]);
+      }
+      p.path(pts, { color: c.accent, width: 2.4 });
+      // grot spirali
+      if (pts.length > 2) {
+        const q = pts[pts.length - 1], q0 = pts[pts.length - 3];
+        const ang = Math.atan2(q[1] - q0[1], q[0] - q0[0]);
+        const s = .07;
+        p.path([[q[0] - s * Math.cos(ang - .5), q[1] - s * Math.sin(ang - .5)], q,
+                [q[0] - s * Math.cos(ang + .5), q[1] - s * Math.sin(ang + .5)]],
+               { color: c.accent, width: 2.2 });
+      }
+
+      // ramiona
+      p.seg(0, 0, 1.28, 0, { color: c.ink3, width: 2.4 });
+      p.seg(0, 0, 1.28 * Math.cos(a), 1.28 * Math.sin(a), { color: c.accent, width: 2.8 });
+      p.dot(Math.cos(a), Math.sin(a), { r: 7, color: c.accent });
+
+      p.text('ramię początkowe', 1.28, 0, { align: 'right', dy: -9, color: c.ink3, font: '11px system-ui' });
+      p.text(TR.fmt(deg, 0) + '°', r1 * Math.cos(a / 2) * 1.15, r1 * Math.sin(a / 2) * 1.15,
+             { align: 'center', color: c.accent, font: '700 14px system-ui', bg: true });
+
+      // numery ćwiartek
+      const qc = [[.72, .72, 'I'], [-.72, .72, 'II'], [-.72, -.72, 'III'], [.72, -.72, 'IV']];
+      for (const q of qc) p.text(q[2], q[0], q[1], { align: 'center', color: c.line2, font: '700 15px system-ui' });
+    }
+  });
+
+  const s = TR.slider(TR.$('#ctl-angle'), {
+    label: 'Kąt w stopniach', min: -720, max: 720, step: 1, value: deg,
+    format: (v) => TR.fmt(v, 0) + '°',
+    onInput: (v) => { deg = v; refresh(); }
+  });
+
+  function refresh() {
+    const a = deg * TR.D2R;
+    const base = TR.norm360(deg);
+    const turns = (deg - base) / 360;
+    const exactRad = TR.radPiText(deg);
+    TR.$('#a-deg').textContent = TR.fmt(deg, 0) + '°';
+    TR.$('#a-rad').textContent = exactRad !== null
+      ? exactRad + ' ≈ ' + TR.fmt(a, 2)
+      : TR.fmt(a, 3);
+    TR.$('#a-turns').textContent = TR.fmt(turns, 2);
+    TR.$('#a-base').textContent = TR.fmt(base, 0) + '°';
+    const quad = (base % 90 === 0)
+      ? 'na osi'
+      : ['I', 'II', 'III', 'IV'][Math.floor(base / 90)];
+    TR.$('#a-quad').textContent = quad;
+    plot.render();
+  }
+
+  plot.onPointer(function (st) {
+    // przeciąganie zmienia kąt, ale zachowuje liczbę pełnych obrotów
+    const base = TR.norm360(deg);
+    const turns = Math.round((deg - base) / 360);
+    let d = TR.norm360(Math.atan2(st.y, st.x) * TR.R2D);
+    const sn = TR.snapSpecial(d, 4);
+    if (sn !== null) d = sn;
+    deg = d + 360 * turns;
+    s.value = deg;
+    refresh();
+  });
+
+  TR.$$('.chip[data-set]').forEach(function (b) {
+    b.addEventListener('click', function () { deg = +b.dataset.set; s.value = deg; refresh(); });
+  });
+
+  refresh();
+})();
+
+/* ============ widget 2: radian, łuk, wycinek ============ */
+(function () {
+  let r = 1, alpha = 1;
+
+  const plot = new TR.Plot(TR.$('#c-arc'), {
+    xmin: -2.2, xmax: 10.4, ymin: -4.2, ymax: 2.4, equal: true, ratio: .524, maxH: 470,
+    draw: function (p) {
+      const c = TR.colors();
+
+      p.grid(1, 1);
+      p.axes({ tickX: 2, tickY: 1 });
+
+      p.circle(0, 0, r, { color: c.line2, width: 1.4, dash: [4, 4] });
+
+      // wycinek
+      p.angleArc(0, 0, r, 0, alpha, { sector: true, fill: TR.alpha(c.accent, .14) });
+      p.angleArc(0, 0, r, 0, alpha, { color: c.accent, width: 3.4 });
+
+      // promienie
+      p.seg(0, 0, r, 0, { color: c.ink2, width: 2.2 });
+      p.seg(0, 0, r * Math.cos(alpha), r * Math.sin(alpha), { color: c.ink2, width: 2.2 });
+      p.text('r = ' + TR.fmt(r, 1), r / 2, 0, { align: 'center', dy: -8, color: c.ink2, font: '600 12px system-ui', bg: true });
+
+      // wyprostowany łuk kontra promień — do porównania długości
+      const yBar = -2.9, x0 = 0;
+      p.seg(x0, yBar, x0 + r * alpha, yBar, { color: c.accent, width: 6 });
+      p.seg(x0, yBar - .85, x0 + r, yBar - .85, { color: c.ink3, width: 6 });
+      p.text('wyprostowany łuk = ' + TR.fmt(r * alpha, 2), x0, yBar, { dy: -11, color: c.accent, font: '600 12px system-ui' });
+      p.text('promień = ' + TR.fmt(r, 2), x0 + r + .2, yBar - .85, { dy: 5, color: c.ink3, font: '600 12px system-ui', bg: true });
+
+      p.dot(r * Math.cos(alpha), r * Math.sin(alpha), { r: 6, color: c.accent });
+    }
+  });
+
+  const box = TR.$('#ctl-arc');
+  TR.slider(box, {
+    label: 'Promień <var>r</var>', min: .5, max: 1.5, step: .1, value: r,
+    format: (v) => TR.fmt(v, 1),
+    onInput: (v) => { r = v; refresh(); }
+  });
+  TR.slider(box, {
+    label: 'Kąt α [rad]', min: 0, max: 2 * Math.PI, step: Math.PI / 180, value: alpha,
+    format: (v) => TR.fmt(v, 2) + ' rad',
+    onInput: (v) => { alpha = v; refresh(); }
+  });
+
+  function refresh() {
+    TR.$('#b-rad').textContent = TR.fmt(alpha, 3);
+    TR.$('#b-deg').textContent = TR.fmt(alpha * TR.R2D, 1) + '°';
+    TR.$('#b-arc').textContent = TR.fmt(r * alpha, 3);
+    TR.$('#b-area').textContent = TR.fmt(.5 * r * r * alpha, 3);
+    plot.render();
+  }
+  refresh();
+})();
+
+/* ============ kalkulator zamiany ============ */
+(function () {
+  const dIn = TR.$('#conv-deg'), rIn = TR.$('#conv-rad');
+
+  function fromDeg() {
+    const v = parseFloat(String(dIn.value).replace(',', '.'));
+    if (!isFinite(v)) { TR.$('#conv-out-exact').textContent = '—'; TR.$('#conv-out-num').textContent = ''; return; }
+    const ex = TR.radPiText(v);
+    TR.$('#conv-out-exact').innerHTML = ex !== null ? TR.fracHTML(ex) : '';
+    TR.$('#conv-out-num').textContent = (ex !== null ? '≈ ' : '') + TR.fmt(v * TR.D2R, 4) + ' rad';
+  }
+  function fromRad() {
+    const v = TR.parseAnswer(rIn.value);
+    TR.$('#conv-out-deg').textContent = isFinite(v) ? TR.fmt(v * TR.R2D, 3) + '°' : '—';
+  }
+  dIn.addEventListener('input', fromDeg);
+  rIn.addEventListener('input', fromRad);
+  fromDeg(); fromRad();
+})();
+
+/* ============ zadania ============ */
+(function () {
+  const SPEC = [30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360];
+
+  function gen() {
+    const kind = TR.rnd.int(1, 4);
+
+    if (kind === 1) {
+      const d = TR.rnd.pick(SPEC);
+      const txt = TR.radPiText(d);
+      return {
+        kind: 'input',
+        q: 'Zamień na radiany: <span class="math" style="font-size:1.2em">' + d + '°</span>',
+        answer: d * TR.D2R, tol: 0.005,
+        placeholder: 'np. 3pi/4',
+        show: txt,
+        why: 'Mnożymy przez <span class="math"><span class="frac"><span>π</span><span>180°</span></span></span>: ' +
+             d + '° · π/180° = ' + txt + ' ≈ ' + TR.fmt(d * TR.D2R, 3) + '.'
+      };
+    }
+
+    if (kind === 2) {
+      const d = TR.rnd.pick(SPEC);
+      const txt = TR.radPiText(d);
+      return {
+        kind: 'input',
+        q: 'Zamień na stopnie: <span class="math" style="font-size:1.2em">' + TR.fracHTML(txt) + '</span>',
+        answer: d, tol: 0.5, unit: '°',
+        placeholder: 'np. 135',
+        show: d + '°',
+        why: 'Mnożymy przez <span class="math"><span class="frac"><span>180°</span><span>π</span></span></span>: ' +
+             txt + ' · 180°/π = ' + d + '°.'
+      };
+    }
+
+    if (kind === 3) {
+      const base = TR.rnd.pick([30, 60, 120, 150, 200, 225, 300, 315, 340]);
+      const turns = TR.rnd.pick([-2, -1, 1, 2]);
+      const d = base + 360 * turns;
+      return {
+        kind: 'input',
+        q: 'Podaj kąt z przedziału <span class="math">⟨0°,&nbsp;360°)</span> współkońcowy z kątem ' +
+           '<span class="math" style="font-size:1.2em">' + TR.fmt(d, 0) + '°</span>',
+        answer: base, tol: 0.5, unit: '°',
+        placeholder: 'np. 150',
+        show: base + '°',
+        why: 'Odejmujemy (albo dodajemy) tyle razy 360°, aż wynik wpadnie w przedział: ' +
+             TR.fmt(d, 0) + '° ' + (turns > 0 ? '− ' + turns : '+ ' + (-turns)) + ' · 360° = ' + base + '°.'
+      };
+    }
+
+    // ćwiartka
+    const d = TR.rnd.int(1, 4) === 1
+      ? TR.rnd.int(-359, -1)
+      : TR.rnd.int(1, 719);
+    const base = TR.norm360(d);
+    if (base % 90 === 0) return gen();
+    const q = Math.floor(base / 90);
+    return {
+      kind: 'choice',
+      q: 'W której ćwiartce leży ramię końcowe kąta ' +
+         '<span class="math" style="font-size:1.2em">' + d + '°</span>?',
+      choices: ['I', 'II', 'III', 'IV'],
+      correct: q,
+      why: 'Kąt podstawowy to ' + base + '°, a to mieści się w przedziale ⟨' +
+           (q * 90) + '°, ' + ((q + 1) * 90) + '°), czyli w ćwiartce ' + ['I', 'II', 'III', 'IV'][q] + '.'
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 6, moduleId: 'katy', pass: 5 / 6 });
+})();
+</script>
+</body>
+</html>

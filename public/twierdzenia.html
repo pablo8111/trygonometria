@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>07. Twierdzenia sinusów i cosinusów — Trygonometria</title>
+<meta name="description" content="Twierdzenie sinusów, twierdzenie cosinusów, pole trójkąta, promień okręgu opisanego. Interaktywny trójkąt i solver.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 07</div>
+    <h1>Twierdzenia sinusów i cosinusów</h1>
+    <p class="lead">Definicje z modułu 02 wymagały kąta prostego. Te dwa twierdzenia zdejmują
+    ten warunek: działają w <strong>każdym</strong> trójkącie. Twierdzenie Pitagorasa okazuje się
+    przy okazji szczególnym przypadkiem jednego z nich.</p>
+  </div>
+
+  <div class="note">
+    <span class="t">Oznaczenia</span>
+    W trójkącie <span class="math"><var>ABC</var></span>: kąty <var>α</var>, <var>β</var>, <var>γ</var>
+    są przy wierzchołkach <var>A</var>, <var>B</var>, <var>C</var>, a boki
+    <var>a</var>, <var>b</var>, <var>c</var> leżą <strong>naprzeciw</strong> nich.
+    Czyli: <var>a</var> naprzeciw <var>α</var>, <var>b</var> naprzeciw <var>β</var>,
+    <var>c</var> naprzeciw <var>γ</var>. Ta konwencja jest w każdym zadaniu, warto ją mieć w palcach.
+  </div>
+
+  <div class="widget">
+    <div class="widget-head">
+      Trójkąt na żywo
+      <span class="hint">przeciągnij dowolny wierzchołek</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder"><canvas id="c-tri"></canvas></div>
+      <div class="readout">
+        <div class="r"><div class="k">α</div><div class="val" id="v-al">—</div></div>
+        <div class="r"><div class="k">β</div><div class="val" id="v-be">—</div></div>
+        <div class="r"><div class="k">γ</div><div class="val" id="v-ga">—</div></div>
+        <div class="r"><div class="k">suma kątów</div><div class="val" id="v-sum">—</div></div>
+      </div>
+      <div class="readout" style="margin-top:10px">
+        <div class="r"><div class="k">a</div><div class="val" id="v-a">—</div></div>
+        <div class="r"><div class="k">b</div><div class="val" id="v-b">—</div></div>
+        <div class="r"><div class="k">c</div><div class="val" id="v-c">—</div></div>
+        <div class="r"><div class="k">pole</div><div class="val" id="v-s">—</div></div>
+        <div class="r"><div class="k">R (okrąg opisany)</div><div class="val" id="v-r">—</div></div>
+      </div>
+
+      <h4 style="margin:22px 0 8px;font-size:.95rem">Sprawdzenie twierdzenia sinusów</h4>
+      <div class="readout" style="margin-top:0">
+        <div class="r"><div class="k">a / sin α</div><div class="val" id="v-ls1">—</div></div>
+        <div class="r"><div class="k">b / sin β</div><div class="val" id="v-ls2">—</div></div>
+        <div class="r"><div class="k">c / sin γ</div><div class="val" id="v-ls3">—</div></div>
+        <div class="r"><div class="k">2R</div><div class="val" id="v-ls4">—</div></div>
+      </div>
+
+      <h4 style="margin:22px 0 8px;font-size:.95rem">Sprawdzenie twierdzenia cosinusów</h4>
+      <div class="readout" style="margin-top:0">
+        <div class="r"><div class="k">c²</div><div class="val" id="v-lc1">—</div></div>
+        <div class="r"><div class="k">a² + b² − 2ab·cos γ</div><div class="val" id="v-lc2">—</div></div>
+      </div>
+      <div class="btn-row">
+        <label class="switch"><input type="checkbox" id="opt-circ"> pokaż okrąg opisany</label>
+        <button class="btn ghost small" id="tri-right">Ustaw kąt prosty przy C</button>
+        <button class="btn ghost small" id="tri-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Twierdzenie sinusów</h2>
+  <div class="key">
+    <div class="math-block" style="margin:.2em 0;font-size:1.35em">
+      <span class="frac"><span><var>a</var></span><span>sin α</span></span> =
+      <span class="frac"><span><var>b</var></span><span>sin β</span></span> =
+      <span class="frac"><span><var>c</var></span><span>sin γ</span></span> = 2<var>R</var>
+    </div>
+    <p style="margin:.6em 0 0;text-align:center"><small><var>R</var> — promień okręgu opisanego
+    na trójkącie</small></p>
+  </div>
+  <p><strong>Po co to:</strong> wiąże bok z <em>przeciwległym</em> kątem. Używamy, gdy w danych
+  jest para „bok i kąt naprzeciw niego”. Typowo: znamy dwa kąty i jeden bok (bo trzeci kąt
+  dostajemy z sumy 180°), albo dwa boki i kąt naprzeciw jednego z nich.</p>
+
+  <details>
+    <summary>Skąd się to bierze (dwa zdania dowodu)</summary>
+    <p>Wysokość opuszczona z wierzchołka <var>C</var> na prostą <var>AB</var> ma długość
+    <span class="math"><var>h</var> = <var>b</var> · sin α</span> (z trójkąta prostokątnego przy <var>A</var>),
+    ale też <span class="math"><var>h</var> = <var>a</var> · sin β</span> (z trójkąta przy <var>B</var>).
+    Zatem <span class="math"><var>b</var> sin α = <var>a</var> sin β</span>, a po podzieleniu przez
+    <span class="math">sin α · sin β</span> dostajemy pierwszą równość. Dla kąta rozwartego działa to
+    samo, bo <span class="math">sin(180° − α) = sin α</span>.</p>
+  </details>
+
+  <h2>Twierdzenie cosinusów</h2>
+  <div class="key">
+    <div class="math-block" style="margin:.2em 0;font-size:1.3em">
+      <var>c</var><sup>2</sup> = <var>a</var><sup>2</sup> + <var>b</var><sup>2</sup>
+      − 2<var>ab</var> · cos γ
+    </div>
+    <p style="margin:.6em 0 0;text-align:center"><small>oraz analogicznie dla pozostałych boków:
+    <span class="math"><var>a</var><sup>2</sup> = <var>b</var><sup>2</sup> + <var>c</var><sup>2</sup> − 2<var>bc</var> cos α</span></small></p>
+  </div>
+
+  <div class="note">
+    <span class="t">To jest Pitagoras z poprawką</span>
+    Dla <span class="math">γ = 90°</span> mamy <span class="math">cos 90° = 0</span>, więc wzór
+    redukuje się do <span class="math"><var>c</var><sup>2</sup> = <var>a</var><sup>2</sup> + <var>b</var><sup>2</sup></span>.
+    Człon <span class="math">−2<var>ab</var> cos γ</span> to dokładnie miara tego, o ile trójkąt
+    „odbiega” od prostokątnego: dla kąta ostrego jest ujemny (<var>c</var> krótsze),
+    dla rozwartego dodatni (<var>c</var> dłuższe). Sprawdź to na widgecie powyżej.
+  </div>
+
+  <p><strong>Po co to:</strong> wiąże trzy boki z jednym kątem — tym <em>między</em> dwoma z nich.
+  Używamy, gdy znamy trzy boki (i szukamy kąta) albo dwa boki i kąt między nimi (i szukamy trzeciego boku).</p>
+
+  <h2>Pole trójkąta</h2>
+  <div class="grid grid-3">
+    <div class="card" style="margin:0">
+      <div class="math-block" style="margin:.2em 0">
+        <var>S</var> = <span class="frac"><span>1</span><span>2</span></span><var>ab</var> · sin γ
+      </div>
+      <p style="margin:.4em 0 0"><small>Dwa boki i kąt między nimi. Najczęściej używany wzór
+      w całym dziale.</small></p>
+    </div>
+    <div class="card" style="margin:0">
+      <div class="math-block" style="margin:.2em 0">
+        <var>S</var> = <span class="frac"><span><var>abc</var></span><span>4<var>R</var></span></span>
+      </div>
+      <p style="margin:.4em 0 0"><small>Gdy w zadaniu pojawia się okrąg opisany.</small></p>
+    </div>
+    <div class="card" style="margin:0">
+      <div class="math-block" style="margin:.2em 0">
+        <var>S</var> = <span class="frac"><span>1</span><span>2</span></span><var>a</var> · <var>h</var><sub>a</sub>
+      </div>
+      <p style="margin:.4em 0 0"><small>Stare, dobre „podstawa razy wysokość przez dwa” —
+      nadal działa i czasem jest najszybsze.</small></p>
+    </div>
+  </div>
+
+  <h2>Które twierdzenie wybrać</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th class="lbl">Co znasz</th><th>Skrót</th><th>Czego użyć</th><th>Ile rozwiązań</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl" style="white-space:normal">trzy boki</td><td>bbb</td>
+          <td>cosinusów (szukając kąta)</td><td>jedno lub żadne*</td></tr>
+        <tr><td class="lbl" style="white-space:normal">dwa boki i kąt <strong>między</strong> nimi</td><td>bkb</td>
+          <td>cosinusów</td><td>jedno</td></tr>
+        <tr><td class="lbl" style="white-space:normal">dwa kąty i bok</td><td>kbk / kkb</td>
+          <td>suma kątów + sinusów</td><td>jedno</td></tr>
+        <tr><td class="lbl" style="white-space:normal">dwa boki i kąt <strong>nie</strong> między nimi</td><td>bbk</td>
+          <td>sinusów — ostrożnie!</td><td>0, 1 lub <strong>2</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><small>* Jeśli nie jest spełniona nierówność trójkąta (najdłuższy bok krótszy od sumy dwóch pozostałych),
+  taki trójkąt nie istnieje.</small></p>
+
+  <div class="warn">
+    <span class="t">Przypadek niejednoznaczny (bbk)</span>
+    Gdy z twierdzenia sinusów wyliczysz <span class="math">sin β</span>, kąt <var>β</var> może być
+    ostry <em>albo</em> rozwarty — bo <span class="math">sin β = sin(180° − β)</span>.
+    Trzeba sprawdzić <strong>oba</strong> i odrzucić ten, przy którym suma kątów przekracza 180°.
+    Solver poniżej robi to za ciebie i pokazuje, ile rozwiązań ma zadanie.
+  </div>
+
+  <h2>Solver trójkąta</h2>
+  <div class="card">
+    <div class="chips" style="margin-bottom:16px">
+      <button class="chip" data-case="sss" aria-pressed="true">trzy boki (bbb)</button>
+      <button class="chip" data-case="sas" aria-pressed="false">bok, kąt, bok (bkb)</button>
+      <button class="chip" data-case="asa" aria-pressed="false">kąt, bok, kąt (kbk)</button>
+      <button class="chip" data-case="ssa" aria-pressed="false">bok, bok, kąt (bbk)</button>
+    </div>
+    <p id="sv-hint" style="font-size:.93rem;color:var(--ink-2)"></p>
+    <div class="grid grid-3" id="sv-inputs"></div>
+    <div class="btn-row">
+      <button class="btn" id="sv-go">Rozwiąż trójkąt</button>
+      <button class="btn ghost" id="sv-demo">Wstaw przykład</button>
+    </div>
+    <div id="sv-out" style="margin-top:16px"></div>
+  </div>
+
+  <h2>Zadania</h2>
+  <p>Osiem zadań: wybór twierdzenia, rachunki, pole trójkąta.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong>Podstawianie kąta, który nie leży naprzeciw danego boku.</strong>
+      W twierdzeniu sinusów para musi być „bok i jego przeciwległy kąt”.</li>
+      <li><strong>Znak przy cosinusie kąta rozwartego.</strong>
+      <span class="math">cos 120° = −½</span>, więc <span class="math">−2<var>ab</var> cos γ</span>
+      staje się <em>dodatnie</em>. Minus w minusie daje plus — łatwo o tym zapomnieć.</li>
+      <li><strong>Zapominanie o drugim rozwiązaniu w przypadku bbk.</strong> Jeśli zadanie mówi
+      „oblicz wszystkie możliwe”, a podasz jedno, to połowa punktów.</li>
+      <li><strong>Używanie <span class="math">arcsin</span> i przyjmowanie tylko kąta ostrego.</strong>
+      Kalkulator zawsze zwraca kąt z przedziału ⟨0°, 90°⟩ dla dodatniego sinusa — kąt rozwarty
+      trzeba dopisać samemu jako <span class="math">180° − β</span>.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('twierdzenia');
+
+/* ============ widget: trójkąt na żywo ============ */
+(function () {
+  const START = [[1.2, 1], [8.2, 1.4], [4.4, 5.6]];
+  let V = START.map(q => q.slice());
+  let drag = -1;
+
+  function geom() {
+    const [A, B, C] = V;
+    const a = Math.hypot(B[0] - C[0], B[1] - C[1]);      // naprzeciw A
+    const b = Math.hypot(A[0] - C[0], A[1] - C[1]);      // naprzeciw B
+    const c = Math.hypot(A[0] - B[0], A[1] - B[1]);      // naprzeciw C
+    const al = Math.acos(TR.clamp((b * b + c * c - a * a) / (2 * b * c), -1, 1)) * TR.R2D;
+    const be = Math.acos(TR.clamp((a * a + c * c - b * b) / (2 * a * c), -1, 1)) * TR.R2D;
+    const ga = 180 - al - be;
+    const S = Math.abs((B[0] - A[0]) * (C[1] - A[1]) - (C[0] - A[0]) * (B[1] - A[1])) / 2;
+    const R = a * b * c / (4 * S);
+    return { A, B, C, a, b, c, al, be, ga, S, R };
+  }
+
+  function circum() {
+    const [A, B, C] = V;
+    const d = 2 * (A[0] * (B[1] - C[1]) + B[0] * (C[1] - A[1]) + C[0] * (A[1] - B[1]));
+    if (Math.abs(d) < 1e-9) return null;
+    const ux = ((A[0] ** 2 + A[1] ** 2) * (B[1] - C[1]) + (B[0] ** 2 + B[1] ** 2) * (C[1] - A[1]) +
+                (C[0] ** 2 + C[1] ** 2) * (A[1] - B[1])) / d;
+    const uy = ((A[0] ** 2 + A[1] ** 2) * (C[0] - B[0]) + (B[0] ** 2 + B[1] ** 2) * (A[0] - C[0]) +
+                (C[0] ** 2 + C[1] ** 2) * (B[0] - A[0])) / d;
+    return [ux, uy, Math.hypot(A[0] - ux, A[1] - uy)];
+  }
+
+  const plot = new TR.Plot(TR.$('#c-tri'), {
+    xmin: -.5, xmax: 10, ymin: -.5, ymax: 7, equal: true, ratio: .714, maxH: 620,
+    draw: function (p) {
+      const col = TR.colors();
+      const g = geom();
+      const NAMES = ['A', 'B', 'C'];
+      const ANG = [g.al, g.be, g.ga];
+
+      p.grid(1, 1);
+
+      if (TR.$('#opt-circ').checked) {
+        const cc = circum();
+        if (cc) {
+          p.circle(cc[0], cc[1], cc[2], { color: TR.alpha(col.gold, .8), width: 1.5, dash: [5, 4] });
+          p.dot(cc[0], cc[1], { r: 4, color: col.gold });
+          p.text('O', cc[0], cc[1], { dx: 7, dy: -6, color: col.gold, font: '600 12px system-ui' });
+        }
+      }
+
+      p.path([V[0], V[1], V[2], V[0]], { color: null, fill: TR.alpha(col.accent, .09) });
+      p.seg(V[1][0], V[1][1], V[2][0], V[2][1], { color: col.sin, width: 3.2 });   // a
+      p.seg(V[0][0], V[0][1], V[2][0], V[2][1], { color: col.cos, width: 3.2 });   // b
+      p.seg(V[0][0], V[0][1], V[1][0], V[1][1], { color: col.tan, width: 3.2 });   // c
+
+      // podpisy boków w środkach
+      const mid = (P, Q) => [(P[0] + Q[0]) / 2, (P[1] + Q[1]) / 2];
+      const ma = mid(V[1], V[2]), mb = mid(V[0], V[2]), mc = mid(V[0], V[1]);
+      p.text('a = ' + TR.fmt(g.a, 2), ma[0], ma[1], { align: 'left', dx: 8, color: col.sin, font: '600 12px system-ui', bg: true });
+      p.text('b = ' + TR.fmt(g.b, 2), mb[0], mb[1], { align: 'right', dx: -8, color: col.cos, font: '600 12px system-ui', bg: true });
+      p.text('c = ' + TR.fmt(g.c, 2), mc[0], mc[1], { align: 'center', dy: 18, color: col.tan, font: '600 12px system-ui', bg: true });
+
+      // wierzchołki i kąty
+      for (let i = 0; i < 3; i++) {
+        const Pv = V[i], Q1 = V[(i + 1) % 3], Q2 = V[(i + 2) % 3];
+        const a1 = Math.atan2(Q1[1] - Pv[1], Q1[0] - Pv[0]);
+        let a2 = Math.atan2(Q2[1] - Pv[1], Q2[0] - Pv[0]);
+        // rysuj krótszy łuk między ramionami
+        let d = a2 - a1;
+        while (d > Math.PI) d -= 2 * Math.PI;
+        while (d < -Math.PI) d += 2 * Math.PI;
+        p.angleArc(Pv[0], Pv[1], .55, a1, a1 + d, { color: col.accent, width: 2 });
+        const mA = a1 + d / 2;
+        p.text(['α', 'β', 'γ'][i] + ' = ' + TR.fmt(ANG[i], 1) + '°',
+               Pv[0] + .95 * Math.cos(mA), Pv[1] + .95 * Math.sin(mA),
+               { align: 'center', color: col.accent, font: '700 12px system-ui', bg: true });
+        p.dot(Pv[0], Pv[1], { r: drag === i ? 9 : 7, color: col.ink });
+        p.text(NAMES[i], Pv[0], Pv[1], { dx: -4, dy: -12, color: col.ink, font: '700 13px system-ui' });
+      }
+    }
+  });
+
+  function refresh() {
+    const g = geom();
+    TR.$('#v-al').textContent = TR.fmt(g.al, 2) + '°';
+    TR.$('#v-be').textContent = TR.fmt(g.be, 2) + '°';
+    TR.$('#v-ga').textContent = TR.fmt(g.ga, 2) + '°';
+    TR.$('#v-sum').textContent = TR.fmt(g.al + g.be + g.ga, 1) + '°';
+    TR.$('#v-a').textContent = TR.fmt(g.a, 3);
+    TR.$('#v-b').textContent = TR.fmt(g.b, 3);
+    TR.$('#v-c').textContent = TR.fmt(g.c, 3);
+    TR.$('#v-s').textContent = TR.fmt(g.S, 3);
+    TR.$('#v-r').textContent = TR.fmt(g.R, 3);
+    TR.$('#v-ls1').textContent = TR.fmt(g.a / Math.sin(g.al * TR.D2R), 3);
+    TR.$('#v-ls2').textContent = TR.fmt(g.b / Math.sin(g.be * TR.D2R), 3);
+    TR.$('#v-ls3').textContent = TR.fmt(g.c / Math.sin(g.ga * TR.D2R), 3);
+    TR.$('#v-ls4').textContent = TR.fmt(2 * g.R, 3);
+    TR.$('#v-lc1').textContent = TR.fmt(g.c * g.c, 3);
+    TR.$('#v-lc2').textContent = TR.fmt(g.a * g.a + g.b * g.b - 2 * g.a * g.b * Math.cos(g.ga * TR.D2R), 3);
+    plot.render();
+  }
+
+  plot.onPointer(function (st) {
+    if (st.phase === 'down') {
+      let best = -1, bd = Infinity;
+      for (let i = 0; i < 3; i++) {
+        const d = Math.hypot(V[i][0] - st.x, V[i][1] - st.y);
+        if (d < bd) { bd = d; best = i; }
+      }
+      drag = bd < .9 ? best : -1;
+    }
+    if (st.phase === 'up') { drag = -1; refresh(); return; }
+    if (drag < 0) return;
+    V[drag] = [TR.clamp(st.x, -.2, 9.8), TR.clamp(st.y, -.2, 6.8)];
+    refresh();
+  });
+
+  TR.$('#opt-circ').addEventListener('change', () => plot.render());
+  TR.$('#tri-reset').addEventListener('click', function () { V = START.map(q => q.slice()); refresh(); });
+  TR.$('#tri-right').addEventListener('click', function () {
+    V = [[1.2, 1], [8.2, 1], [8.2, 5.2]];
+    refresh();
+  });
+
+  refresh();
+})();
+
+/* ============ solver trójkąta ============ */
+(function () {
+  const CASES = {
+    sss: { hint: 'Podaj długości trzech boków. Kąty policzymy z twierdzenia cosinusów.',
+      fields: [['a', 'a'], ['b', 'b'], ['c', 'c']], demo: [7, 8, 9] },
+    sas: { hint: 'Podaj dwa boki i kąt <strong>między</strong> nimi (γ leży między a i b). ' +
+      'Trzeci bok policzymy z twierdzenia cosinusów.',
+      fields: [['a', 'a'], ['b', 'b'], ['ga', 'γ [°]']], demo: [6, 9, 40] },
+    asa: { hint: 'Podaj bok i dwa kąty do niego przyległe (c leży między α i β). ' +
+      'Trzeci kąt z sumy 180°, boki z twierdzenia sinusów.',
+      fields: [['al', 'α [°]'], ['c', 'c'], ['be', 'β [°]']], demo: [50, 10, 65] },
+    ssa: { hint: 'Podaj dwa boki i kąt naprzeciw <strong>pierwszego</strong> z nich ' +
+      '(α leży naprzeciw a). To przypadek niejednoznaczny — może wyjść 0, 1 albo 2 trójkąty.',
+      fields: [['a', 'a'], ['b', 'b'], ['al', 'α [°]']], demo: [7, 9, 45] }
+  };
+  let cs = 'sss';
+
+  function build() {
+    const cf = CASES[cs];
+    TR.$('#sv-hint').innerHTML = cf.hint;
+    TR.$('#sv-inputs').innerHTML = cf.fields.map(f =>
+      '<div class="ctrl"><label for="sv-' + f[0] + '">' + f[1] + '</label>' +
+      '<input type="text" id="sv-' + f[0] + '" autocomplete="off"></div>').join('');
+    TR.$('#sv-out').innerHTML = '';
+  }
+
+  function val(id) {
+    const el = TR.$('#sv-' + id);
+    if (!el) return null;
+    const v = TR.parseAnswer(el.value);
+    return isFinite(v) ? v : null;
+  }
+
+  function report(list, note) {
+    TR.$('#sv-out').innerHTML =
+      (note ? '<div class="' + (list.length ? 'note' : 'warn') + '" style="margin-top:0">' + note + '</div>' : '') +
+      list.map(function (t, i) {
+        return (list.length > 1 ? '<h4 style="margin:16px 0 8px">Rozwiązanie ' + (i + 1) + '</h4>' : '') +
+          '<div class="readout" style="margin-top:0">' +
+          '<div class="r"><div class="k">α</div><div class="val">' + TR.fmt(t.al, 2) + '°</div></div>' +
+          '<div class="r"><div class="k">β</div><div class="val">' + TR.fmt(t.be, 2) + '°</div></div>' +
+          '<div class="r"><div class="k">γ</div><div class="val">' + TR.fmt(t.ga, 2) + '°</div></div>' +
+          '<div class="r sin-b"><div class="k">a</div><div class="val">' + TR.fmt(t.a, 3) + '</div></div>' +
+          '<div class="r cos-b"><div class="k">b</div><div class="val">' + TR.fmt(t.b, 3) + '</div></div>' +
+          '<div class="r tan-b"><div class="k">c</div><div class="val">' + TR.fmt(t.c, 3) + '</div></div>' +
+          '<div class="r"><div class="k">pole</div><div class="val">' + TR.fmt(t.S, 3) + '</div></div>' +
+          '<div class="r"><div class="k">R</div><div class="val">' + TR.fmt(t.R, 3) + '</div></div>' +
+          '</div>';
+      }).join('');
+  }
+
+  function finish(a, b, c, al, be, ga) {
+    const S = .5 * a * b * Math.sin(ga * TR.D2R);
+    return { a, b, c, al, be, ga, S, R: a * b * c / (4 * S) };
+  }
+
+  function solve() {
+    const a = val('a'), b = val('b'), c = val('c');
+    const al = val('al'), be = val('be'), ga = val('ga');
+    const need = CASES[cs].fields.map(f => val(f[0]));
+    if (need.some(v => v === null || v <= 0)) {
+      report([], 'Wypełnij wszystkie pola dodatnimi liczbami.');
+      return;
+    }
+
+    if (cs === 'sss') {
+      const m = Math.max(a, b, c), s = a + b + c - m;
+      if (m >= s) { report([], 'Taki trójkąt nie istnieje: najdłuższy bok (' + TR.fmt(m, 2) +
+        ') musi być krótszy od sumy dwóch pozostałych (' + TR.fmt(s, 2) + ').'); return; }
+      const A = Math.acos((b * b + c * c - a * a) / (2 * b * c)) * TR.R2D;
+      const B = Math.acos((a * a + c * c - b * b) / (2 * a * c)) * TR.R2D;
+      report([finish(a, b, c, A, B, 180 - A - B)],
+        'Z twierdzenia cosinusów: cos α = (b² + c² − a²) / 2bc, analogicznie dla β. Trzeci kąt z sumy 180°.');
+      return;
+    }
+
+    if (cs === 'sas') {
+      if (ga >= 180) { report([], 'Kąt musi być mniejszy od 180°.'); return; }
+      const cc = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(ga * TR.D2R));
+      const A = Math.acos(TR.clamp((b * b + cc * cc - a * a) / (2 * b * cc), -1, 1)) * TR.R2D;
+      report([finish(a, b, cc, A, 180 - A - ga, ga)],
+        'Trzeci bok z twierdzenia cosinusów: c = √(a² + b² − 2ab·cos γ) = ' + TR.fmt(cc, 3) +
+        '. Potem kąty — znowu z cosinusów (bezpieczniej niż z sinusów, bo nie ma niejednoznaczności).');
+      return;
+    }
+
+    if (cs === 'asa') {
+      if (al + be >= 180) { report([], 'Suma dwóch kątów musi być mniejsza od 180°.'); return; }
+      const G = 180 - al - be;
+      const k = c / Math.sin(G * TR.D2R);
+      report([finish(k * Math.sin(al * TR.D2R), k * Math.sin(be * TR.D2R), c, al, be, G)],
+        'γ = 180° − α − β = ' + TR.fmt(G, 2) + '°. Dalej twierdzenie sinusów: a = c · sin α / sin γ.');
+      return;
+    }
+
+    // bbk — przypadek niejednoznaczny
+    if (al >= 180) { report([], 'Kąt musi być mniejszy od 180°.'); return; }
+    const sinB = b * Math.sin(al * TR.D2R) / a;
+    if (sinB > 1 + 1e-12) {
+      report([], 'Brak rozwiązań: z twierdzenia sinusów wyszłoby sin β = ' + TR.fmt(sinB, 4) +
+        ' > 1, a to niemożliwe. Bok a jest za krótki, żeby taki trójkąt się domknął.');
+      return;
+    }
+    const B1 = Math.asin(TR.clamp(sinB, -1, 1)) * TR.R2D;
+    const B2 = 180 - B1;
+    const out = [];
+    for (const B of [B1, B2]) {
+      if (al + B >= 180 - 1e-9) continue;
+      const G = 180 - al - B;
+      const cc = a * Math.sin(G * TR.D2R) / Math.sin(al * TR.D2R);
+      if (out.some(t => Math.abs(t.be - B) < 1e-6)) continue;
+      out.push(finish(a, b, cc, al, B, G));
+    }
+    report(out, out.length === 2
+      ? 'Dwa rozwiązania! sin β = b · sin α / a = ' + TR.fmt(sinB, 4) + ', a to daje β = ' +
+        TR.fmt(B1, 2) + '° albo β = 180° − ' + TR.fmt(B1, 2) + '° = ' + TR.fmt(B2, 2) +
+        '°. Oba dają sumę kątów mniejszą od 180°, więc oba trójkąty istnieją.'
+      : 'Jedno rozwiązanie: drugi kandydat na β (' + TR.fmt(B2, 2) +
+        '°) dałby sumę kątów co najmniej 180°, więc wypada.');
+  }
+
+  TR.$$('.chip[data-case]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      cs = b.dataset.case;
+      TR.$$('.chip[data-case]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      build();
+    });
+  });
+  TR.$('#sv-go').addEventListener('click', solve);
+  TR.$('#sv-demo').addEventListener('click', function () {
+    const cf = CASES[cs];
+    cf.fields.forEach((f, i) => { TR.$('#sv-' + f[0]).value = cf.demo[i]; });
+    solve();
+  });
+
+  build();
+})();
+
+/* ============ zadania ============ */
+(function () {
+  function gen() {
+    const kind = TR.rnd.int(1, 5);
+
+    if (kind === 1) {
+      const cases = [
+        { d: 'trzy boki trójkąta, szukasz kąta', a: 'twierdzenie cosinusów' },
+        { d: 'dwa boki i kąt między nimi, szukasz trzeciego boku', a: 'twierdzenie cosinusów' },
+        { d: 'dwa kąty i jeden bok, szukasz pozostałych boków', a: 'twierdzenie sinusów' },
+        { d: 'bok, kąt naprzeciw niego i drugi bok, szukasz kąta', a: 'twierdzenie sinusów' },
+        { d: 'dwa boki i kąt między nimi, szukasz pola', a: 'wzór S = ½ab·sin γ' }
+      ];
+      const it = TR.rnd.pick(cases);
+      const ch = TR.rnd.shuffle(['twierdzenie sinusów', 'twierdzenie cosinusów',
+        'wzór S = ½ab·sin γ', 'twierdzenie Pitagorasa']);
+      return {
+        kind: 'choice',
+        q: 'Znasz: <strong>' + it.d + '</strong>. Czego użyjesz?',
+        choices: ch,
+        correct: ch.indexOf(it.a),
+        why: 'Twierdzenie cosinusów wiąże trzy boki z kątem <em>między</em> dwoma z nich. ' +
+             'Twierdzenie sinusów wiąże bok z kątem <em>naprzeciw</em> niego. ' +
+             'Pitagoras działa tylko w trójkącie prostokątnym.'
+      };
+    }
+
+    if (kind === 2) {
+      // twierdzenie cosinusów — trzeci bok
+      const a = TR.rnd.int(4, 12), b = TR.rnd.int(4, 12);
+      const ga = TR.rnd.pick([30, 45, 60, 120, 135, 150]);
+      const c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(ga * TR.D2R));
+      return {
+        kind: 'input',
+        q: 'W trójkącie <var>a</var> = <b>' + a + '</b>, <var>b</var> = <b>' + b + '</b>, ' +
+           'a kąt między nimi <var>γ</var> = <b>' + ga + '°</b>.<br>' +
+           'Oblicz długość boku <var>c</var> (z dokładnością do 0,01).',
+        answer: c, tol: 0.03,
+        placeholder: 'np. 9,17',
+        show: TR.fmt(c, 3),
+        why: 'c² = a² + b² − 2ab·cos γ = ' + (a * a) + ' + ' + (b * b) + ' − 2·' + a + '·' + b +
+             '·cos ' + ga + '° = ' + TR.fmt(c * c, 3) + ', więc c = ' + TR.fmt(c, 3) + '.' +
+             (ga > 90 ? ' Zwróć uwagę: cos ' + ga + '° jest ujemny, więc ostatni składnik dodaje się do sumy.' : '')
+      };
+    }
+
+    if (kind === 3) {
+      // twierdzenie sinusów — bok
+      const al = TR.rnd.pick([30, 40, 45, 50, 60]);
+      const be = TR.rnd.pick([50, 60, 70, 80]);
+      if (al + be >= 175) return gen();
+      const a = TR.rnd.int(5, 15);
+      const b = a * Math.sin(be * TR.D2R) / Math.sin(al * TR.D2R);
+      return {
+        kind: 'input',
+        q: 'W trójkącie <var>α</var> = <b>' + al + '°</b>, <var>β</var> = <b>' + be + '°</b>, ' +
+           '<var>a</var> = <b>' + a + '</b>.<br>Oblicz długość boku <var>b</var> ' +
+           '(z dokładnością do 0,01).',
+        answer: b, tol: 0.03,
+        placeholder: 'np. 12,34',
+        show: TR.fmt(b, 3),
+        why: 'Z twierdzenia sinusów a/sin α = b/sin β, więc b = a · sin β / sin α = ' + a +
+             ' · sin ' + be + '° / sin ' + al + '° = ' + TR.fmt(b, 3) + '.'
+      };
+    }
+
+    if (kind === 4) {
+      // pole
+      const a = TR.rnd.int(4, 14), b = TR.rnd.int(4, 14);
+      const ga = TR.rnd.pick([30, 45, 60, 120, 135, 150]);
+      const S = .5 * a * b * Math.sin(ga * TR.D2R);
+      return {
+        kind: 'input',
+        q: 'Oblicz pole trójkąta, w którym <var>a</var> = <b>' + a + '</b>, <var>b</var> = <b>' + b +
+           '</b>, a kąt między tymi bokami ma miarę <b>' + ga + '°</b> ' +
+           '(z dokładnością do 0,01).',
+        answer: S, tol: 0.03,
+        placeholder: 'np. 24,25',
+        show: TR.fmt(S, 3),
+        why: 'S = ½·a·b·sin γ = ½ · ' + a + ' · ' + b + ' · sin ' + ga + '° = ' + TR.fmt(S, 3) +
+             '. Zauważ, że sin ' + ga + '° = sin ' + (180 - ga) + '° — kąt rozwarty daje takie samo pole ' +
+             'jak jego dopełnienie.'
+      };
+    }
+
+    // ile trójkątów w przypadku bbk
+    const al = TR.rnd.pick([30, 40, 50]);
+    const b = 10;
+    const variant = TR.rnd.int(1, 3);
+    const h = b * Math.sin(al * TR.D2R);
+    const a = variant === 1 ? Math.round(h * .6 * 10) / 10        // za krótki — 0 rozwiązań
+            : variant === 2 ? Math.round((h + (b - h) / 2) * 10) / 10  // między h i b — 2 rozwiązania
+            : Math.round((b + 3) * 10) / 10;                       // dłuższy od b — 1 rozwiązanie
+    const sinB = b * Math.sin(al * TR.D2R) / a;
+    let n;
+    if (sinB > 1) n = 0;
+    else {
+      const B1 = Math.asin(sinB) * TR.R2D;
+      n = (al + (180 - B1) < 180 - 1e-9 && Math.abs(B1 - 90) > 1e-9) ? 2 : 1;
+    }
+    return {
+      kind: 'choice',
+      q: 'Ile trójkątów spełnia warunki: <var>a</var> = <b>' + a + '</b>, <var>b</var> = <b>' + b +
+         '</b>, <var>α</var> = <b>' + al + '°</b> (kąt naprzeciw boku <var>a</var>)?',
+      choices: ['żaden', 'dokładnie jeden', 'dwa'],
+      correct: n,
+      why: 'Z twierdzenia sinusów sin β = b·sin α / a = ' + TR.fmt(sinB, 4) + '. ' +
+           (n === 0 ? 'To więcej niż 1, więc taki trójkąt nie istnieje — bok a jest za krótki.'
+             : n === 2 ? 'Oba kąty, ostry ' + TR.fmt(Math.asin(sinB) * TR.R2D, 1) + '° i rozwarty ' +
+               TR.fmt(180 - Math.asin(sinB) * TR.R2D, 1) + '°, dają sumę kątów mniejszą od 180°.'
+             : 'Kąt rozwarty dałby sumę kątów co najmniej 180°, więc zostaje tylko jedno rozwiązanie.')
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 8, moduleId: 'twierdzenia', pass: 0.75 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03. Koło jednostkowe — Trygonometria</title>
+<meta name="description" content="Definicja sinusa, cosinusa i tangensa na kole jednostkowym. Znaki funkcji w ćwiartkach, wartości szczególne, okresowość.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 03</div>
+    <h1>Koło jednostkowe</h1>
+    <p class="lead">Definicje z trójkąta prostokątnego mają wadę: działają tylko dla kątów ostrych.
+    A fizyka potrzebuje <span class="math">sin 210°</span> i <span class="math">cos (−45°)</span>.
+    Rozwiązanie jest jedno i bardzo elegancko rozszerza to, co już wiesz.</p>
+  </div>
+
+  <h2>Nowa definicja — ta sama co stara</h2>
+  <p>Rysujemy okrąg o środku <span class="math">(0,&nbsp;0)</span> i promieniu <strong>1</strong>
+  (dlatego „jednostkowy”). Kąt <var>α</var> odmierzamy jak w module 01, a jego ramię końcowe
+  przecina okrąg w jednym punkcie <span class="math"><var>P</var></span>. I teraz:</p>
+
+  <div class="key">
+    <span class="t">Definicja</span>
+    <div class="math-block" style="margin:.2em 0">
+      <var>P</var>(<var>α</var>) = (<span class="cos-c">cos <var>α</var></span>,
+      <span class="sin-c">sin <var>α</var></span>)
+    </div>
+    <p style="margin:.6em 0 0;text-align:center"><small>Cosinus to <strong>pierwsza</strong>
+    współrzędna punktu na okręgu, sinus — <strong>druga</strong>. Nic więcej.</small></p>
+  </div>
+
+  <p>Dla kąta ostrego jest to dokładnie stara definicja: powstaje trójkąt prostokątny
+  o przeciwprostokątnej 1, więc <span class="math">sin α = <span class="frac"><span><var>a</var></span><span>1</span></span> = <var>a</var></span>
+  — czyli wysokość punktu. Ale nowa definicja nie pyta o trójkąt, tylko o współrzędne,
+  więc działa dla <em>każdego</em> kąta: rozwartego, ujemnego, większego od pełnego obrotu.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Koło jednostkowe
+      <span class="hint">przeciągnij punkt <var>P</var> po okręgu</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder mid"><canvas id="c-circle"></canvas></div>
+      <div class="controls" id="ctl-circle"></div>
+      <div class="btn-row" style="margin-top:8px">
+        <label class="switch"><input type="checkbox" id="opt-snap" checked> przyciągaj do kątów szczególnych</label>
+        <label class="switch"><input type="checkbox" id="opt-tan" checked> pokaż tangens</label>
+        <label class="switch"><input type="checkbox" id="opt-proj" checked> pokaż rzuty</label>
+      </div>
+      <div class="readout" style="margin-top:16px">
+        <div class="r"><div class="k">Kąt</div><div class="val" id="k-deg">—</div></div>
+        <div class="r"><div class="k">Radiany</div><div class="val" id="k-rad">—</div></div>
+        <div class="r"><div class="k">Ćwiartka</div><div class="val" id="k-quad">—</div></div>
+      </div>
+      <div class="readout" style="margin-top:10px">
+        <div class="r cos-b"><div class="k">cos α</div><div class="val cos-c" id="k-cos">—</div></div>
+        <div class="r sin-b"><div class="k">sin α</div><div class="val sin-c" id="k-sin">—</div></div>
+        <div class="r tan-b"><div class="k">tg α</div><div class="val tan-c" id="k-tg">—</div></div>
+        <div class="r tan-b"><div class="k">ctg α</div><div class="val tan-c" id="k-ctg">—</div></div>
+      </div>
+      <div id="k-exact" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <h2>Znaki w ćwiartkach</h2>
+  <p>Znaki wynikają wprost z definicji — nie ma tu czego wkuwać, wystarczy pomyśleć,
+  gdzie punkt ma dodatnie współrzędne. W tabeli podświetla się ćwiartka
+  z widgetu powyżej.</p>
+
+  <div class="table-scroll">
+    <table id="signs">
+      <thead><tr><th class="lbl">ćwiartka</th><th>zakres</th>
+        <th class="cos-c">cos α (x)</th><th class="sin-c">sin α (y)</th>
+        <th class="tan-c">tg α</th><th class="tan-c">ctg α</th></tr></thead>
+      <tbody>
+        <tr data-q="0"><td class="lbl">I</td><td>0° – 90°</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+        <tr data-q="1"><td class="lbl">II</td><td>90° – 180°</td><td>−</td><td>+</td><td>−</td><td>−</td></tr>
+        <tr data-q="2"><td class="lbl">III</td><td>180° – 270°</td><td>−</td><td>−</td><td>+</td><td>+</td></tr>
+        <tr data-q="3"><td class="lbl">IV</td><td>270° – 360°</td><td>+</td><td>−</td><td>−</td><td>−</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="t">Skrót pamięciowy</span>
+    W ćwiartce <strong>I</strong> — <strong>wszystkie</strong> dodatnie.
+    W <strong>II</strong> — tylko <strong>sinus</strong>.
+    W <strong>III</strong> — tylko <strong>tangens</strong> (i cotangens).
+    W <strong>IV</strong> — tylko <strong>cosinus</strong>.
+    Kolejność: <em>wszystkie, sinus, tangens, cosinus</em> — jedna litera na ćwiartkę: <strong>W S T C</strong>.
+  </div>
+
+  <h2>Co z tego od razu wynika</h2>
+  <div class="grid grid-2">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Zakres wartości</h3>
+      <p style="margin:0">Punkt leży na okręgu o promieniu 1, więc żadna jego współrzędna nie
+      przekroczy 1:</p>
+      <div class="math-block" style="margin:.7em 0 0">
+        −1 ≤ sin α ≤ 1 &nbsp;&nbsp; i &nbsp;&nbsp; −1 ≤ cos α ≤ 1
+      </div>
+      <p style="margin:.7em 0 0"><small>Dlatego równanie <span class="math">sin x = 2</span>
+      nie ma rozwiązań, i to widać, zanim się cokolwiek policzy.</small></p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Okresowość</h3>
+      <p style="margin:0">Pełny obrót wraca do tego samego punktu, więc dla każdego całkowitego
+      <var>k</var>:</p>
+      <div class="math-block" style="margin:.7em 0 0">
+        sin(α + <var>k</var>·360°) = sin α
+      </div>
+      <p style="margin:.7em 0 0"><small>Sinus i cosinus mają okres 360° = 2π.
+      Tangens ma okres <strong>180° = π</strong> — punkty <var>P</var>(α) i <var>P</var>(α+180°)
+      są przeciwne, a stosunek <span class="math"><span class="frac"><span>−y</span><span>−x</span></span></span>
+      się nie zmienia.</small></p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Jedynka trygonometryczna</h3>
+      <p style="margin:0">Punkt <span class="math">(cos α, sin α)</span> leży na okręgu
+      <span class="math"><var>x</var><sup>2</sup> + <var>y</var><sup>2</sup> = 1</span>, więc natychmiast:</p>
+      <div class="math-block" style="margin:.7em 0 0">
+        sin<sup>2</sup>α + cos<sup>2</sup>α = 1
+      </div>
+      <p style="margin:.7em 0 0"><small>To po prostu twierdzenie Pitagorasa zapisane inaczej.
+      Więcej w module 05.</small></p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Gdzie tangens nie istnieje</h3>
+      <p style="margin:0"><span class="math">tg α = <span class="frac"><span>sin α</span><span>cos α</span></span></span>,
+      więc pada tam, gdzie <span class="math">cos α = 0</span>, czyli dla</p>
+      <div class="math-block" style="margin:.7em 0 0">
+        α = 90° + <var>k</var>·180°
+      </div>
+      <p style="margin:.7em 0 0"><small>Na rysunku: ramię kąta jest wtedy pionowe i nigdy nie
+      przetnie pionowej prostej <span class="math"><var>x</var> = 1</span>.
+      Analogicznie ctg nie istnieje dla <span class="math">α = <var>k</var>·180°</span>.</small></p>
+    </div>
+  </div>
+
+  <h2>Tangens na rysunku</h2>
+  <p>Włącz w widgecie opcję „pokaż tangens”. Zielony odcinek na pionowej prostej
+  <span class="math"><var>x</var> = 1</span> to dokładnie <span class="math">tg α</span>.
+  Dlaczego? Trójkąt <span class="math"><var>OAB</var></span> (gdzie <var>A</var> = (1,0)) jest podobny
+  do trójkąta zbudowanego na punkcie <var>P</var>, a skoro jego podstawa ma długość 1, to
+  wysokość jest równa <span class="math"><span class="frac"><span>sin α</span><span>cos α</span></span></span>.
+  Kiedy kąt zbliża się do 90°, ten odcinek ucieka do nieskończoności — właśnie to znaczy,
+  że <span class="math">tg 90°</span> nie istnieje.</p>
+
+  <h2>Wartości szczególne — pełna tabela</h2>
+  <p>Wszystkie kąty będące wielokrotnościami 30° i 45°. Warto umieć odtworzyć tę tabelę
+  z pamięci w dwie minuty: wystarczy znać pierwszą ćwiartkę i znaki.</p>
+  <div class="table-scroll" id="tbl-exact"></div>
+
+  <h2>Zadania</h2>
+  <p>Osiem zadań na wartości szczególne, znaki i kąty współkońcowe.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong>Zapominanie o znaku.</strong> <span class="math">sin 150°</span> jest dodatni
+      (ćwiartka II), ale <span class="math">cos 150°</span> ujemny. Zawsze najpierw ćwiartka, potem wartość.</li>
+      <li><strong>Mieszanie kąta z jego wartością.</strong> <span class="math">sin 30° = 1/2</span>,
+      ale <span class="math">sin 1/2</span> to sinus liczby 0,5 radiana ≈ 0,479. To nie to samo.</li>
+      <li><strong>Uznawanie, że tangens ma okres 360°.</strong> Ma 180°. To pułapka wielu zadań.</li>
+      <li><strong>Traktowanie promienia jako czegoś innego niż 1.</strong> Na kole
+      <em>jednostkowym</em> promień jest zawsze 1 — dlatego sinus to po prostu wysokość,
+      bez dzielenia przez cokolwiek.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('kolo');
+
+/* ============ widget: koło jednostkowe ============ */
+(function () {
+  let deg = 210;
+  let snapOn = true, showTan = true, showProj = true;
+
+  const plot = new TR.Plot(TR.$('#c-circle'), {
+    xmin: -1.45, xmax: 1.95, ymin: -1.45, ymax: 1.45, equal: true, ratio: .853, maxH: 600,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = deg * TR.D2R;
+      const x = Math.cos(a), y = Math.sin(a);
+      const t = Math.tan(a);
+
+      p.grid(.5, .5);
+
+      // pionowa prosta x = 1 (prosta tangensa)
+      if (showTan) {
+        p.seg(1, p.win.ymin, 1, p.win.ymax, { color: TR.alpha(c.tan, .45), width: 1.4, dash: [4, 4] });
+        p.text('x = 1', 1, p.win.ymax, { dx: 5, dy: 14, color: c.tan, font: '11px system-ui' });
+      }
+
+      p.axes({ tickX: 1, tickY: 1 });
+      p.circle(0, 0, 1, { color: c.line2, width: 2 });
+
+      // ćwiartki
+      const qlab = [[.62, .62, 'I'], [-.62, .62, 'II'], [-.62, -.62, 'III'], [.62, -.62, 'IV']];
+      for (const q of qlab) p.text(q[2], q[0], q[1], { align: 'center', color: c.line2, font: '700 14px system-ui' });
+
+      // kąt
+      p.angleArc(0, 0, .3, 0, a, { sector: true, fill: TR.alpha(c.accent, .15) });
+      p.angleArc(0, 0, .3, 0, a, { color: c.accent, width: 2 });
+
+      // ramię
+      p.seg(0, 0, x, y, { color: c.ink2, width: 1.8 });
+
+      // tangens jako odcinek na prostej x = 1
+      if (showTan && Math.abs(x) > 1e-6 && Math.abs(t) < 8) {
+        p.seg(0, 0, 1, t, { color: TR.alpha(c.tan, .5), width: 1.2, dash: [3, 3] });
+        p.seg(1, 0, 1, t, { color: c.tan, width: 4 });
+        p.dot(1, t, { r: 5, color: c.tan });
+        p.text('tg α = ' + TR.fmt(t, 3), 1, t, { dx: 9, dy: t >= 0 ? -6 : 14, color: c.tan, font: '600 12px system-ui', bg: true });
+      }
+
+      // rzuty
+      if (showProj) {
+        p.seg(0, 0, x, 0, { color: c.cos, width: 4 });
+        p.seg(x, 0, x, y, { color: c.sin, width: 4 });
+        p.seg(x, y, 0, y, { color: TR.alpha(c.sin, .35), width: 1.2, dash: [3, 3] });
+        p.text('cos α', x / 2, 0, { align: 'center', dy: y >= 0 ? 18 : -9, color: c.cos, font: '600 12px system-ui', bg: true });
+        p.text('sin α', x, y / 2, { align: x >= 0 ? 'left' : 'right', dx: x >= 0 ? 9 : -9, color: c.sin, font: '600 12px system-ui', bg: true });
+        p.dot(x, 0, { r: 4, color: c.cos });
+        p.dot(0, y, { r: 4, color: c.sin });
+      }
+
+      p.dot(x, y, { r: 8, color: c.accent });
+      p.text('P', x, y, { dx: 11, dy: -9, color: c.accent, font: '700 13px system-ui' });
+      p.text(TR.fmt(deg, 1) + '°', .42 * Math.cos(a / 2), .42 * Math.sin(a / 2),
+             { align: 'center', color: c.accent, font: '700 13px system-ui', bg: true });
+    }
+  });
+
+  const s = TR.slider(TR.$('#ctl-circle'), {
+    label: 'Kąt α', min: -360, max: 720, step: .5, value: deg,
+    format: (v) => TR.fmt(v, 1) + '°',
+    onInput: (v) => { deg = v; refresh(); }
+  });
+
+  function refresh() {
+    const a = deg * TR.D2R;
+    const base = TR.norm360(deg);
+    const sin = Math.sin(a), cos = Math.cos(a), tg = Math.tan(a);
+
+    TR.$('#k-deg').textContent = TR.fmt(deg, 1) + '°';
+    const ex = TR.radPiText(deg);
+    TR.$('#k-rad').textContent = ex !== null ? ex : TR.fmt(a, 3);
+    const onAxis = Math.abs(base % 90) < 1e-6;
+    const qi = onAxis ? -1 : Math.floor(base / 90);
+    TR.$('#k-quad').textContent = onAxis ? 'na osi' : ['I', 'II', 'III', 'IV'][qi];
+
+    TR.$('#k-cos').textContent = TR.fmt(cos, 4);
+    TR.$('#k-sin').textContent = TR.fmt(sin, 4);
+    TR.$('#k-tg').textContent = Math.abs(cos) < 1e-9 ? '—' : TR.fmt(tg, 4);
+    TR.$('#k-ctg').textContent = Math.abs(sin) < 1e-9 ? '—' : TR.fmt(1 / tg, 4);
+
+    TR.$$('#signs tbody tr').forEach(function (tr) {
+      tr.classList.toggle('hl', +tr.dataset.q === qi);
+    });
+
+    // dokładne wartości, jeśli kąt jest szczególny
+    const box = TR.$('#k-exact');
+    const eSin = TR.exactHTML('sin', base), eCos = TR.exactHTML('cos', base), eTg = TR.exactHTML('tg', base);
+    if (eSin !== null) {
+      box.innerHTML = '<div class="key" style="margin:0">' +
+        '<span class="t plain">Wartości dokładne dla ' + TR.fmt(base, 0) + '°' +
+        (ex !== null ? ' = ' + TR.fracHTML(TR.radPiText(base)) : '') + '</span>' +
+        '<span class="math" style="font-size:1.1em">' +
+        '<span class="sin-c">sin = ' + eSin + '</span> &nbsp;&nbsp;&nbsp; ' +
+        '<span class="cos-c">cos = ' + eCos + '</span> &nbsp;&nbsp;&nbsp; ' +
+        '<span class="tan-c">tg = ' + eTg + '</span></span></div>';
+    } else {
+      box.innerHTML = '<p style="margin:0"><small>To nie jest kąt szczególny — ' +
+        'ustaw wielokrotność 30° albo 45°, żeby zobaczyć wartości dokładne.</small></p>';
+    }
+
+    plot.render();
+  }
+
+  plot.onPointer(function (st) {
+    const base = TR.norm360(deg);
+    const turns = Math.round((deg - base) / 360);
+    let d = TR.norm360(Math.atan2(st.y, st.x) * TR.R2D);
+    if (snapOn) { const sn = TR.snapSpecial(d, 6); if (sn !== null) d = sn; }
+    deg = d + 360 * turns;
+    s.value = deg;
+    refresh();
+  });
+
+  TR.$('#opt-snap').addEventListener('change', function (e) { snapOn = e.target.checked; });
+  TR.$('#opt-tan').addEventListener('change', function (e) { showTan = e.target.checked; plot.render(); });
+  TR.$('#opt-proj').addEventListener('change', function (e) { showProj = e.target.checked; plot.render(); });
+
+  refresh();
+})();
+
+/* ============ tabela wartości szczególnych ============ */
+(function () {
+  const degs = TR.SPECIAL_DEGS.concat([360]);
+  let rows = '';
+  for (const d of degs) {
+    const dd = d === 360 ? 0 : d;
+    rows += '<tr>' +
+      '<td class="lbl">' + d + '°</td>' +
+      '<td>' + TR.fracHTML(TR.radPiText(d)) + '</td>' +
+      '<td class="sin-c">' + TR.exactHTML('sin', dd) + '</td>' +
+      '<td class="cos-c">' + TR.exactHTML('cos', dd) + '</td>' +
+      '<td class="tan-c">' + TR.exactHTML('tg', dd) + '</td>' +
+      '</tr>';
+  }
+  TR.$('#tbl-exact').innerHTML =
+    '<table><thead><tr><th class="lbl">α</th><th>α [rad]</th>' +
+    '<th class="sin-c">sin α</th><th class="cos-c">cos α</th><th class="tan-c">tg α</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>';
+})();
+
+/* ============ zadania ============ */
+(function () {
+  const FNS = ['sin', 'cos', 'tg'];
+  const NAME = { sin: 'sin', cos: 'cos', tg: 'tg' };
+  const ALL_VALS = ['0', '1', '−1', '1/2', '−1/2', '√2/2', '−√2/2', '√3/2', '−√3/2', '√3', '−√3', '√3/3', '−√3/3'];
+
+  function fnVal(fn, deg) {
+    const a = deg * TR.D2R;
+    return fn === 'sin' ? Math.sin(a) : fn === 'cos' ? Math.cos(a) : Math.tan(a);
+  }
+
+  function gen() {
+    const kind = TR.rnd.int(1, 4);
+
+    if (kind === 1) {
+      // wartość dokładna dla kąta szczególnego
+      let deg, fn, ex;
+      do {
+        deg = TR.rnd.pick(TR.SPECIAL_DEGS);
+        fn = TR.rnd.pick(FNS);
+        ex = TR.exact(fn, deg);
+      } while (ex === null || ex === undefined);
+      const wrong = TR.rnd.shuffle(ALL_VALS.filter(v => v !== ex)).slice(0, 3);
+      const ch = TR.rnd.shuffle(wrong.concat([ex]));
+      const base = TR.norm360(deg);
+      const quad = ['I', 'II', 'III', 'IV'][Math.floor(base / 90)] || 'na osi';
+      return {
+        kind: 'choice',
+        q: 'Podaj wartość dokładną: <span class="math" style="font-size:1.25em">' +
+           NAME[fn] + ' ' + deg + '°</span>',
+        choices: ch.map(TR.fracHTML),
+        correct: ch.indexOf(ex),
+        why: 'Kąt ' + deg + '° leży w ćwiartce ' + quad + ', gdzie ' + NAME[fn] + ' jest ' +
+             (fnVal(fn, deg) >= 0 ? 'dodatni' : 'ujemny') + '. Wartość: ' + TR.fracHTML(ex) +
+             ' ≈ ' + TR.fmt(fnVal(fn, deg), 4) + '.'
+      };
+    }
+
+    if (kind === 2) {
+      // znak funkcji
+      let deg;
+      do { deg = TR.rnd.int(1, 359); } while (deg % 90 === 0);
+      const fn = TR.rnd.pick(FNS);
+      const v = fnVal(fn, deg);
+      const q = Math.floor(deg / 90);
+      return {
+        kind: 'choice',
+        q: 'Jaki znak ma <span class="math" style="font-size:1.2em">' + NAME[fn] + ' ' + deg + '°</span>?',
+        choices: ['dodatni', 'ujemny'],
+        correct: v >= 0 ? 0 : 1,
+        why: 'Kąt ' + deg + '° leży w ćwiartce ' + ['I', 'II', 'III', 'IV'][q] +
+             '. Tam ' + (q === 0 ? 'wszystkie funkcje są dodatnie'
+               : q === 1 ? 'dodatni jest tylko sinus'
+               : q === 2 ? 'dodatni jest tylko tangens (i cotangens)'
+               : 'dodatni jest tylko cosinus') + '. Dokładnie: ' + TR.fmt(v, 3) + '.'
+      };
+    }
+
+    if (kind === 3) {
+      // kąt współkońcowy i wartość
+      const base = TR.rnd.pick([30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330]);
+      const k = TR.rnd.pick([-2, -1, 1, 2]);
+      const deg = base + 360 * k;
+      const fn = TR.rnd.pick(['sin', 'cos']);
+      const ex = TR.exact(fn, base);
+      const wrong = TR.rnd.shuffle(ALL_VALS.filter(v => v !== ex)).slice(0, 3);
+      const ch = TR.rnd.shuffle(wrong.concat([ex]));
+      return {
+        kind: 'choice',
+        q: 'Oblicz <span class="math" style="font-size:1.25em">' + NAME[fn] + ' ' + deg + '°</span>',
+        choices: ch.map(TR.fracHTML),
+        correct: ch.indexOf(ex),
+        why: 'Funkcje sinus i cosinus mają okres 360°, więc odejmujemy pełne obroty: ' +
+             deg + '° − (' + k + ') · 360° = ' + base + '°. Dalej jak zwykle: ' +
+             NAME[fn] + ' ' + base + '° = ' + TR.fracHTML(ex) + '.'
+      };
+    }
+
+    // współrzędne punktu na okręgu
+    const deg = TR.rnd.pick([30, 45, 60, 120, 135, 150, 210, 225, 240, 300, 315, 330]);
+    const co = TR.exact('cos', deg), si = TR.exact('sin', deg);
+    const right = '(' + co + ', ' + si + ')';
+    const opts = [right,
+      '(' + si + ', ' + co + ')',
+      '(' + (co[0] === '−' ? co.slice(1) : '−' + co) + ', ' + si + ')',
+      '(' + co + ', ' + (si[0] === '−' ? si.slice(1) : '−' + si) + ')'];
+    const ch = TR.rnd.shuffle(Array.from(new Set(opts)));
+    return {
+      kind: 'choice',
+      q: 'Jakie współrzędne ma punkt <var>P</var>(' + deg + '°) na kole jednostkowym?',
+      choices: ch.map(function (t) {
+        const m = /^\((.+), (.+)\)$/.exec(t);
+        return '(' + TR.fracHTML(m[1]) + ', ' + TR.fracHTML(m[2]) + ')';
+      }),
+      correct: ch.indexOf(right),
+      why: 'Pierwsza współrzędna to cosinus, druga sinus: <var>P</var>(α) = (cos α, sin α). ' +
+           'Dla ' + deg + '°: cos = ' + TR.fracHTML(co) + ', sin = ' + TR.fracHTML(si) + '.'
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 8, moduleId: 'kolo', pass: 0.75 });
+})();
+</script>
+</body>
+</html>

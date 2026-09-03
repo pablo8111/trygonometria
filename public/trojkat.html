@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02. Trójkąt prostokątny — Trygonometria</title>
+<meta name="description" content="Definicje sinusa, cosinusa, tangensa i cotangensa w trójkącie prostokątnym. Podobieństwo trójkątów, wartości dla 30, 45 i 60 stopni, rozwiązywanie trójkąta.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 02</div>
+    <h1>Trójkąt prostokątny</h1>
+    <p class="lead">Tu się wszystko zaczyna. Sinus, cosinus i tangens nie są magicznymi przyciskami
+    w kalkulatorze — to nazwy trzech stosunków boków w trójkącie prostokątnym.
+    Cała sztuczka polega na tym, że te stosunki <strong>nie zależą od wielkości trójkąta</strong>,
+    tylko od kąta.</p>
+  </div>
+
+  <h2>Dlaczego to w ogóle działa</h2>
+  <p>Weź dwa trójkąty prostokątne z tym samym kątem ostrym <var>α</var>. Skoro mają równe wszystkie
+  trzy kąty (bo trzeci wychodzi z sumy 180°), to są <strong>podobne</strong>. A w trójkątach podobnych
+  odpowiednie boki są proporcjonalne:</p>
+
+  <div class="math-block">
+    <span class="frac"><span><var>a</var>′</span><span><var>a</var></span></span> =
+    <span class="frac"><span><var>b</var>′</span><span><var>b</var></span></span> =
+    <span class="frac"><span><var>c</var>′</span><span><var>c</var></span></span> = <var>k</var>
+    &nbsp;&nbsp;⟹&nbsp;&nbsp;
+    <span class="frac"><span><var>a</var>′</span><span><var>c</var>′</span></span> =
+    <span class="frac"><span><var>a</var></span><span><var>c</var></span></span>
+  </div>
+
+  <p>Stosunek dwóch boków jest więc <em>funkcją samego kąta</em>. I właśnie tej funkcji dajemy nazwę.
+  Poniższy rysunek możesz rozciągać — zobacz, że przy zmianie rozmiaru liczby po prawej stoją w miejscu,
+  a zmieniają się tylko przy zmianie kąta.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Trójkąt prostokątny
+      <span class="hint">przeciągnij wierzchołek <var>C</var></span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder mid"><canvas id="c-tri"></canvas></div>
+      <div class="controls" id="ctl-tri"></div>
+      <div class="readout">
+        <div class="r"><div class="k">Kąt α</div><div class="val" id="t-a">—</div></div>
+        <div class="r sin-b"><div class="k">a — przeciwległa</div><div class="val sin-c" id="t-la">—</div></div>
+        <div class="r cos-b"><div class="k">b — przyległa</div><div class="val cos-c" id="t-lb">—</div></div>
+        <div class="r"><div class="k">c — przeciwprost.</div><div class="val" id="t-lc">—</div></div>
+      </div>
+      <div class="readout" style="margin-top:10px">
+        <div class="r sin-b"><div class="k">sin α = a/c</div><div class="val sin-c" id="t-sin">—</div></div>
+        <div class="r cos-b"><div class="k">cos α = b/c</div><div class="val cos-c" id="t-cos">—</div></div>
+        <div class="r tan-b"><div class="k">tg α = a/b</div><div class="val tan-c" id="t-tg">—</div></div>
+        <div class="r tan-b"><div class="k">ctg α = b/a</div><div class="val tan-c" id="t-ctg">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Definicje</h2>
+  <p>Nazwy boków zawsze podajemy <strong>względem konkretnego kąta ostrego</strong>. Dla kąta <var>α</var>:</p>
+  <ul>
+    <li><strong>przeciwprostokątna</strong> <var>c</var> — bok naprzeciw kąta prostego (najdłuższy, zawsze ten sam);</li>
+    <li><strong>przyprostokątna przeciwległa</strong> <var>a</var> — leży naprzeciw <var>α</var>;</li>
+    <li><strong>przyprostokątna przyległa</strong> <var>b</var> — tworzy kąt <var>α</var> razem z przeciwprostokątną.</li>
+  </ul>
+
+  <div class="key">
+    <span class="t">Cztery definicje</span>
+    <div class="math-block" style="margin:.3em 0">
+      <span class="sin-c">sin α =
+        <span class="frac"><span>przeciwległa</span><span>przeciwprostokątna</span></span> =
+        <span class="frac"><span><var>a</var></span><span><var>c</var></span></span></span>
+      &nbsp;&nbsp;&nbsp;
+      <span class="cos-c">cos α =
+        <span class="frac"><span>przyległa</span><span>przeciwprostokątna</span></span> =
+        <span class="frac"><span><var>b</var></span><span><var>c</var></span></span></span>
+    </div>
+    <div class="math-block" style="margin:.3em 0">
+      <span class="tan-c">tg α =
+        <span class="frac"><span>przeciwległa</span><span>przyległa</span></span> =
+        <span class="frac"><span><var>a</var></span><span><var>b</var></span></span></span>
+      &nbsp;&nbsp;&nbsp;
+      <span class="tan-c">ctg α =
+        <span class="frac"><span>przyległa</span><span>przeciwległa</span></span> =
+        <span class="frac"><span><var>b</var></span><span><var>a</var></span></span></span>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="t">Trzy wnioski od razu z definicji</span>
+    <ul style="margin-bottom:0">
+      <li>Skoro <var>a</var> &lt; <var>c</var> i <var>b</var> &lt; <var>c</var>, to
+      <span class="math">0 &lt; sin α &lt; 1</span> oraz <span class="math">0 &lt; cos α &lt; 1</span>
+      dla kąta ostrego. Sinus większy od 1 to zawsze błąd rachunkowy.</li>
+      <li><span class="math">tg α =
+        <span class="frac"><span>sin α</span><span>cos α</span></span></span>, bo
+        <span class="math"><span class="frac"><span><var>a</var>/<var>c</var></span><span><var>b</var>/<var>c</var></span></span> =
+        <span class="frac"><span><var>a</var></span><span><var>b</var></span></span></span>.
+        Tangens nie ma ograniczenia z góry.</li>
+      <li>Kąt <var>β</var> = 90° − <var>α</var> ma zamienione role boków, więc
+      <span class="math">sin β = cos α</span> i <span class="math">cos β = sin α</span>.
+      Stąd nazwa: <em>co</em>sinus to sinus kąta <em>do</em>pełniającego.</li>
+    </ul>
+  </div>
+
+  <h2>Wartości, które bierze się z geometrii</h2>
+  <p>Dla trzech kątów nie trzeba kalkulatora — wystarczy jedna figura i twierdzenie Pitagorasa.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Skąd się biorą wartości dla 30°, 45° i 60°
+      <span class="hint">przełącz figurę</span>
+    </div>
+    <div class="widget-body">
+      <div class="chips" style="margin-bottom:14px">
+        <button class="chip" data-fig="sq" aria-pressed="true">Połowa kwadratu → 45°</button>
+        <button class="chip" data-fig="eq" aria-pressed="false">Połowa trójkąta równobocznego → 30° i 60°</button>
+      </div>
+      <div class="canvas-holder narrow"><canvas id="c-geo"></canvas></div>
+      <div id="geo-note" style="margin-top:14px;font-size:.95rem;color:var(--ink-2)"></div>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th class="lbl"></th><th>30°</th><th>45°</th><th>60°</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl sin-c">sin</td>
+          <td><span class="frac"><span>1</span><span>2</span></span></td>
+          <td><span class="frac"><span>√2</span><span>2</span></span></td>
+          <td><span class="frac"><span>√3</span><span>2</span></span></td></tr>
+        <tr><td class="lbl cos-c">cos</td>
+          <td><span class="frac"><span>√3</span><span>2</span></span></td>
+          <td><span class="frac"><span>√2</span><span>2</span></span></td>
+          <td><span class="frac"><span>1</span><span>2</span></span></td></tr>
+        <tr><td class="lbl tan-c">tg</td>
+          <td><span class="frac"><span>√3</span><span>3</span></span></td>
+          <td>1</td>
+          <td>√3</td></tr>
+        <tr><td class="lbl tan-c">ctg</td>
+          <td>√3</td>
+          <td>1</td>
+          <td><span class="frac"><span>√3</span><span>3</span></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="t">Sposób na zapamiętanie</span>
+    Sinus rośnie: <span class="math"><span class="frac"><span>1</span><span>2</span></span>,
+    <span class="frac"><span>√2</span><span>2</span></span>,
+    <span class="frac"><span>√3</span><span>2</span></span></span> —
+    licznik to <span class="math">√1, √2, √3</span>, mianownik zawsze 2.
+    Cosinus to ta sama trójka czytana od końca. Kąt rośnie → przeciwległy bok rośnie (sinus rośnie),
+    a przyległy maleje (cosinus maleje).
+  </div>
+
+  <h2>Rozwiązywanie trójkąta prostokątnego</h2>
+  <p>„Rozwiązać trójkąt” znaczy: policzyć wszystkie boki i kąty. Wystarczą dwie dane
+  (nie licząc kąta prostego), byle nie były to dwa kąty.</p>
+
+  <div class="card">
+    <div class="grid grid-2" style="align-items:end">
+      <div class="ctrl">
+        <label for="s-alpha">Kąt α [°]</label>
+        <input type="text" id="s-alpha" placeholder="np. 35">
+      </div>
+      <div class="ctrl">
+        <label for="s-a">a — przyprostokątna przeciwległa</label>
+        <input type="text" id="s-a" placeholder="np. 6">
+      </div>
+      <div class="ctrl">
+        <label for="s-b">b — przyprostokątna przyległa</label>
+        <input type="text" id="s-b" placeholder="np. 8">
+      </div>
+      <div class="ctrl">
+        <label for="s-c">c — przeciwprostokątna</label>
+        <input type="text" id="s-c" placeholder="np. 10">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="s-go">Rozwiąż</button>
+      <button class="btn ghost" id="s-clear">Wyczyść</button>
+      <span class="muted" style="font-size:.9rem">wypełnij dokładnie dwa pola</span>
+    </div>
+    <div id="s-out" style="margin-top:16px"></div>
+  </div>
+
+  <h2>Zadania</h2>
+  <p>Osiem zadań: definicje, wartości szczególne i rachunki na trójkącie.</p>
+  <div id="quiz"></div>
+
+  <details>
+    <summary>Najczęstsze pomyłki w tym module</summary>
+    <ul>
+      <li><strong>Zamiana „przyległa” z „przeciwległą”.</strong> Zawsze najpierw zaznacz kąt,
+      o który chodzi, i dopiero potem nazywaj boki. Ten sam bok jest przyległy dla jednego kąta
+      i przeciwległy dla drugiego.</li>
+      <li><strong>Używanie sinusa tam, gdzie nie ma kąta prostego.</strong> Te definicje działają
+      <em>wyłącznie</em> w trójkącie prostokątnym. W dowolnym trójkącie potrzebne są twierdzenia
+      z modułu 07.</li>
+      <li><strong>Mylenie <span class="math">tg α</span> z <span class="math">1/tg α</span>.</strong>
+      Odwrotnością tangensa jest cotangens, więc <span class="math">tg α · ctg α = 1</span>.</li>
+      <li><strong>Zaokrąglanie w środku obliczeń.</strong> Jeśli policzysz <var>c</var> z zaokrągleniem
+      do jednego miejsca, a potem z niego <var>b</var>, błąd się skumuluje. Zaokrąglaj na końcu.</li>
+    </ul>
+  </details>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('trojkat');
+
+/* ============ widget: trójkąt prostokątny ============ */
+(function () {
+  let alpha = 36, c = 5;                     // kąt w stopniach, przeciwprostokątna
+
+  const plot = new TR.Plot(TR.$('#c-tri'), {
+    xmin: -1, xmax: 8, ymin: -1.4, ymax: 6, equal: true, ratio: .822, maxH: 580,
+    draw: function (p) {
+      const col = TR.colors();
+      const a = alpha * TR.D2R;
+      const bx = c * Math.cos(a), ay = c * Math.sin(a);
+
+      p.grid(1, 1);
+      p.axes({ tickX: 2, tickY: 2 });
+
+      // wypełnienie
+      p.path([[0, 0], [bx, 0], [bx, ay], [0, 0]], { color: null, width: 0, fill: TR.alpha(col.accent, .08) });
+
+      p.seg(0, 0, bx, 0, { color: col.cos, width: 3.4 });       // b — przyległa
+      p.seg(bx, 0, bx, ay, { color: col.sin, width: 3.4 });     // a — przeciwległa
+      p.seg(0, 0, bx, ay, { color: col.ink, width: 3 });        // c — przeciwprostokątna
+
+      p.rightAngle(bx, 0, [-1, 0], [0, 1], .38, { color: col.ink3 });
+      p.angleArc(0, 0, .95, 0, a, { color: col.accent, width: 2.2 });
+
+      p.text('α = ' + TR.fmt(alpha, 1) + '°', 1.25 * Math.cos(a / 2), 1.25 * Math.sin(a / 2),
+             { color: col.accent, font: '700 13px system-ui', bg: true });
+      p.text('b = ' + TR.fmt(bx, 2), bx / 2, 0, { align: 'center', dy: 18, color: col.cos, font: '600 13px system-ui' });
+      p.text('a = ' + TR.fmt(ay, 2), bx, ay / 2, { dx: 10, color: col.sin, font: '600 13px system-ui' });
+      p.text('c = ' + TR.fmt(c, 2), bx / 2, ay / 2, { align: 'right', dx: -8, color: col.ink, font: '600 13px system-ui', bg: true });
+      p.text('β = ' + TR.fmt(90 - alpha, 1) + '°', bx, ay, { align: 'right', dx: -6, dy: 22, color: col.ink3, font: '12px system-ui' });
+
+      p.dot(0, 0, { r: 4, color: col.ink3 });
+      p.dot(bx, 0, { r: 4, color: col.ink3 });
+      p.dot(bx, ay, { r: 7, color: col.accent });
+      p.text('C', bx, ay, { dx: 10, dy: -8, color: col.accent, font: '700 13px system-ui' });
+      p.text('A', 0, 0, { dx: -14, dy: 16, color: col.ink3, font: '700 13px system-ui' });
+      p.text('B', bx, 0, { dx: 8, dy: 18, color: col.ink3, font: '700 13px system-ui' });
+    }
+  });
+
+  const box = TR.$('#ctl-tri');
+  const sA = TR.slider(box, {
+    label: 'Kąt α', min: 5, max: 85, step: .5, value: alpha,
+    format: (v) => TR.fmt(v, 1) + '°',
+    onInput: (v) => { alpha = v; refresh(); }
+  });
+  const sC = TR.slider(box, {
+    label: 'Skala — długość przeciwprostokątnej <var>c</var>', min: 1.5, max: 7, step: .1, value: c,
+    format: (v) => TR.fmt(v, 1),
+    onInput: (v) => { c = v; refresh(); }
+  });
+
+  function refresh() {
+    const a = alpha * TR.D2R;
+    const bx = c * Math.cos(a), ay = c * Math.sin(a);
+    TR.$('#t-a').textContent = TR.fmt(alpha, 1) + '°';
+    TR.$('#t-la').textContent = TR.fmt(ay, 2);
+    TR.$('#t-lb').textContent = TR.fmt(bx, 2);
+    TR.$('#t-lc').textContent = TR.fmt(c, 2);
+    TR.$('#t-sin').textContent = TR.fmt(Math.sin(a), 4);
+    TR.$('#t-cos').textContent = TR.fmt(Math.cos(a), 4);
+    TR.$('#t-tg').textContent = TR.fmt(Math.tan(a), 4);
+    TR.$('#t-ctg').textContent = TR.fmt(1 / Math.tan(a), 4);
+    plot.render();
+  }
+
+  plot.onPointer(function (st) {
+    const x = Math.max(.3, st.x), y = Math.max(.15, st.y);
+    alpha = TR.clamp(Math.atan2(y, x) * TR.R2D, 5, 85);
+    c = TR.clamp(Math.hypot(x, y), 1.5, 7);
+    sA.value = alpha; sC.value = c;
+    refresh();
+  });
+
+  refresh();
+})();
+
+/* ============ widget: geometria kątów 30/45/60 ============ */
+(function () {
+  let fig = 'sq';
+
+  const NOTES = {
+    sq: 'Kwadrat o boku 1 przecięty przekątną daje trójkąt prostokątny z kątami 45°, 45°, 90°. ' +
+        'Przekątna z Pitagorasa: <span class="math">√(1²+1²) = √2</span>. Stąd ' +
+        '<span class="math">sin 45° = cos 45° = <span class="frac"><span>1</span><span>√2</span></span> = ' +
+        '<span class="frac"><span>√2</span><span>2</span></span></span> oraz ' +
+        '<span class="math">tg 45° = <span class="frac"><span>1</span><span>1</span></span> = 1</span>.',
+    eq: 'Trójkąt równoboczny o boku 2 przecięty wysokością daje trójkąt o kątach 30°, 60°, 90°, ' +
+        'z bokami 1 (połowa podstawy), <span class="math">√3</span> (wysokość, z Pitagorasa: ' +
+        '<span class="math">√(2²−1²)</span>) i 2 (przeciwprostokątna). Stąd ' +
+        '<span class="math">sin 30° = <span class="frac"><span>1</span><span>2</span></span></span>, ' +
+        '<span class="math">cos 30° = <span class="frac"><span>√3</span><span>2</span></span></span>, ' +
+        '<span class="math">tg 60° = <span class="frac"><span>√3</span><span>1</span></span> = √3</span>.'
+  };
+
+  const plot = new TR.Plot(TR.$('#c-geo'), {
+    xmin: -.6, xmax: 3.4, ymin: -.6, ymax: 2.6, equal: true, ratio: .8, maxH: 430,
+    draw: function (p) {
+      const c = TR.colors();
+      p.canvas.classList.add('static');
+
+      if (fig === 'sq') {
+        // kwadrat 1x1 z przekątną
+        p.path([[0, 0], [1.6, 0], [1.6, 1.6], [0, 1.6], [0, 0]], { color: c.line2, width: 1.8, dash: [5, 4] });
+        p.path([[0, 0], [1.6, 0], [1.6, 1.6], [0, 0]], { color: null, width: 0, fill: TR.alpha(c.accent, .1) });
+        p.seg(0, 0, 1.6, 0, { color: c.cos, width: 3.2 });
+        p.seg(1.6, 0, 1.6, 1.6, { color: c.sin, width: 3.2 });
+        p.seg(0, 0, 1.6, 1.6, { color: c.ink, width: 3 });
+        p.rightAngle(1.6, 0, [-1, 0], [0, 1], .18, {});
+        p.angleArc(0, 0, .45, 0, Math.PI / 4, { color: c.accent, width: 2 });
+        p.text('45°', .62, .16, { color: c.accent, font: '700 13px system-ui' });
+        p.text('1', .8, 0, { align: 'center', dy: 18, color: c.cos, font: '600 14px system-ui' });
+        p.text('1', 1.6, .8, { dx: 10, color: c.sin, font: '600 14px system-ui' });
+        p.text('√2', .7, .95, { align: 'right', color: c.ink, font: '600 14px system-ui' });
+      } else {
+        // trójkąt równoboczny o boku 2 z wysokością
+        const s = 1.3, h = s * Math.sqrt(3);
+        p.path([[0, 0], [2 * s, 0], [s, h], [0, 0]], { color: c.line2, width: 1.8, dash: [5, 4] });
+        p.path([[0, 0], [s, 0], [s, h], [0, 0]], { color: null, width: 0, fill: TR.alpha(c.accent, .1) });
+        p.seg(0, 0, s, 0, { color: c.cos, width: 3.2 });
+        p.seg(s, 0, s, h, { color: c.sin, width: 3.2 });
+        p.seg(0, 0, s, h, { color: c.ink, width: 3 });
+        p.rightAngle(s, 0, [-1, 0], [0, 1], .18, {});
+        p.angleArc(0, 0, .5, 0, Math.PI / 3, { color: c.accent, width: 2 });
+        p.text('60°', .62, .22, { color: c.accent, font: '700 13px system-ui' });
+        p.angleArc(s, h, .42, -Math.PI / 2 - Math.PI / 6, -Math.PI / 2, { color: c.gold, width: 2 });
+        p.text('30°', s, h, { align: 'center', dx: -12, dy: 26, color: c.gold, font: '700 13px system-ui' });
+        p.text('1', s / 2, 0, { align: 'center', dy: 18, color: c.cos, font: '600 14px system-ui' });
+        p.text('√3', s, h / 2, { dx: 10, color: c.sin, font: '600 14px system-ui' });
+        p.text('2', s / 2 - .05, h / 2, { align: 'right', color: c.ink, font: '600 14px system-ui' });
+        p.text('2', 1.5 * s, h / 2, { dx: 8, color: c.ink3, font: '600 13px system-ui' });
+      }
+    }
+  });
+
+  function setFig(f) {
+    fig = f;
+    TR.$$('.chip[data-fig]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fig === f)));
+    TR.$('#geo-note').innerHTML = NOTES[f];
+    plot.render();
+  }
+  TR.$$('.chip[data-fig]').forEach(b => b.addEventListener('click', () => setFig(b.dataset.fig)));
+  setFig('sq');
+})();
+
+/* ============ solver trójkąta prostokątnego ============ */
+(function () {
+  const ids = ['s-alpha', 's-a', 's-b', 's-c'];
+  const out = TR.$('#s-out');
+
+  function num(id) {
+    const v = TR.parseAnswer(TR.$('#' + id).value);
+    return isFinite(v) ? v : null;
+  }
+
+  function solve() {
+    const al = num('s-alpha'), a = num('s-a'), b = num('s-b'), c = num('s-c');
+    const given = [al, a, b, c].filter(v => v !== null).length;
+    if (given !== 2) {
+      out.innerHTML = '<div class="warn" style="margin:0">Podaj dokładnie dwie dane — ' +
+        'teraz jest ich ' + given + '.</div>';
+      return;
+    }
+    if ([a, b, c].some(v => v !== null && v <= 0) || (al !== null && (al <= 0 || al >= 90))) {
+      out.innerHTML = '<div class="warn" style="margin:0">Boki muszą być dodatnie, ' +
+        'a kąt ostry musi mieścić się w przedziale (0°, 90°).</div>';
+      return;
+    }
+
+    let A = al, A2, ra, rb, rc, how;
+    if (al !== null && c !== null) { ra = c * Math.sin(al * TR.D2R); rb = c * Math.cos(al * TR.D2R); rc = c;
+      how = 'a = c · sin α, &nbsp; b = c · cos α'; }
+    else if (al !== null && a !== null) { ra = a; rc = a / Math.sin(al * TR.D2R); rb = a / Math.tan(al * TR.D2R);
+      how = 'c = a / sin α, &nbsp; b = a / tg α'; }
+    else if (al !== null && b !== null) { rb = b; rc = b / Math.cos(al * TR.D2R); ra = b * Math.tan(al * TR.D2R);
+      how = 'c = b / cos α, &nbsp; a = b · tg α'; }
+    else if (a !== null && b !== null) { ra = a; rb = b; rc = Math.hypot(a, b); A = Math.atan2(a, b) * TR.R2D;
+      how = 'c = √(a² + b²) &nbsp;(Pitagoras), &nbsp; α = arctg (a/b)'; }
+    else if (a !== null && c !== null) {
+      if (a >= c) { out.innerHTML = '<div class="warn" style="margin:0">Przeciwprostokątna musi być ' +
+        'najdłuższym bokiem: potrzeba a &lt; c.</div>'; return; }
+      ra = a; rc = c; rb = Math.sqrt(c * c - a * a); A = Math.asin(a / c) * TR.R2D;
+      how = 'b = √(c² − a²), &nbsp; α = arcsin (a/c)';
+    } else {
+      if (b >= c) { out.innerHTML = '<div class="warn" style="margin:0">Przeciwprostokątna musi być ' +
+        'najdłuższym bokiem: potrzeba b &lt; c.</div>'; return; }
+      rb = b; rc = c; ra = Math.sqrt(c * c - b * b); A = Math.acos(b / c) * TR.R2D;
+      how = 'a = √(c² − b²), &nbsp; α = arccos (b/c)';
+    }
+    A2 = 90 - A;
+
+    out.innerHTML =
+      '<div class="readout" style="margin-top:0">' +
+        '<div class="r"><div class="k">α</div><div class="val">' + TR.fmt(A, 2) + '°</div></div>' +
+        '<div class="r"><div class="k">β</div><div class="val">' + TR.fmt(A2, 2) + '°</div></div>' +
+        '<div class="r sin-b"><div class="k">a</div><div class="val sin-c">' + TR.fmt(ra, 3) + '</div></div>' +
+        '<div class="r cos-b"><div class="k">b</div><div class="val cos-c">' + TR.fmt(rb, 3) + '</div></div>' +
+        '<div class="r"><div class="k">c</div><div class="val">' + TR.fmt(rc, 3) + '</div></div>' +
+        '<div class="r"><div class="k">pole</div><div class="val">' + TR.fmt(ra * rb / 2, 3) + '</div></div>' +
+      '</div>' +
+      '<p style="margin:12px 0 0"><small>Użyte wzory: <span class="math">' + how + '</span></small></p>';
+  }
+
+  TR.$('#s-go').addEventListener('click', solve);
+  TR.$('#s-clear').addEventListener('click', function () {
+    ids.forEach(id => { TR.$('#' + id).value = ''; });
+    out.innerHTML = '';
+  });
+  ids.forEach(id => TR.$('#' + id).addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') solve();
+  }));
+})();
+
+/* ============ zadania ============ */
+(function () {
+  const NAMES = { sin: 'sin', cos: 'cos', tg: 'tg', ctg: 'ctg' };
+
+  function triple() {
+    // pitagorejskie trójki — żeby wyniki były ładne
+    const t = TR.rnd.pick([[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17], [9, 12, 15], [7, 24, 25]]);
+    return { a: t[0], b: t[1], c: t[2] };
+  }
+
+  function gen() {
+    const kind = TR.rnd.int(1, 5);
+
+    if (kind === 1) {
+      const t = triple();
+      const fn = TR.rnd.pick(['sin', 'cos', 'tg', 'ctg']);
+      const val = { sin: t.a / t.c, cos: t.b / t.c, tg: t.a / t.b, ctg: t.b / t.a }[fn];
+      const frac = { sin: t.a + '/' + t.c, cos: t.b + '/' + t.c, tg: t.a + '/' + t.b, ctg: t.b + '/' + t.a }[fn];
+      return {
+        kind: 'input',
+        q: 'W trójkącie prostokątnym przyprostokątna przeciwległa do kąta <var>α</var> ma długość ' +
+           '<b>' + t.a + '</b>, przyległa <b>' + t.b + '</b>, a przeciwprostokątna <b>' + t.c + '</b>.<br>' +
+           'Oblicz <span class="math" style="font-size:1.15em">' + NAMES[fn] + ' α</span>.',
+        answer: val, tol: 0.005,
+        placeholder: 'np. 3/5 lub 0,6',
+        show: TR.fracHTML(frac) + ' = ' + TR.fmt(val, 4),
+        why: 'Z definicji: ' + NAMES[fn] + ' α = ' + TR.fracHTML(frac) + ' = ' + TR.fmt(val, 4) + '.'
+      };
+    }
+
+    if (kind === 2) {
+      const d = TR.rnd.pick([30, 45, 60]);
+      const fn = TR.rnd.pick(['sin', 'cos', 'tg']);
+      const ex = TR.exact(fn, d);
+      const val = { sin: Math.sin, cos: Math.cos, tg: Math.tan }[fn](d * TR.D2R);
+      const opts = TR.rnd.shuffle(['1/2', '√2/2', '√3/2', '√3/3', '1', '√3']).slice(0, 4);
+      if (opts.indexOf(ex) < 0) opts[0] = ex;
+      const ch = TR.rnd.shuffle(opts);
+      return {
+        kind: 'choice',
+        q: 'Ile wynosi <span class="math" style="font-size:1.2em">' + NAMES[fn] + ' ' + d + '°</span>?',
+        choices: ch.map(TR.fracHTML),
+        correct: ch.indexOf(ex),
+        why: NAMES[fn] + ' ' + d + '° = ' + TR.fracHTML(ex) + ' ≈ ' + TR.fmt(val, 4) +
+             '. To wartość z połowy ' + (d === 45 ? 'kwadratu' : 'trójkąta równobocznego') + '.'
+      };
+    }
+
+    if (kind === 3) {
+      const al = TR.rnd.pick([25, 32, 38, 41, 47, 55, 63, 68]);
+      const c = TR.rnd.int(4, 20);
+      const which = TR.rnd.pick(['a', 'b']);
+      const val = which === 'a' ? c * Math.sin(al * TR.D2R) : c * Math.cos(al * TR.D2R);
+      return {
+        kind: 'input',
+        q: 'W trójkącie prostokątnym przeciwprostokątna ma długość <b>' + c + '</b>, ' +
+           'a kąt ostry <var>α</var> = <b>' + al + '°</b>.<br>Oblicz długość przyprostokątnej <b>' +
+           (which === 'a' ? 'przeciwległej' : 'przyległej') + '</b> do kąta <var>α</var> ' +
+           '(z dokładnością do 0,01).',
+        answer: val, tol: 0.02,
+        placeholder: 'np. 7,42',
+        show: TR.fmt(val, 3),
+        why: which === 'a'
+          ? 'sin α = a/c, więc a = c · sin α = ' + c + ' · sin ' + al + '° = ' + TR.fmt(val, 3) + '.'
+          : 'cos α = b/c, więc b = c · cos α = ' + c + ' · cos ' + al + '° = ' + TR.fmt(val, 3) + '.'
+      };
+    }
+
+    if (kind === 4) {
+      const t = triple();
+      const val = Math.atan2(t.a, t.b) * TR.R2D;
+      return {
+        kind: 'input',
+        q: 'Przyprostokątne trójkąta prostokątnego mają długości <b>' + t.a + '</b> i <b>' + t.b + '</b> ' +
+           '(pierwsza jest przeciwległa do kąta <var>α</var>).<br>' +
+           'Oblicz miarę kąta <var>α</var> w stopniach, z dokładnością do 0,1°.',
+        answer: val, tol: 0.15, unit: '°',
+        placeholder: 'np. 36,9',
+        show: TR.fmt(val, 2) + '°',
+        why: 'tg α = a/b = ' + TR.fracHTML(t.a + '/' + t.b) + ' = ' + TR.fmt(t.a / t.b, 4) +
+             ', więc α = arctg ' + TR.fmt(t.a / t.b, 4) + ' ≈ ' + TR.fmt(val, 2) + '°. ' +
+             'Na kalkulatorze: shift + tan, tryb DEG.'
+      };
+    }
+
+    // zależność sin/cos kątów dopełniających
+    const al = TR.rnd.pick([18, 27, 34, 41, 52, 63, 71]);
+    const fn = TR.rnd.pick(['sin', 'cos']);
+    const other = fn === 'sin' ? 'cos' : 'sin';
+    return {
+      kind: 'choice',
+      q: 'Wyrażenie <span class="math" style="font-size:1.15em">' + NAMES[fn] + ' ' + al + '°</span> ' +
+         'jest równe:',
+      choices: [
+        NAMES[other] + ' ' + (90 - al) + '°',
+        NAMES[other] + ' ' + al + '°',
+        NAMES[fn] + ' ' + (90 - al) + '°',
+        '−' + NAMES[other] + ' ' + (90 - al) + '°'
+      ],
+      correct: 0,
+      why: 'W trójkącie prostokątnym kąty ostre się dopełniają do 90°, a boki zamieniają role. ' +
+           'Stąd sin α = cos (90° − α) i cos α = sin (90° − α).'
+    };
+  }
+
+  TR.quiz(TR.$('#quiz'), gen, { count: 8, moduleId: 'trojkat', pass: 0.75 });
+})();
+</script>
+</body>
+</html>

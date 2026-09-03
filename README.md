@@ -56,3 +56,9 @@ npx wrangler deploy
 ```
 
 Wymaga `CLOUDFLARE_API_TOKEN` i `CLOUDFLARE_ACCOUNT_ID` w środowisku.
+
+Adres produkcyjny: <https://trygonometria.pwojto-seo.workers.dev>
+
+`html_handling: "auto-trailing-slash"` sprawia, że `/kolo.html` przekierowuje
+na `/kolo` — oba adresy działają, linki wewnątrz witryny używają wersji z `.html`,
+żeby ta sama struktura plików działała też na zwykłym serwerze statycznym.

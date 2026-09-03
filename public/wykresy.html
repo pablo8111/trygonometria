@@ -20,6 +20,25 @@
     wszystko, co drga: struny, prąd zmienny, ruch wahadła, dźwięk.</p>
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Sinus jest już funkcją, ale wciąż wygląda jak tabelka liczb. Nie widać, jak się zachowuje:
+      gdzie rośnie, gdzie ma maksimum, co się dzieje po jakimś czasie.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Narysujmy jej wykres. Skoro punkt jedzie po okręgu w kółko, to jego wysokość musi
+      <strong>falować</strong> — i tak jest. Sinusoida to okrąg rozwinięty na prostą.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bo ten kształt opisuje wszystko, co drga: dźwięk, światło, prąd, wahadło, falę na wodzie.
+      Cztery parametry wykresu to cztery fizyczne wielkości, które ten ruch określają.</p>
+    </div>
+  </div>
+
   <h2>Od okręgu do fali</h2>
   <p>Punkt po lewej jedzie po kole jednostkowym. Jego <span class="sin-c">wysokość</span>
   (czyli sinus kąta) jest rysowana po prawej — kąt na osi poziomej, sinus na pionowej.
@@ -86,6 +105,58 @@
     Funkcja parzysta jest symetryczna względem osi <var>y</var> (cosinusoida wygląda tak samo
     w lewo i w prawo od zera). Nieparzysta jest symetryczna względem punktu
     <span class="math">(0,&nbsp;0)</span> — obrót o 180° nakłada wykres na siebie.
+  </div>
+
+
+  <h2>Dlaczego akurat ten kształt jest wszędzie</h2>
+  <p>Sinusoida nie jest jednym z wielu możliwych kształtów fali — jest <strong>tym jedynym</strong>,
+  do którego natura ciągle wraca. Są ku temu dwa poważne powody.</p>
+
+  <div class="grid grid-2">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Powód pierwszy: siła sprężysta</h3>
+      <p style="margin:0;font-size:.95rem">Gdy coś jest wytrącone z równowagi, przyroda bardzo często
+      działa siłą <em>proporcjonalną do wychylenia i skierowaną z powrotem</em>:
+      im dalej odciągniesz sprężynę, tym mocniej ciągnie. Z takiego warunku wynika ruch, którego
+      jedynym możliwym opisem jest sinus. Dotyczy to sprężyny, wahadła, drgającej struny,
+      atomu w krysztale i obwodu elektrycznego z cewką i kondensatorem — dlatego wszystkie
+      zachowują się identycznie, choć nie mają ze sobą nic wspólnego.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">Powód drugi: twierdzenie Fouriera</h3>
+      <p style="margin:0;font-size:.95rem"><strong>Każdy</strong> powtarzalny przebieg — nawet
+      poszarpany, nawet dziwaczny — da się przedstawić jako suma zwykłych sinusoid o różnych
+      częstotliwościach. Sinus jest więc dla fal tym, czym liczby pierwsze dla liczb naturalnych:
+      cegiełką, z której zbudowana jest reszta. Na tym stoją MP3, JPEG, korektor graficzny
+      i analiza EKG.</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <span class="t">Cztery parametry to cztery wielkości fizyczne</span>
+    <div class="table-scroll" style="margin:.4em 0 0">
+      <table>
+        <thead><tr><th class="lbl">parametr</th><th>w matematyce</th><th>w fizyce drgań</th><th>przykład: dźwięk</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl"><var>a</var></td><td>amplituda</td><td>jak mocno się wychyla</td><td>głośność</td></tr>
+          <tr><td class="lbl"><var>b</var></td><td>ściśnięcie w poziomie</td><td>częstotliwość <span class="math"><var>f</var> = 1/<var>T</var></span></td><td>wysokość dźwięku</td></tr>
+          <tr><td class="lbl"><var>c</var></td><td>przesunięcie poziome</td><td>faza — kiedy się zaczyna</td><td>opóźnienie w głośniku</td></tr>
+          <tr><td class="lbl"><var>d</var></td><td>przesunięcie pionowe</td><td>składowa stała</td><td>ciśnienie otoczenia</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="t">Konkretnie: gniazdko w ścianie</span>
+    Napięcie w polskiej sieci to
+    <span class="math"><var>U</var>(<var>t</var>) = 325 · sin(2π · 50 · <var>t</var>)</span> woltów.
+    Czytamy z tego wzoru: amplituda <strong>325 V</strong> (tyle wynosi szczyt),
+    <span class="math"><var>b</var> = 2π·50</span>, więc okres
+    <span class="math"><var>T</var> = 2π/<var>b</var> = 1/50 = 0,02 s</span> — pięćdziesiąt pełnych
+    cykli na sekundę. A skąd znajome <strong>230 V</strong>? To wartość skuteczna,
+    czyli <span class="math">325/√2</span> — bo napięcie przez większość czasu jest mniejsze
+    od szczytowego.
   </div>
 
   <h2>Przekształcenia wykresu</h2>
@@ -183,6 +254,15 @@
       współczynnika: dla <span class="math"><var>y</var> = −2sin <var>x</var></span> amplituda to 2.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Co dalej</span>
+    <p>Umiemy narysować i odczytać wykres. Ale w zadaniach wyrażenia trygonometryczne przychodzą
+    w postaci nieporęcznej — i trzeba je najpierw przepisać na wygodniejszą. Do tego służą
+    tożsamości: reguły gramatyki tego języka.
+    <a href="tozsamosci.html">Moduł 05: tożsamości →</a></p>
+  </div>
 
 </div>
 </main>

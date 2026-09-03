@@ -29,6 +29,35 @@
     <var>c</var> naprzeciw <var>γ</var>. Ta konwencja jest w każdym zadaniu, warto ją mieć w palcach.
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Prawdziwe trójkąty — działka, dach, trójkąt między trzema masztami — rzadko mają kąt prosty.
+      A wszystko, co umiemy dotąd, wymagało kąta prostego.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Dwa twierdzenia, które uogólniają to, co znamy: jedno rozszerza twierdzenie Pitagorasa
+      na dowolny kąt, drugie wiąże każdy bok z kątem leżącym naprzeciw niego.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bo trójkąt to najprostsza sztywna figura — i dlatego cały świat mierzy się trójkątami:
+      od mapy Polski po pozycję z GPS-u.</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <span class="t">Dlaczego akurat trójkąty</span>
+    <p style="margin:0">Czworokąt o zadanych czterech bokach można złożyć jak drzwiczki — nie jest
+    sztywny. Trójkąt o zadanych trzech bokach ma tylko jeden możliwy kształt. To znaczy, że
+    <strong>trzy liczby wystarczą, żeby trójkąt był w pełni określony</strong> — a więc wszystkie
+    pozostałe jego wielkości da się z nich wyliczyć. Właśnie tym są oba twierdzenia z tego modułu:
+    przepisem na te obliczenia. Przy okazji to samo tłumaczy, dlaczego kratownice mostów i dachów
+    buduje się z trójkątów, a nie z prostokątów.</p>
+  </div>
+
   <div class="widget">
     <div class="widget-head">
       Trójkąt na żywo
@@ -141,6 +170,46 @@
     </div>
   </div>
 
+
+  <h2>Do czego to jest potrzebne</h2>
+  <p>Pomysł nazywa się <strong>triangulacja</strong> i jest jednym z najstarszych i najbardziej
+  użytecznych w całej nauce: skoro trzy dane określają trójkąt jednoznacznie, to mierząc łatwe
+  wielkości (kąty i jeden bok), dostajemy trudne (odległości, do których nie da się dojść).</p>
+
+  <ul class="uses">
+    <li><b>Jak zmierzono Polskę</b>
+      <span>W XIX i XX wieku kraj pokryto siecią triangulacyjną: łańcuchem trójkątów
+      między wieżami na wzgórzach. Dokładnie mierzono <em>jeden</em> bok (tak zwaną bazę,
+      czasem kilka kilometrów, taśmą inwarową), całą resztę wyliczono z kątów.
+      Na tym stoją wszystkie polskie mapy sprzed epoki satelitów.</span></li>
+    <li><b>GPS</b>
+      <span>Odbiornik zna odległości do kilku satelitów (z czasu przelotu sygnału) i ich położenia.
+      Twoja pozycja to punkt domykający te trójkąty — liczony twierdzeniem cosinusów
+      w wersji przestrzennej.</span></li>
+    <li><b>Odległości do gwiazd</b>
+      <span>Paralaksa: obserwujemy tę samą gwiazdę z dwóch przeciwległych punktów orbity Ziemi
+      (baza = 300 mln km) i mierzymy różnicę kątów. Trójkąt jest ekstremalnie wąski,
+      ale reguły te same.</span></li>
+    <li><b>Budownictwo i geodezja działki</b>
+      <span>Pole trójkąta ze wzoru <span class="math"><var>S</var> = ½<var>ab</var> sin γ</span>
+      to standardowy sposób liczenia powierzchni nieregularnej działki: dzieli się ją na trójkąty
+      i sumuje.</span></li>
+    <li><b>Sejsmologia</b>
+      <span>Epicentrum trzęsienia ziemi wyznacza się z czasów dotarcia fal do trzech stacji —
+      znowu trójkąt.</span></li>
+  </ul>
+
+  <div class="note">
+    <span class="t">Jak te dwa twierdzenia mają się do reszty działu</span>
+    Twierdzenie cosinusów to <strong>twierdzenie Pitagorasa z poprawką na kąt</strong> —
+    dla <span class="math">γ = 90°</span> poprawka znika. Twierdzenie sinusów to z kolei
+    <strong>uogólnienie definicji sinusa</strong> z modułu 02: tam
+    <span class="math">sin α = <var>a</var>/<var>c</var></span> działało tylko przy kącie prostym,
+    tu <span class="math"><var>a</var>/sin α</span> jest stałe dla całego trójkąta.
+    Nic nowego nie spadło z nieba — to te same idee, rozciągnięte na szerszy przypadek.
+    Dokładnie tak, jak koło jednostkowe rozciągnęło definicje z trójkąta na wszystkie kąty.
+  </div>
+
   <h2>Które twierdzenie wybrać</h2>
   <div class="table-scroll">
     <table>
@@ -204,6 +273,15 @@
       trzeba dopisać samemu jako <span class="math">180° − β</span>.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Koło się domknęło</span>
+    <p>Zaczęliśmy od pytania, jak zamienić kąt na liczbę, a skończyliśmy na tym, że umiemy policzyć
+    dowolny trójkąt i opisać dowolne drganie. Zostało to utrwalić — i mieć wszystko pod ręką.
+    <a href="trening.html">Moduł 08: trening →</a> &nbsp;·&nbsp;
+    <a href="sciagawka.html">Moduł 09: ściągawka →</a></p>
+  </div>
 
 </div>
 </main>

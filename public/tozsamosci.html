@@ -20,6 +20,36 @@
     da się wyprowadzić z dwóch rzeczy: z twierdzenia Pitagorasa i z rysunku koła jednostkowego.</p>
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>To samo wyrażenie trygonometryczne można zapisać na wiele sposobów. Jedne dają się
+      policzyć, inne nie — a wyglądają podobnie.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Ustalmy zestaw równości prawdziwych <strong>zawsze</strong>. Wolno nimi zastępować jedno
+      wyrażenie drugim, tak jak w algebrze wolno zastąpić
+      <span class="math">(<var>a</var>+<var>b</var>)<sup>2</sup></span> przez
+      <span class="math"><var>a</var><sup>2</sup>+2<var>ab</var>+<var>b</var><sup>2</sup></span>.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bez nich nie rozwiążesz równania, w którym występuje więcej niż jedna funkcja,
+      i nie uprościsz niczego. To jest skrzynka z narzędziami do wszystkich pozostałych modułów.</p>
+    </div>
+  </div>
+
+  <div class="warn">
+    <span class="t">Tożsamość to nie równanie</span>
+    <p style="margin:0"><strong>Równanie</strong> <span class="math">sin <var>x</var> = 1/2</span>
+    jest prawdziwe tylko dla niektórych <var>x</var> — i naszym zadaniem jest je znaleźć.<br>
+    <strong>Tożsamość</strong> <span class="math">sin<sup>2</sup><var>x</var> + cos<sup>2</sup><var>x</var> = 1</span>
+    jest prawdziwa dla <em>każdego</em> <var>x</var> — nie ma tu czego szukać, to narzędzie,
+    a nie zadanie. Mylenie tych dwóch rzeczy to najczęstsze nieporozumienie w całym dziale.</p>
+  </div>
+
   <h2>Jedynka trygonometryczna</h2>
   <p>Punkt <span class="math"><var>P</var> = (cos α, sin α)</span> leży na okręgu o promieniu 1.
   Okrąg ten ma równanie <span class="math"><var>x</var><sup>2</sup> + <var>y</var><sup>2</sup> = 1</span>.
@@ -155,6 +185,57 @@
     </div>
   </div>
 
+
+  <h2>Dlaczego wzory na sumę kątów są ważniejsze, niż wyglądają</h2>
+  <p>Na pierwszy rzut oka to tylko kolejne wzory do zapamiętania. W rzeczywistości mówią coś
+  bardzo mocnego o świecie.</p>
+
+  <div class="key">
+    <span class="t">Co z nich wynika fizycznie</span>
+    <p style="margin:0">Dodaj do siebie dwa drgania o <strong>tej samej częstotliwości</strong>,
+    ale różnych amplitudach i fazach. Ze wzoru na sinus sumy wychodzi, że rezultatem jest
+    <strong>znowu drganie o tej samej częstotliwości</strong> — tylko o innej amplitudzie i fazie.
+    Nie powstaje żaden nowy kształt.</p>
+    <p style="margin:.6em 0 0">Dlatego dwa głośniki grające ten sam ton dają ten sam ton, tylko
+    głośniej albo — przy przeciwnej fazie — ciszej. Na tym stoją słuchawki z aktywną redukcją
+    hałasu: dokładają falę przesuniętą o <span class="math">π</span>, a suma się wygasza.
+    To nie jest metafora, to dosłownie ten wzór.</p>
+  </div>
+
+  <div class="aside">
+    <span class="t">Skąd się bierze wzór na cosinus różnicy</span>
+    <p>Weź dwa punkty na kole jednostkowym: <span class="math"><var>P</var> = (cos <var>x</var>, sin <var>x</var>)</span>
+    i <span class="math"><var>Q</var> = (cos <var>y</var>, sin <var>y</var>)</span>.
+    Policz odległość <span class="math"><var>PQ</var></span> na dwa sposoby.</p>
+    <p><strong>Sposób pierwszy</strong> — ze wzoru na odległość punktów, rozwijając kwadraty
+    i korzystając z jedynki trygonometrycznej, dostajesz
+    <span class="math"><var>PQ</var><sup>2</sup> = 2 − 2(cos <var>x</var> cos <var>y</var> + sin <var>x</var> sin <var>y</var>)</span>.</p>
+    <p><strong>Sposób drugi</strong> — obróć całą sytuację tak, żeby <var>Q</var> wylądował w punkcie
+    <span class="math">(1, 0)</span>. Odległość się nie zmieni, a <var>P</var> jest teraz pod kątem
+    <span class="math"><var>x</var> − <var>y</var></span>, więc
+    <span class="math"><var>PQ</var><sup>2</sup> = 2 − 2cos(<var>x</var> − <var>y</var>)</span>.</p>
+    <p>Porównaj obie linijki — i masz wzór. Reszta (suma, sinus, kąt podwojony) wynika już z tego
+    jednego przez podstawienia. <strong>Nie trzeba więc pamiętać sześciu wzorów, tylko jeden
+    i umieć się poruszać.</strong></p>
+  </div>
+
+  <h2>Do czego to jest potrzebne</h2>
+  <ul class="uses">
+    <li><b>Upraszczanie przed rozwiązaniem</b>
+      <span>Równania z dwiema różnymi funkcjami (np. <span class="math">sin 2<var>x</var> = cos <var>x</var></span>)
+      są nie do ruszenia, dopóki nie sprowadzisz wszystkiego do jednej. Wzór na kąt podwojony
+      robi dokładnie to.</span></li>
+    <li><b>Wzory redukcyjne w praktyce</b>
+      <span>Kalkulator i tablice znają tylko pierwszą ćwiartkę. Redukcja pozwala każdy kąt sprowadzić
+      do kąta ostrego — dlatego w tablicach matematycznych jest tylko zakres 0°–90°.</span></li>
+    <li><b>Fizyka fal — interferencja</b>
+      <span>Nakładanie się fal, dudnienia, redukcja szumu, fale stojące na strunie.
+      Wszystko to są wzory na sumę kątów zastosowane do drgań.</span></li>
+    <li><b>Rachunek różniczkowy i całkowy (klasa 3–4)</b>
+      <span>Bez tożsamości nie policzysz większości całek z funkcjami trygonometrycznymi.
+      To narzędzie, do którego jeszcze wrócisz.</span></li>
+  </ul>
+
   <h2>Kąt podwojony</h2>
   <p>To po prostu <span class="math"><var>y</var> = <var>x</var></span> w powyższych wzorach:</p>
 
@@ -214,6 +295,15 @@
       kąt wpada w ćwiartkę III, gdzie sinus jest ujemny.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Co dalej</span>
+    <p>Mamy słownik i mamy gramatykę. Czas na pytanie odwrotne do wszystkiego, co robiliśmy
+    dotąd: nie „jaka jest wartość dla tego kąta”, tylko <strong>„dla jakiego kąta wartość
+    jest taka”</strong>. Odpowiedzi będzie nieskończenie wiele.
+    <a href="rownania.html">Moduł 06: równania →</a></p>
+  </div>
 
 </div>
 </main>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>00. Po co jest trygonometria — Trygonometria</title>
+<meta name="description" content="Skąd wzięła się trygonometria, na jakiej jednej myśli stoi i do czego jest dziś potrzebna: od pomiaru wysokości wieży po prąd w gniazdku i GPS.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="kicker">Moduł 00 · zacznij tutaj</div>
+    <h1>Po co jest trygonometria</h1>
+    <p class="lead">Zanim pojawi się pierwszy wzór, warto wiedzieć, na jakie pytanie ten dział
+    odpowiada. Bo odpowiada na dwa — i dopiero po drodze okazuje się, że to jedno i to samo pytanie.</p>
+  </div>
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Kąt nie jest liczbą, którą da się wstawić do wzoru. Można go narysować i zmierzyć kątomierzem,
+      ale nie można go dodać do długości ani pomnożyć przez masę.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Zbudujmy <strong>słownik</strong>, który każdemu kątowi przypisuje liczbę — i to tak, żeby ta liczba
+      mówiła coś użytecznego o kształcie. Tym słownikiem są sinus, cosinus i tangens.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bo wtedy geometrię można liczyć zamiast rysować. A przy okazji dostajemy jedyny znany
+      matematyce porządny opis wszystkiego, co się powtarza: fal, drgań, obrotów.</p>
+    </div>
+  </div>
+
+  <h2>Dwa problemy, które wyglądają na niezwiązane</h2>
+
+  <h3>Problem pierwszy: jak zmierzyć to, do czego nie da się podejść</h3>
+  <p>Chcesz znać wysokość wieży kościoła. Nie wejdziesz na nią z taśmą mierniczą. Chcesz znać
+  szerokość rzeki — nie przepłyniesz jej ze zwijaną miarką. Chcesz znać odległość do Księżyca —
+  tym bardziej.</p>
+  <p>Ale <strong>kąt umiesz zmierzyć zawsze</strong>, stojąc w miejscu, przyrządem wielkości pudełka.
+  Wystarczy celownik i podziałka. Pytanie brzmi: czy z kąta i jednej odległości, którą <em>da się</em>
+  zmierzyć, można wyliczyć tę, której się nie da?</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Wysokość wieży bez wchodzenia na nią
+      <span class="hint">przesuń obserwatora albo zmień kąt</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder"><canvas id="c-tower"></canvas></div>
+      <div class="controls" id="ctl-tower"></div>
+      <div class="readout">
+        <div class="r"><div class="k">Odległość d</div><div class="val" id="w-d">—</div></div>
+        <div class="r"><div class="k">Kąt α</div><div class="val" id="w-al">—</div></div>
+        <div class="r"><div class="k">tg α</div><div class="val" id="w-tg">—</div></div>
+        <div class="r"><div class="k">Wysokość wieży</div><div class="val" id="w-h">—</div></div>
+      </div>
+      <p style="margin:14px 0 0;font-size:.94rem;color:var(--ink-2)">
+        Rachunek jest jednolinijkowy: <span class="math"><var>h</var> = <var>d</var> · tg α + 1,6 m</span>
+        (te 1,6 m to wysokość oczu). Zmierzyłaś dwie rzeczy, które łatwo zmierzyć — odległość po ziemi
+        i kąt — a dostałaś trzecią, której zmierzyć się nie dało.
+        <strong>To jest cała trygonometria w jednym zdaniu.</strong>
+      </p>
+    </div>
+  </div>
+
+  <h3>Problem drugi: jak opisać to, co się powtarza</h3>
+  <p>Wahadło kołysze się w tę i we w tę. Struna gitary drga. Napięcie w gniazdku sto razy na sekundę
+  zmienia znak. Serce bije, pory roku wracają, Księżyc obiega Ziemię. Wszystkie te rzeczy mają
+  wspólną cechę: <strong>wracają do punktu wyjścia i zaczynają od nowa</strong>.</p>
+  <p>Funkcje, które znasz — liniowa, kwadratowa, wykładnicza — tego nie potrafią. Liniowa rośnie
+  w nieskończoność, kwadratowa też, wykładnicza tym bardziej. Żadna z nich nie umie wrócić.
+  Potrzebna jest funkcja, która <em>kręci się w kółko</em>.</p>
+
+  <div class="key">
+    <span class="t">Zaskoczenie</span>
+    Rozwiązanie obu problemów jest to samo. Trójkąt prostokątny, którym mierzysz wieżę, to wycinek
+    okręgu. A punkt jadący po okręgu w kółko to właśnie coś, co wraca do punktu wyjścia.
+    <strong>Trójkąt daje liczby, okrąg daje powtarzalność, a to jest ta sama konstrukcja
+    oglądana z dwóch stron.</strong>
+  </div>
+
+  <h2>Jedna myśl, na której to wszystko stoi</h2>
+  <p>Cała trygonometria opiera się na jednej obserwacji, na tyle prostej, że łatwo ją przeoczyć:</p>
+
+  <div class="key">
+    <span class="t">Fundament</span>
+    <p style="margin:0;font-size:1.05rem">Powiększ trójkąt prostokątny dwa razy. Wszystkie boki będą
+    dwa razy dłuższe — ale <strong>stosunek dowolnych dwóch boków się nie zmieni</strong>.
+    Stosunek nie zależy więc od trójkąta. Zależy wyłącznie od <strong>kąta</strong>.</p>
+  </div>
+
+  <p>To znaczy, że stosunkowi boków wolno nadać nazwę zależną tylko od kąta — i tak powstaje funkcja.
+  Sprawdź to poniżej: dwa trójkąty o różnych rozmiarach, ten sam kąt, te same trzy liczby po prawej.</p>
+
+  <div class="widget">
+    <div class="widget-head">
+      Dwa trójkąty, ten sam kąt, te same stosunki
+      <span class="hint">zmień kąt i rozmiar drugiego trójkąta</span>
+    </div>
+    <div class="widget-body">
+      <div class="canvas-holder"><canvas id="c-sim"></canvas></div>
+      <div class="controls" id="ctl-sim"></div>
+      <div class="table-scroll" style="margin-bottom:0">
+        <table id="tbl-sim">
+          <thead><tr><th class="lbl"></th><th>mały trójkąt</th><th>duży trójkąt</th><th>zgadza się?</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p style="margin:14px 0 0;font-size:.94rem;color:var(--ink-2)">
+        Długości boków (górna część tabeli) różnią się. Ich stosunki (dolna część) — nigdy.
+        Dlatego ma sens pisać <span class="math">sin 30°</span> bez pytania „ale w jakim trójkącie?”.
+      </p>
+    </div>
+  </div>
+
+  <div class="aside">
+    <span class="t">Skąd nazwy</span>
+    <p><strong>Sinus</strong> to pomyłka tłumacza. Hinduscy matematycy nazywali tę wielkość
+    <em>jyā</em> („cięciwa łuku”, dosłownie: cięciwa łuku w sensie broni). Arabowie zapisali to
+    jako <em>jiba</em>, ale w piśmie bez samogłosek wyglądało to tak samo jak <em>jaib</em> —
+    „zatoka, fałda szaty”. Tłumacz na łacinę w XII wieku przełożył więc wiernie: <em>sinus</em>,
+    czyli zatoka. I tak zostało.</p>
+    <p><strong>Tangens</strong> i <strong>secans</strong> to za to nazwy uczciwe: po łacinie
+    „styczna” i „sieczna”. Na kole jednostkowym tangens naprawdę jest odcinkiem odmierzonym
+    na stycznej do okręgu — zobaczysz to w module 03.</p>
+  </div>
+
+  <h2>Skąd się to wzięło historycznie</h2>
+  <p>Trygonometria nie powstała, żeby dręczyć licealistów. Powstała, bo ludzie chcieli wiedzieć,
+  gdzie są i gdzie będą planety.</p>
+  <ul>
+    <li><strong>II w. p.n.e., Hipparch z Nikei.</strong> Buduje pierwszą tablicę cięciw, żeby liczyć
+    pozycje ciał niebieskich. To pra-tablica sinusów.</li>
+    <li><strong>II w. n.e., Ptolemeusz.</strong> W <em>Almageście</em> podaje tablice z dokładnością
+    do pięciu miejsc — i wzory, które dziś nazywamy wzorami na sinus sumy kątów.</li>
+    <li><strong>V–XII w., Indie i świat arabski.</strong> Pojawia się sinus w dzisiejszej postaci
+    (stosunek, nie cięciwa) i cała reszta funkcji.</li>
+    <li><strong>XVI–XVIII w., nawigacja.</strong> Bez trygonometrii sferycznej nie da się przepłynąć
+    oceanu i wiedzieć, gdzie się jest. Państwa fundują nagrody za tablice.</li>
+    <li><strong>XVIII w., Euler.</strong> Przewrót: sinus przestaje być odcinkiem w okręgu, a staje się
+    <strong>funkcją liczby rzeczywistej</strong>. Od tego momentu można go różniczkować, całkować
+    i wstawiać do równań fizyki. To jest dokładnie ta wersja, której uczysz się w liceum.</li>
+  </ul>
+
+  <h2>Do czego to jest potrzebne dzisiaj</h2>
+  <ul class="uses">
+    <li><b>Fizyka — rozkład sił</b>
+      <span>Ciało na równi pochyłej o kącie <var>α</var>: siła ściągająca w dół równi to
+      <span class="math"><var>F</var> = <var>mg</var> · sin α</span>, siła docisku to
+      <span class="math"><var>mg</var> · cos α</span>. Każde zadanie z równią zaczyna się od sinusa.</span></li>
+    <li><b>Fizyka — drgania i fale</b>
+      <span>Wychylenie wahadła, ruch masy na sprężynie, fala na strunie i fala dźwiękowa mają
+      ten sam opis: <span class="math"><var>x</var>(<var>t</var>) = <var>A</var> sin(ω<var>t</var> + φ)</span>.
+      Trzy liczby — amplituda, częstość, faza — i tyle.</span></li>
+    <li><b>Elektryczność</b>
+      <span>Napięcie w gniazdku to dosłownie
+      <span class="math"><var>U</var>(<var>t</var>) = 325 · sin(2π · 50 · <var>t</var>)</span> woltów.
+      Znajome 230 V to wartość skuteczna, czyli <span class="math">325/√2</span>.</span></li>
+    <li><b>Nawigacja i GPS</b>
+      <span>Triangulacja: znasz odległości do kilku satelitów, wyliczasz swoje położenie
+      z twierdzenia cosinusów. Cała mapa Polski została w XIX i XX wieku zmierzona
+      łańcuchem trójkątów, bok po boku.</span></li>
+    <li><b>Grafika komputerowa i gry</b>
+      <span>Każdy obrót obiektu na ekranie to mnożenie przez macierz zbudowaną z sinusów
+      i cosinusów. Kamera, która krąży wokół postaci, liczy sinus sześćdziesiąt razy na sekundę.</span></li>
+    <li><b>Dźwięk, obraz, kompresja</b>
+      <span>Twierdzenie Fouriera: <em>każdy</em> powtarzalny sygnał da się rozłożyć na sumę sinusów.
+      Na tym stoją MP3, JPEG, korektor graficzny w odtwarzaczu i rozpoznawanie mowy.</span></li>
+    <li><b>Medycyna i geologia</b>
+      <span>Tomografia komputerowa składa obraz przekroju z pomiarów pod wieloma kątami.
+      Badanie sejsmiczne szuka złóż, mierząc kąty odbicia fal.</span></li>
+  </ul>
+
+  <div class="note">
+    <span class="t">Co z tego wynika dla nauki</span>
+    Jeśli kiedyś na lekcji fizyki zobaczysz wzór z sinusem i pomyślisz „skąd to się wzięło” —
+    prawie zawsze odpowiedź brzmi: albo ktoś rozłożył wektor na składowe (moduł 02),
+    albo coś się kręci lub drga (moduł 04). Nie ma trzeciej możliwości.
+  </div>
+
+  <h2>Mapa działu: od ogółu do szczegółu</h2>
+  <p>Kolejność modułów nie jest przypadkowa. Każdy odpowiada na pytanie, które zostawił otwarte
+  poprzedni.</p>
+
+  <ul class="chain">
+    <li><span class="num">01</span><span class="txt"><a href="katy.html"><b>Kąty i miara łukowa</b></a>
+      <span>Najpierw język. Czym jest kąt jako liczba i dlaczego matematyka woli radiany od stopni.</span></span></li>
+    <li><span class="num">02</span><span class="txt"><a href="trojkat.html"><b>Trójkąt prostokątny</b></a>
+      <span>Definicja w najprostszym możliwym przypadku. Tu powstaje słownik: kąt → liczba.</span></span></li>
+    <li><span class="num">03</span><span class="txt"><a href="kolo.html"><b>Koło jednostkowe</b></a>
+      <span>Definicja z modułu 02 działa tylko dla kątów ostrych. Rozszerzamy ją na wszystkie kąty
+      tak, żeby stare reguły dalej obowiązywały.</span></span></li>
+    <li><span class="num">04</span><span class="txt"><a href="wykresy.html"><b>Wykresy</b></a>
+      <span>Skoro sinus jest funkcją, to ma wykres. I okazuje się, że to fala — czyli kształt,
+      którym fizyka opisuje pół świata.</span></span></li>
+    <li><span class="num">05</span><span class="txt"><a href="tozsamosci.html"><b>Tożsamości</b></a>
+      <span>Reguły gry: co wolno przepisać na co. Bez tego nie ruszysz z miejsca w żadnym trudniejszym
+      zadaniu.</span></span></li>
+    <li><span class="num">06</span><span class="txt"><a href="rownania.html"><b>Równania</b></a>
+      <span>Pytanie odwrotne: znam wartość, szukam kąta. Odpowiedzi jest nieskończenie wiele
+      i trzeba umieć je zapisać jednym wzorem.</span></span></li>
+    <li><span class="num">07</span><span class="txt"><a href="twierdzenia.html"><b>Twierdzenia sinusów i cosinusów</b></a>
+      <span>Powrót do punktu wyjścia — ale teraz trójkąt nie musi mieć kąta prostego.
+      Koło się domyka.</span></span></li>
+    <li><span class="num">08</span><span class="txt"><a href="trening.html"><b>Trening</b></a>
+      <span>Zadania z całości, na trzech poziomach, ze statystyką skuteczności.</span></span></li>
+    <li><span class="num">09</span><span class="txt"><a href="sciagawka.html"><b>Ściągawka</b></a>
+      <span>Wszystkie wzory na jednej stronie, do druku.</span></span></li>
+  </ul>
+
+  <div class="bridge">
+    <span class="lbl">Następny krok</span>
+    <p>Zanim zamienimy kąt na liczbę, musimy się umówić, jak sam kąt zapisywać liczbowo — i dlaczego
+    stopnie, choć znajome, są w matematyce jednostką niewygodną.
+    <a href="katy.html">Przejdź do modułu 01 →</a></p>
+  </div>
+
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+TR.chrome('dlaczego');
+
+/* ============ widget: wysokość wieży ============ */
+(function () {
+  let d = 40, alpha = 32;
+  const EYE = 1.6;
+
+  const plot = new TR.Plot(TR.$('#c-tower'), {
+    xmin: -8, xmax: 78, ymin: -6, ymax: 46, equal: true, ratio: .605, maxH: 520,
+    draw: function (p) {
+      const c = TR.colors();
+      const h = d * Math.tan(alpha * TR.D2R) + EYE;
+
+      // ziemia
+      p.path([[p.win.xmin, p.win.ymin], [p.win.xmax, p.win.ymin], [p.win.xmax, 0], [p.win.xmin, 0]],
+             { color: null, fill: TR.alpha(c.tan, .1) });
+      p.seg(p.win.xmin, 0, p.win.xmax, 0, { color: c.ink3, width: 2 });
+
+      // wieża
+      const tw = 5;
+      p.path([[d, 0], [d + tw, 0], [d + tw, h], [d, h], [d, 0]],
+             { color: c.ink2, width: 2, fill: TR.alpha(c.ink3, .16) });
+      // dach
+      p.path([[d - 1.6, h], [d + tw / 2, h + 7], [d + tw + 1.6, h], [d - 1.6, h]],
+             { color: c.ink2, width: 2, fill: TR.alpha(c.sin, .35) });
+      // okienko
+      p.path([[d + 1.6, h * .55], [d + 3.4, h * .55], [d + 3.4, h * .72], [d + 1.6, h * .72], [d + 1.6, h * .55]],
+             { color: c.ink3, width: 1.2, fill: TR.alpha(c.gold, .35) });
+
+      // obserwator
+      p.seg(0, 0, 0, EYE, { color: c.ink, width: 3 });
+      p.dot(0, EYE + .7, { r: 5, color: c.ink, ring: false });
+      p.text('oko na wysokości 1,6 m', 0, 0, { dx: -2, dy: 26, align: 'left', color: c.ink3, font: '11px system-ui' });
+
+      // linia wzroku i pomocnicza
+      p.seg(0, EYE, d, EYE, { color: c.cos, width: 2.4, dash: [6, 4] });
+      p.seg(0, EYE, d, h, { color: c.accent, width: 2.6 });
+      p.seg(d, EYE, d, h, { color: c.sin, width: 3.4 });
+
+      p.angleArc(0, EYE, 9, 0, alpha * TR.D2R, { sector: true, fill: TR.alpha(c.accent, .16) });
+      p.angleArc(0, EYE, 9, 0, alpha * TR.D2R, { color: c.accent, width: 2 });
+      p.text('α = ' + TR.fmt(alpha, 1) + '°', 12.5 * Math.cos(alpha * TR.D2R / 2), EYE + 12.5 * Math.sin(alpha * TR.D2R / 2),
+             { color: c.accent, font: '700 13px system-ui', bg: true });
+
+      p.text('d = ' + TR.fmt(d, 1) + ' m', d / 2, EYE, { align: 'center', dy: -8, color: c.cos, font: '600 13px system-ui', bg: true });
+      p.text(TR.fmt(h - EYE, 2) + ' m', d, (EYE + h) / 2, { dx: -8, align: 'right', color: c.sin, font: '600 13px system-ui', bg: true });
+      p.text('h = ' + TR.fmt(h, 2) + ' m', d + tw, h, { dx: 12, dy: -4, color: c.ink, font: '700 14px system-ui', bg: true });
+      p.rightAngle(d, EYE, [-1, 0], [0, 1], 3, {});
+    }
+  });
+
+  const box = TR.$('#ctl-tower');
+  TR.slider(box, {
+    label: 'Odległość od wieży <var>d</var>', min: 10, max: 65, step: 1, value: d,
+    format: (v) => TR.fmt(v, 0) + ' m',
+    onInput: (v) => { d = v; refresh(); }
+  });
+  TR.slider(box, {
+    label: 'Zmierzony kąt <var>α</var> (patrzysz na szczyt)', min: 8, max: 62, step: .5, value: alpha,
+    format: (v) => TR.fmt(v, 1) + '°',
+    onInput: (v) => { alpha = v; refresh(); }
+  });
+
+  function refresh() {
+    const t = Math.tan(alpha * TR.D2R);
+    // kadr dopasowany do wysokości wieży — żeby nie zostawało pół obrazka pustego nieba
+    const h = d * t + EYE;
+    const top = Math.max(22, h + 11);
+    plot.setWindow({ xmin: -8, xmax: 78, ymin: -top * .13, ymax: top });
+    TR.$('#w-d').textContent = TR.fmt(d, 0) + ' m';
+    TR.$('#w-al').textContent = TR.fmt(alpha, 1) + '°';
+    TR.$('#w-tg').textContent = TR.fmt(t, 4);
+    TR.$('#w-h').textContent = TR.fmt(d * t + EYE, 2) + ' m';
+    plot.render();
+  }
+  refresh();
+})();
+
+/* ============ widget: podobieństwo trójkątów ============ */
+(function () {
+  let alpha = 34, k = 2.1;
+  const S = 3.4;                                  // przeciwprostokątna małego trójkąta
+
+  const plot = new TR.Plot(TR.$('#c-sim'), {
+    xmin: -.8, xmax: 12.5, ymin: -1.4, ymax: 7.2, equal: true, ratio: .646, maxH: 540,
+    draw: function (p) {
+      const c = TR.colors();
+      const a = alpha * TR.D2R;
+
+      function tri(ox, len, label, col) {
+        const bx = len * Math.cos(a), ay = len * Math.sin(a);
+        p.path([[ox, 0], [ox + bx, 0], [ox + bx, ay], [ox, 0]],
+               { color: null, fill: TR.alpha(col, .1) });
+        p.seg(ox, 0, ox + bx, 0, { color: c.cos, width: 3 });
+        p.seg(ox + bx, 0, ox + bx, ay, { color: c.sin, width: 3 });
+        p.seg(ox, 0, ox + bx, ay, { color: c.ink, width: 2.4 });
+        p.rightAngle(ox + bx, 0, [-1, 0], [0, 1], .3, {});
+        p.angleArc(ox, 0, .8, 0, a, { color: col, width: 2 });
+        p.text(TR.fmt(alpha, 0) + '°', ox + 1.15 * Math.cos(a / 2), 1.15 * Math.sin(a / 2),
+               { color: col, font: '700 12px system-ui', bg: true });
+        p.text(label, ox + bx / 2, ay / 2, { align: 'center', dx: 6, dy: -18, color: col, font: '700 13px system-ui', bg: true });
+        p.text(TR.fmt(bx, 2), ox + bx / 2, 0, { align: 'center', dy: 17, color: c.cos, font: '600 12px system-ui' });
+        p.text(TR.fmt(ay, 2), ox + bx, ay / 2, { dx: 8, color: c.sin, font: '600 12px system-ui' });
+        p.text(TR.fmt(len, 2), ox + bx / 2 - .1, ay / 2 + .1, { align: 'right', color: c.ink, font: '600 12px system-ui', bg: true });
+      }
+
+      p.seg(p.win.xmin, 0, p.win.xmax, 0, { color: c.line2, width: 1.2 });
+      tri(0, S, 'mały', c.accent);
+      tri(S * Math.cos(a) + 1.6, S * k, 'duży', c.gold);
+    }
+  });
+
+  const box = TR.$('#ctl-sim');
+  TR.slider(box, {
+    label: 'Kąt α (wspólny dla obu trójkątów)', min: 15, max: 70, step: 1, value: alpha,
+    format: (v) => TR.fmt(v, 0) + '°',
+    onInput: (v) => { alpha = v; refresh(); }
+  });
+  TR.slider(box, {
+    label: 'Ile razy większy jest drugi trójkąt', min: 1.2, max: 2.4, step: .05, value: k,
+    format: (v) => '× ' + TR.fmt(v, 2),
+    onInput: (v) => { k = v; refresh(); }
+  });
+
+  function refresh() {
+    // kadr dopasowany do aktualnych trójkątów
+    const aa = alpha * TR.D2R;
+    const wide = S * Math.cos(aa) + 1.6 + S * k * Math.cos(aa);
+    const tall = S * k * Math.sin(aa);
+    plot.setWindow({ xmin: -.8, xmax: wide + 1.4, ymin: -1.3, ymax: tall + 1.5 });
+    plot.render();
+    const a = alpha * TR.D2R;
+    const t1 = { b: S * Math.cos(a), a: S * Math.sin(a), c: S };
+    const t2 = { b: S * k * Math.cos(a), a: S * k * Math.sin(a), c: S * k };
+
+    function row(name, v1, v2, isRatio) {
+      const same = Math.abs(v1 - v2) < 1e-9;
+      return '<tr' + (isRatio ? ' class="hl"' : '') + '>' +
+        '<td class="lbl" style="white-space:normal">' + name + '</td>' +
+        '<td style="font-family:var(--mono)">' + TR.fmt(v1, 4) + '</td>' +
+        '<td style="font-family:var(--mono)">' + TR.fmt(v2, 4) + '</td>' +
+        '<td style="font-weight:700;color:' + (same ? 'var(--ok)' : 'var(--bad)') + '">' +
+        (same ? 'tak ✓' : 'nie ✗') + '</td></tr>';
+    }
+
+    TR.$('#tbl-sim tbody').innerHTML =
+      row('długość boku <var>a</var>', t1.a, t2.a) +
+      row('długość boku <var>b</var>', t1.b, t2.b) +
+      row('długość boku <var>c</var>', t1.c, t2.c) +
+      row('<span class="math">a / c</span> — czyli sin α', t1.a / t1.c, t2.a / t2.c, true) +
+      row('<span class="math">b / c</span> — czyli cos α', t1.b / t1.c, t2.b / t2.c, true) +
+      row('<span class="math">a / b</span> — czyli tg α', t1.a / t1.b, t2.a / t2.b, true);
+  }
+  refresh();
+})();
+</script>
+</body>
+</html>

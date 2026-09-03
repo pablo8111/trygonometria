@@ -20,6 +20,25 @@
     bez radianów nie zadziałają pochodne, fizyka drgań ani ruch po okręgu.</p>
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Chcemy zamieniać kąty na liczby. Ale najpierw sam kąt trzeba jakoś zapisać liczbowo —
+      i okazuje się, że znajome stopnie są do tego jednostką kiepską.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Mierzmy kąt <strong>długością łuku</strong>, który wycina na okręgu o promieniu 1.
+      Kąt przestaje być jednostką, a staje się zwykłą liczbą — i wzory nagle się skracają.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bez radianów nie działa przybliżenie <span class="math">sin <var>x</var> ≈ <var>x</var></span>,
+      na którym stoi cała fizyka drgań, ani wzory na pochodne, które poznasz w klasie trzeciej.</p>
+    </div>
+  </div>
+
   <h2>Kąt skierowany</h2>
   <p>Kąt umieszczamy w układzie współrzędnych tak, żeby jego wierzchołek był w punkcie
   <span class="math">(0,&nbsp;0)</span>, a <strong>ramię początkowe</strong> leżało na dodatniej
@@ -86,6 +105,18 @@
     Jeśli w wyniku ma być π, to znaczy, że idziesz w stronę radianów.
   </div>
 
+
+  <div class="aside">
+    <span class="t">Skąd się wzięło akurat 360</span>
+    <p>Podział pełnego obrotu na 360 części to spadek po Babilonii, gdzie liczono w systemie
+    sześćdziesiątkowym (jego resztki nosimy do dziś: 60 sekund, 60 minut, 12 godzin).
+    Do tego rok ma około 360 dni, więc Słońce przesuwa się po niebie mniej więcej o jeden
+    „stopień” dziennie — wygodnie. No i 360 dzieli się bez reszty przez 24 różne liczby,
+    w tym przez 2, 3, 4, 5, 6, 8, 9, 10, 12. Spróbuj podzielić 100 na trzy równe części.</p>
+    <p>To wszystko są argumenty <em>praktyczne</em>, nie matematyczne. Liczba 360 nie wynika
+    z niczego w samym okręgu — ktoś ją wybrał. Radian wynika.</p>
+  </div>
+
   <div class="widget">
     <div class="widget-head">
       Radian, długość łuku i pole wycinka
@@ -127,6 +158,45 @@
       dla α = 2π wychodzi <span class="math"><var>S</var> = π<var>r</var><sup>2</sup></span>,
       czyli pole całego koła. Zgadza się.</small></p>
     </div>
+  </div>
+
+
+  <h2>Dlaczego to naprawdę ma znaczenie</h2>
+  <p>Radiany wyglądają na kaprys, dopóki nie zobaczysz, co się psuje bez nich.
+  Trzy miejsca, w których różnica jest zasadnicza:</p>
+
+  <div class="grid grid-3">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">1. Wzory geometryczne się skracają</h3>
+      <p style="margin:0;font-size:.94rem">W radianach:
+      <span class="math"><var>l</var> = <var>r</var>α</span>.
+      W stopniach: <span class="math"><var>l</var> = <span class="frac"><span>π<var>r</var>α</span><span>180</span></span></span>.
+      Ta sama treść, ale w drugiej wersji nosisz ze sobą stałą, która nie ma nic wspólnego
+      z geometrią — tylko z tym, że ktoś wybrał 360.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">2. Małe kąty stają się liczbami</h3>
+      <p style="margin:0;font-size:.94rem">Dla małych kątów <strong>w radianach</strong> zachodzi
+      <span class="math">sin α ≈ α</span>. Sprawdź:
+      <span class="math">sin 0,05 = 0,049979…</span> — zgadza się na trzy miejsca.
+      Na tym przybliżeniu stoi wzór na okres wahadła, teoria drgań i pół optyki.
+      W stopniach nie ma ono sensu: <span class="math">sin 0,05° = 0,00087</span>.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:0">3. Pochodne wychodzą czyste</h3>
+      <p style="margin:0;font-size:.94rem">W klasie trzeciej zobaczysz, że
+      <span class="math">(sin <var>x</var>)′ = cos <var>x</var></span> — ale tylko wtedy, gdy
+      <var>x</var> jest w radianach. W stopniach byłoby
+      <span class="math">(sin <var>x</var>)′ = <span class="frac"><span>π</span><span>180</span></span> cos <var>x</var></span>,
+      i ten czynnik ciągnąłby się przez każde kolejne przekształcenie.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="t">Jak o tym myśleć</span>
+    Stopień jest jak cal albo funt: działa, ale jest umowny. Radian jest jak metr zdefiniowany
+    przez prędkość światła — wynika z samej rzeczy, którą mierzy. Dlatego w fizyce i w wyższej
+    matematyce stopnie po prostu znikają, a w liceum pojawiają się jeszcze obie miary naraz.
   </div>
 
   <h2>Kąty, które trzeba znać z pamięci</h2>
@@ -217,6 +287,15 @@
       do długości). Dlatego wolno napisać <span class="math">α = π/3</span> bez dopisku „rad”.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Co dalej</span>
+    <p>Umiemy już zapisać kąt jako liczbę. Teraz najważniejszy krok całego działu:
+    przypisanie kątowi <em>drugiej</em> liczby, która mówi coś o kształcie —
+    czyli budowa słownika kąt → liczba.
+    <a href="trojkat.html">Moduł 02: trójkąt prostokątny →</a></p>
+  </div>
 
 </div>
 </main>

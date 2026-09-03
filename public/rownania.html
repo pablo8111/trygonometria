@@ -20,6 +20,34 @@
     żeby znaleźć wszystkie i zapisać je jednym wzorem.</p>
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Dotąd pytaliśmy: „dany kąt — jaka wartość?”. Teraz pytamy odwrotnie: „dana wartość —
+      jaki kąt?”. To pytanie odwrotne, a funkcje okresowe odwracają się niejednoznacznie.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Narysuj na kole jednostkowym prostą odpowiadającą szukanej wartości i zobacz,
+      gdzie przecina okrąg. Zwykle w dwóch punktach — a każdy z nich powtarza się co pełny obrót.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bo w fizyce prawie zawsze pyta się właśnie tak: <em>kiedy</em> wahadło będzie w danym
+      położeniu, <em>przy jakim kącie</em> zasięg rzutu jest największy, <em>kiedy</em> napięcie
+      przekroczy próg.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <span class="t">Dlaczego rozwiązań jest nieskończenie wiele — i dlaczego to nie jest usterka</span>
+    Jeśli kąt czytasz jako moment w cyklu, to pytanie „kiedy wahadło jest w położeniu zerowym”
+    ma naturalnie nieskończenie wiele odpowiedzi: teraz, za pół okresu, za okres, za półtora…
+    Wahadło nie przestaje się kołysać dlatego, że raz już odpowiedzieliśmy.
+    <strong>Nieskończoność rozwiązań jest tu wiernym odbiciem tego, że zjawisko się powtarza.</strong>
+  </div>
+
   <h2>Skąd te dwie serie rozwiązań</h2>
   <p>Weźmy <span class="math">sin <var>x</var> = <span class="frac"><span>1</span><span>2</span></span></span>.
   Na kole jednostkowym pytamy: które punkty mają <strong>drugą współrzędną</strong> równą ½?
@@ -147,6 +175,43 @@
     </ol>
   </div>
 
+
+  <h2>Do czego to jest potrzebne</h2>
+  <ul class="uses">
+    <li><b>Kiedy napięcie przekroczy próg</b>
+      <span>Zabezpieczenie ma zadziałać przy 300 V. Napięcie sieci to
+      <span class="math">325 sin(2π·50<var>t</var>)</span>, więc pytanie brzmi:
+      <span class="math">sin(2π·50<var>t</var>) = 300/325</span>. Rozwiązań jest nieskończenie
+      wiele, bo warunek jest spełniany <strong>sto razy na sekundę</strong>, bez końca —
+      i właśnie ta informacja jest w zadaniu najważniejsza.</span></li>
+    <li><b>Najlepszy kąt rzutu</b>
+      <span>Zasięg rzutu ukośnego to <span class="math"><var>z</var> = <span class="frac"><span><var>v</var><sup>2</sup> sin 2α</span><span><var>g</var></span></span></span>.
+      Największy zasięg wtedy, gdy <span class="math">sin 2α = 1</span>, czyli
+      <span class="math">2α = 90°</span> — stąd słynne <strong>45°</strong>. To nie jest ciekawostka,
+      to rozwiązanie równania trygonometrycznego.</span></li>
+    <li><b>Kiedy Słońce jest nad horyzontem</b>
+      <span>Wysokość Słońca w ciągu roku i doby opisują funkcje trygonometryczne.
+      Pytanie „o której wschodzi” to równanie tego typu.</span></li>
+    <li><b>Rezonans i strojenie</b>
+      <span>Dobór częstotliwości, przy której układ zaczyna drgać najmocniej, sprowadza się
+      do warunku na fazę — a więc znowu do równania.</span></li>
+  </ul>
+
+  <div class="key">
+    <span class="t">Jak myśleć o rozwiązywaniu, żeby się nie pogubić</span>
+    <p style="margin:0">Każde równanie trygonometryczne rozwiązuje się w tej samej kolejności,
+    niezależnie od tego, jak strasznie wygląda:</p>
+    <ol style="margin:.6em 0 0">
+      <li><strong>Sprowadź do jednej funkcji</strong> — tożsamościami z modułu 05.</li>
+      <li><strong>Wyodrębnij tę funkcję</strong> — tak, by po jednej stronie stało samo
+      <span class="math">sin(…)</span>, a po drugiej liczba.</li>
+      <li><strong>Podstaw</strong> <span class="math"><var>t</var></span> za całą zawartość nawiasu.</li>
+      <li><strong>Rozwiąż równanie podstawowe</strong> — z koła albo z tabeli.</li>
+      <li><strong>Wróć do <var>x</var></strong> — i pamiętaj, żeby przekształcić także okres.</li>
+      <li><strong>Wybierz rozwiązania z przedziału</strong>, jeśli zadanie go podaje.</li>
+    </ol>
+  </div>
+
   <h2>Nierówności trygonometryczne</h2>
   <p>Tu koło jednostkowe naprawdę zarabia na siebie. Zamiast myśleć wzorami, patrzymy:
   <em>dla których punktów okręgu współrzędna jest większa od zadanej wartości?</em>
@@ -194,6 +259,15 @@
       Jeśli przedział podany jest w radianach, odpowiedź też musi być w radianach.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Co dalej</span>
+    <p>Zostało domknąć koło. Wyszliśmy od trójkąta prostokątnego, bo tylko w nim umieliśmy
+    cokolwiek policzyć. Teraz, mając funkcje określone dla wszystkich kątów, można wrócić
+    do geometrii — i policzyć <strong>dowolny</strong> trójkąt, bez kąta prostego.
+    <a href="twierdzenia.html">Moduł 07: twierdzenia sinusów i cosinusów →</a></p>
+  </div>
 
 </div>
 </main>

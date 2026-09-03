@@ -20,6 +20,26 @@
     Rozwiązanie jest jedno i bardzo elegancko rozszerza to, co już wiesz.</p>
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Definicja z trójkąta prostokątnego zna tylko kąty od 0° do 90°. Nie ma w niej miejsca
+      na kąt rozwarty, ujemny ani na obrót o dwa okrążenia.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Przestańmy pytać o <em>stosunek boków</em>, zacznijmy pytać o <em>współrzędne punktu</em>
+      na okręgu o promieniu 1. Dla kątów ostrych wychodzi dokładnie to samo, ale nowa definicja
+      nie potrzebuje już trójkąta — więc działa zawsze.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Bo wszystko, co się obraca lub drga, przechodzi przez wszystkie kąty po kolei
+      i wraca. Bez tego kroku nie ma opisu ruchu okrężnego, fal ani prądu zmiennego.</p>
+    </div>
+  </div>
+
   <h2>Nowa definicja — ta sama co stara</h2>
   <p>Rysujemy okrąg o środku <span class="math">(0,&nbsp;0)</span> i promieniu <strong>1</strong>
   (dlatego „jednostkowy”). Kąt <var>α</var> odmierzamy jak w module 01, a jego ramię końcowe
@@ -66,6 +86,27 @@
       </div>
       <div id="k-exact" style="margin-top:14px"></div>
     </div>
+  </div>
+
+
+  <div class="aside">
+    <span class="t">To nie pierwszy raz — matematyka ciągle tak robi</span>
+    <p>Rozszerzanie definicji tak, żeby stare reguły dalej działały, to jeden z głównych ruchów
+    w całej matematyce. Widziałaś go już wielokrotnie:</p>
+    <ul style="margin:.5em 0">
+      <li><span class="math"><var>a</var><sup><var>n</var></sup></span> zaczyna jako „pomnóż
+      <var>a</var> przez siebie <var>n</var> razy”. Dla <span class="math"><var>n</var> = 0</span>
+      albo <span class="math"><var>n</var> = −2</span> to zdanie traci sens — a jednak
+      <span class="math"><var>a</var><sup>0</sup> = 1</span> i
+      <span class="math"><var>a</var><sup>−2</sup> = 1/<var>a</var><sup>2</sup></span>,
+      bo tak <em>musi</em> być, żeby reguła
+      <span class="math"><var>a</var><sup><var>m</var></sup>·<var>a</var><sup><var>n</var></sup> =
+      <var>a</var><sup><var>m</var>+<var>n</var></sup></span> nadal obowiązywała.</li>
+      <li>Odejmowanie działało tylko „od większej mniejszą”, dopóki nie wymyślono liczb ujemnych.</li>
+      <li>Pierwiastkowanie działało tylko dla liczb nieujemnych, dopóki nie wymyślono liczb zespolonych.</li>
+    </ul>
+    <p>Za każdym razem schemat jest ten sam: <strong>stara definicja jest szczególnym przypadkiem
+    nowej</strong>, a nowa obejmuje więcej. Dokładnie to dzieje się tutaj z sinusem.</p>
   </div>
 
   <h2>Znaki w ćwiartkach</h2>
@@ -152,6 +193,38 @@
   Kiedy kąt zbliża się do 90°, ten odcinek ucieka do nieskończoności — właśnie to znaczy,
   że <span class="math">tg 90°</span> nie istnieje.</p>
 
+
+  <h2>Do czego to jest potrzebne</h2>
+  <p>Koło jednostkowe wygląda na abstrakcję, ale opisuje bardzo konkretną rzecz:
+  <strong>obrót</strong>. A obraca się zaskakująco dużo.</p>
+
+  <ul class="uses">
+    <li><b>Ruch po okręgu</b>
+      <span>Punkt na kole młyńskim, satelita, elektron w polu magnetycznym, korba w silniku.
+      Położenie po czasie <var>t</var>: <span class="math"><var>x</var> = <var>R</var> cos(ω<var>t</var>)</span>,
+      <span class="math"><var>y</var> = <var>R</var> sin(ω<var>t</var>)</span>. To dosłownie koło
+      jednostkowe przeskalowane do promienia <var>R</var>.</span></li>
+    <li><b>Obroty w grafice komputerowej</b>
+      <span>Obrót punktu o kąt <var>α</var> wokół środka:
+      <span class="math"><var>x</var>′ = <var>x</var> cos α − <var>y</var> sin α</span>,
+      <span class="math"><var>y</var>′ = <var>x</var> sin α + <var>y</var> cos α</span>.
+      Każda gra liczy to miliony razy na sekundę.</span></li>
+    <li><b>Prąd zmienny</b>
+      <span>Wirnik w elektrowni obraca się w polu magnetycznym — i napięcie na wyjściu jest po prostu
+      rzutem tego obrotu. Dlatego prąd w sieci jest sinusoidalny: bo generator się kręci.</span></li>
+    <li><b>Fazy i opóźnienia</b>
+      <span>Kąt na kole można czytać jako <em>moment w cyklu</em>. Dwa drgania „przesunięte o 90°”
+      to takie, w których jedno osiąga maksimum, gdy drugie przechodzi przez zero.</span></li>
+  </ul>
+
+  <div class="note">
+    <span class="t">Jedna zmiana perspektywy warta zapamiętania</span>
+    W module 02 kąt był <strong>cechą figury</strong>. Tutaj kąt jest <strong>miarą obrotu</strong>,
+    a często wręcz <strong>miarą czasu</strong> — bo jeśli coś kręci się ze stałą prędkością,
+    to „ile się obróciło” znaczy to samo co „ile minęło”. To dlatego w module 04 na osi poziomej
+    wykresu pojawi się kąt, a myśleć o nim będziemy jak o czasie.
+  </div>
+
   <h2>Wartości szczególne — pełna tabela</h2>
   <p>Wszystkie kąty będące wielokrotnościami 30° i 45°. Warto umieć odtworzyć tę tabelę
   z pamięci w dwie minuty: wystarczy znać pierwszą ćwiartkę i znaki.</p>
@@ -174,6 +247,15 @@
       bez dzielenia przez cokolwiek.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Co dalej</span>
+    <p>Sinus i cosinus przestały być stosunkami w trójkącie, a stały się <strong>funkcjami</strong>
+    określonymi dla każdej liczby rzeczywistej. A skoro to funkcje, to mają wykresy — i te wykresy
+    okazują się kształtem, którym fizyka opisuje pół świata.
+    <a href="wykresy.html">Moduł 04: wykresy →</a></p>
+  </div>
 
 </div>
 </main>

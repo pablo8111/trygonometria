@@ -21,6 +21,25 @@
     tylko od kąta.</p>
   </div>
 
+
+  <div class="bigpicture">
+    <div>
+      <span class="lbl">Problem</span>
+      <p>Kąt trzeba zamienić na liczbę, która mówi coś o kształcie. Z samego kąta nie da się nic
+      policzyć — potrzebna jest wielkość, która z kątem jednoznacznie się wiąże.</p>
+    </div>
+    <div>
+      <span class="lbl">Pomysł</span>
+      <p>Weź <strong>stosunek dwóch boków</strong> trójkąta prostokątnego. Przy powiększaniu trójkąta
+      boki rosną, ale stosunek stoi w miejscu — więc jest własnością samego kąta.</p>
+    </div>
+    <div>
+      <span class="lbl">Po co</span>
+      <p>Żeby mierzyć niedostępne: wysokość, odległość, głębokość. I żeby rozkładać wektory
+      na składowe — bez tego nie ma ani jednego zadania z równi pochyłej.</p>
+    </div>
+  </div>
+
   <h2>Dlaczego to w ogóle działa</h2>
   <p>Weź dwa trójkąty prostokątne z tym samym kątem ostrym <var>α</var>. Skoro mają równe wszystkie
   trzy kąty (bo trzeci wychodzi z sumy 180°), to są <strong>podobne</strong>. A w trójkątach podobnych
@@ -109,6 +128,21 @@
     </ul>
   </div>
 
+
+  <div class="aside">
+    <span class="t">Dlaczego akurat te nazwy, i dlaczego jest ich tyle</span>
+    <p>Z trzech boków da się utworzyć <strong>sześć</strong> różnych stosunków (każda para boków
+    na dwa sposoby). Ale trzy z nich są odwrotnościami pozostałych trzech, więc nowej informacji
+    nie wnoszą. Zostają trzy pary:</p>
+    <ul style="margin:.5em 0 0">
+      <li><span class="math">sin</span> i jej odwrotność <span class="math">cosec</span> (rzadko używana),</li>
+      <li><span class="math">cos</span> i jej odwrotność <span class="math">sec</span> (też rzadko),</li>
+      <li><span class="math">tg</span> i jej odwrotność <span class="math">ctg</span> (ta akurat przydaje się często).</li>
+    </ul>
+    <p style="margin-top:.6em">Do wszystkiego wystarczyłby zresztą sam sinus — reszta wyraża się
+    przez niego. Cosinus i tangens istnieją dla wygody, nie z konieczności.</p>
+  </div>
+
   <h2>Wartości, które bierze się z geometrii</h2>
   <p>Dla trzech kątów nie trzeba kalkulatora — wystarczy jedna figura i twierdzenie Pitagorasa.</p>
 
@@ -161,6 +195,50 @@
     a przyległy maleje (cosinus maleje).
   </div>
 
+
+  <h2>Do czego to jest potrzebne</h2>
+  <p>Jedno zastosowanie widziałaś już w module 00: pomiar wysokości wieży. Ale najczęściej
+  spotkasz te trzy funkcje w zupełnie innej roli — jako narzędzie do
+  <strong>rozkładania wektorów na składowe</strong>.</p>
+
+  <div class="key">
+    <span class="t">Najważniejsze zastosowanie w fizyce</span>
+    <p style="margin:0">Masz siłę (albo prędkość, albo dowolny wektor) o wartości <var>F</var>,
+    skierowaną pod kątem <var>α</var>. Chcesz wiedzieć, ile z niej „działa w poziomie”,
+    a ile „w pionie”. Rysujesz trójkąt prostokątny, w którym <var>F</var> jest przeciwprostokątną:</p>
+    <div class="math-block" style="margin:.7em 0 0">
+      <var>F</var><sub>x</sub> = <var>F</var> · cos α &nbsp;&nbsp;&nbsp;&nbsp;
+      <var>F</var><sub>y</sub> = <var>F</var> · sin α
+    </div>
+  </div>
+
+  <ul class="uses">
+    <li><b>Równia pochyła</b>
+      <span>Ciało na równi o kącie nachylenia <var>α</var>: siła ściągająca je w dół równi to
+      <span class="math"><var>mg</var> sin α</span>, a siła dociskająca do powierzchni to
+      <span class="math"><var>mg</var> cos α</span>. Dla <span class="math">α = 0°</span> wychodzi
+      <span class="math">0</span> i <span class="math"><var>mg</var></span> — na płaskim nic nie zjeżdża.
+      Dla <span class="math">α = 90°</span> odwrotnie: swobodny spadek. Wzór sam sprawdza się na krańcach.</span></li>
+    <li><b>Rzut ukośny</b>
+      <span>Piłka wyrzucona z prędkością <var>v</var> pod kątem <var>α</var> ma prędkość poziomą
+      <span class="math"><var>v</var> cos α</span> i pionową <span class="math"><var>v</var> sin α</span>.
+      Cały tor liczy się z tych dwóch liczb.</span></li>
+    <li><b>Budownictwo i dachy</b>
+      <span>Kąt nachylenia połaci, długość krokwi, przewyższenie schodów — wszystko to jest
+      dosłownie ten sam trójkąt.</span></li>
+    <li><b>Nawigacja i mapy</b>
+      <span>Azymut plus przebyta odległość dają przesunięcie na wschód
+      (<span class="math"><var>d</var> sin</span>) i na północ (<span class="math"><var>d</var> cos</span>).</span></li>
+  </ul>
+
+  <div class="note">
+    <span class="t">Reguła, która oszczędza mnóstwo czasu</span>
+    Nie ucz się na pamięć, czy przy danej składowej stoi sinus czy cosinus. Zamiast tego
+    <strong>narysuj trójkąt i sprawdź, który bok przylega do kąta</strong>. Bok przylegający
+    → cosinus, bok naprzeciwko → sinus. W zadaniach fizycznych kąt bywa mierzony raz od poziomu,
+    raz od pionu, więc każda reguła „zawsze sinus” prędzej czy później zawiedzie.
+  </div>
+
   <h2>Rozwiązywanie trójkąta prostokątnego</h2>
   <p>„Rozwiązać trójkąt” znaczy: policzyć wszystkie boki i kąty. Wystarczą dwie dane
   (nie licząc kąta prostego), byle nie były to dwa kąty.</p>
@@ -211,6 +289,15 @@
       do jednego miejsca, a potem z niego <var>b</var>, błąd się skumuluje. Zaokrąglaj na końcu.</li>
     </ul>
   </details>
+
+
+  <div class="bridge">
+    <span class="lbl">Co dalej</span>
+    <p>Słownik kąt → liczba już mamy, ale ma poważną wadę: działa tylko dla kątów ostrych,
+    bo tylko takie mieszczą się w trójkącie prostokątnym. Świat tymczasem kręci się dalej —
+    potrzebujemy <span class="math">sin 210°</span> i <span class="math">cos(−45°)</span>.
+    <a href="kolo.html">Moduł 03: koło jednostkowe →</a></p>
+  </div>
 
 </div>
 </main>

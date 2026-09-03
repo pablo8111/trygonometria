@@ -9,6 +9,8 @@ const TR = (function () {
   /* ---------------- moduły witryny ---------------- */
 
   const MODULES = [
+    { id: 'dlaczego', file: 'dlaczego.html', n: '00', title: 'Po co jest trygonometria', short: 'Po co',
+      desc: 'Dwa problemy, jedno rozwiązanie. Skąd się to wzięło, na czym stoi i gdzie się tego używa.' },
     { id: 'katy', file: 'katy.html', n: '01', title: 'Kąty i miara łukowa', short: 'Kąty',
       desc: 'Stopnie, radiany, kąt skierowany. Długość łuku i pole wycinka.' },
     { id: 'trojkat', file: 'trojkat.html', n: '02', title: 'Trójkąt prostokątny', short: 'Trójkąt',

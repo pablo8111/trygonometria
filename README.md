@@ -1,13 +1,21 @@
 # Trygonometria — interaktywny kurs dla liceum
 
 Statyczna witryna do nauki trygonometrii na poziomie I klasy liceum
-(profil matematyczno-fizyczny), po polsku. Dziewięć modułów, każdy z ruchomymi
+(profil matematyczno-fizyczny), po polsku. Dziesięć modułów, każdy z ruchomymi
 rysunkami na `<canvas>` i generatorem zadań ze sprawdzaniem odpowiedzi.
+
+## Układ dydaktyczny: od ogółu do szczegółu
+
+Każdy moduł otwiera blok **problem → pomysł → po co**: najpierw pytanie, na które
+moduł odpowiada, potem idea w jednym zdaniu bez symboli, potem zastosowanie.
+Dopiero za tym idą definicje i wzory. Moduł zamyka **most** do następnego —
+zdanie mówiące, jakie pytanie zostało otwarte. Moduł 00 daje ramę dla całości.
 
 ## Moduły
 
 | # | Plik | Zawartość | Interakcje |
 |---|------|-----------|------------|
+| 00 | `dlaczego.html` | po co jest trygonometria, jedna myśl u podstaw, historia, zastosowania, mapa działu | pomiar wysokości wieży z kąta i odległości, dwa podobne trójkąty z porównaniem stosunków |
 | 01 | `katy.html` | miara stopniowa i łukowa, kąt skierowany, łuk i wycinek | kąt skierowany ze spiralą obrotów, wizualizacja definicji radiana, kalkulator zamiany |
 | 02 | `trojkat.html` | definicje sin/cos/tg/ctg, podobieństwo, wartości 30/45/60 | trójkąt z przeciąganym wierzchołkiem, figury 45° i 30/60°, solver trójkąta prostokątnego |
 | 03 | `kolo.html` | definicja na kole jednostkowym, znaki, okresowość | koło z przeciąganym punktem, tangens jako odcinek na prostej x = 1, pełna tabela wartości |
